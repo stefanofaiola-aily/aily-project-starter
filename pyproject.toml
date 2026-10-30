@@ -1,0 +1,50 @@
+[project]
+name = "aily-project-starter"
+version = "0.1.0"
+description = "Small standalone projects using published Aily libraries"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "aily-data-access-layer>=2.104.0,<3.0.0",
+    "aily-py-commons>=1.141.0,<2.0.0",
+    "click>=8.1,<9",
+    "pandas>=2.2,<3",
+    "python-dotenv>=1.0,<2",
+]
+
+[project.scripts]
+aily-project = "aily_project.cli:cli"
+
+[dependency-groups]
+dev = ["pytest>=8,<9", "pytest-cov>=4,<8", "ruff>=0.10,<1", "ty==0.0.16"]
+notebook = ["ipykernel>=6,<8", "notebook>=7,<8"]
+ui = ["streamlit>=1.50,<2"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aily_project"]
+
+[tool.uv]
+required-version = ">=0.11.32"
+default-groups = ["dev"]
+
+[[tool.uv.index]]
+name = "aily"
+url = "https://dl.cloudsmith.io/basic/ailylabs/pip/python/simple/"
+default = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--strict-markers"
+markers = ["unit: isolated tests without cloud or database access"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

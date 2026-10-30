@@ -1,0 +1,12 @@
+entity,period_role,source_row_id
+burberry,oldest,
+burberry,earlier,
+burberry,latest,
+ralph_lauren,oldest,
+ralph_lauren,earlier,
+ralph_lauren,latest,
+moncler,oldest,
+moncler,earlier,
+moncler,latest,
+burberry,target,
+burberry,last_year_target,

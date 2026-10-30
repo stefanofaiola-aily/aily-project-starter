@@ -1,0 +1,4 @@
+entity,company_code,oldest_year,oldest_quarter,earlier_year,earlier_quarter,latest_year,latest_quarter,target_year,target_quarter,last_year_target_year,last_year_target_quarter
+burberry,BRBY.L,2024,Q2,2025,Q2,2026,Q2,2027,Q3,2026,Q3
+ralph_lauren,RL,2024,Q2,2025,Q2,2026,Q2,,,,
+moncler,MONC.MI,2023,Q3,2024,Q3,2025,Q3,,,,

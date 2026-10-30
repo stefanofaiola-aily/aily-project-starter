@@ -1,0 +1,17 @@
+[environment]
+python-version = "3.11"
+
+[src]
+include = ["src"]
+
+[rules]
+unresolved-reference = "error"
+invalid-assignment = "error"
+call-non-callable = "error"
+invalid-return-type = "error"
+missing-argument = "error"
+unknown-argument = "error"
+invalid-argument-type = "error"
+
+[analysis]
+respect-type-ignore-comments = false
