@@ -179,6 +179,59 @@ def test_entity_periods_and_forecast_roles_are_csv_driven() -> None:
         FMI["entity_period_choices"](entities, ["missing"])
 
 
+@pytest.mark.parametrize("score,uplift_pct", [(52, 0), (70.5, 5.1)])
+def test_burberry_sales_scenario_targets_fy2026_q4_forecast(
+    score: float, uplift_pct: float
+) -> None:
+    entities = pd.read_csv(Path(__file__).parents[1] / "inputs/entities.csv")
+    choices = FMI["entity_period_choices"](
+        entities, ["burberry"], ("target", "last_year_target")
+    )
+    indexed = choices.set_index("period_role")
+
+    assert indexed.loc["target", ["year", "quarter", "classification"]].tolist() == [
+        2026,
+        "Q4",
+        "Forecast",
+    ]
+    assert indexed.loc[
+        "last_year_target", ["year", "quarter", "classification"]
+    ].tolist() == [2025, "Q4", "Actual"]
+
+    # Synthetic rows exercise the notebook's full selection-to-uplift path.
+    # Neither the FY2026 Q4 Actual nor the old FY2027 Q3 Forecast is the baseline.
+    raw = pd.DataFrame(
+        [
+            {
+                "entity": "burberry",
+                "year": year,
+                "quarter": quarter,
+                "classification": classification,
+                "amount": amount,
+                "metric": "revenue",
+                "reported_date": date,
+            }
+            for year, quarter, classification, amount, date in [
+                (2026, "Q4", "Forecast", 1000, "2026-03-31"),
+                (2026, "Q4", "Actual", 9000, "2026-03-31"),
+                (2025, "Q4", "Actual", 800, "2025-03-31"),
+                (2027, "Q3", "Forecast", 5000, "2026-12-30"),
+            ]
+        ]
+    )
+    selected = FMI["preview_periods"](raw, choices, "2026-10-28T23:59:59Z")
+    amounts = selected.set_index("period_role")["amount"]
+    scenario = FMI["sales_scenario"](
+        score, float(amounts["target"]), float(amounts["last_year_target"])
+    )
+    assert scenario["baseline"] == 1000
+    assert scenario["uplift_pct"] == pytest.approx(uplift_pct)
+    assert scenario["adjusted_forecast"] == pytest.approx(1000 * (1 + uplift_pct / 100))
+    assert scenario["forecast_yoy_pct"] == pytest.approx(
+        (scenario["adjusted_forecast"] / 800 - 1) * 100
+    )
+
+
 def test_preview_pair_uses_raw_ratios_without_review_attestation() -> None:
     financials, posts, labels, settings, pairs = pair_inputs()
     analysis = FMI["comparison_analyses"](settings, pairs)[0]

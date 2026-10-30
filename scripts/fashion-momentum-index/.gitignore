@@ -3,3 +3,6 @@ results/
 .env
 .ipynb_checkpoints/
 __pycache__/
+# Local reports, historical deliveries and database-derived snapshots.
+# Keep these audit/input artifacts outside source control.
+handover/

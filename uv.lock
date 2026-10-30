@@ -50,8 +50,10 @@ dependencies = [
     { name = "aily-data-access-layer" },
     { name = "aily-py-commons" },
     { name = "click" },
+    { name = "openpyxl" },
     { name = "pandas" },
     { name = "python-dotenv" },
+    { name = "pyyaml" },
 ]
 
 [package.dev-dependencies]
@@ -74,8 +76,10 @@ requires-dist = [
     { name = "aily-data-access-layer", specifier = ">=2.104.0,<3.0.0" },
     { name = "aily-py-commons", specifier = ">=1.141.0,<2.0.0" },
     { name = "click", specifier = ">=8.1,<9" },
+    { name = "openpyxl", specifier = ">=3.1,<4" },
     { name = "pandas", specifier = ">=2.2,<3" },
     { name = "python-dotenv", specifier = ">=1.0,<2" },
+    { name = "pyyaml", specifier = ">=6,<7" },
 ]
 
 [package.metadata.requires-dev]

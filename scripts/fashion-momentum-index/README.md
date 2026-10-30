@@ -83,6 +83,12 @@ Saved automatically:
 - `data/processed/preview_collection_review.csv`: show-week caption suggestions.
 - `data/processed/preview_target_financials.csv`: scenario source rows.
 
+The Burberry sales scenario targets **FY2026 Q4 Forecast**, with **FY2025 Q4
+Actual** for the year-on-year comparison, as configured in `inputs/entities.csv`.
+Each pair's FMI drives the adjustment to that forecast; FMI at or below 60 means
+0% uplift. Light labels FY2026 Q4 with reported date 31 March 2026, not calendar
+Q4 2026. Rerun notebook 02 after changing the target period.
+
 Your input CSVs and `collection_review.csv` are never overwritten by scoring.
 Calculations and editable period choices are visible in the notebook.
 

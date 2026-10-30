@@ -698,9 +698,19 @@ At 60, uplift 0%; at 70, uplift 5%; at 80, uplift 7%; at 100, uplift 11%.
 There is an intentional jump just above 60 to just above 3%. Low FMI never reduces
 the baseline. These rules are planning assumptions, not a fitted sales model.
 
-The current preview selects Burberry FY2027 Q3 as target and FY2026 Q3 as its
-prior-year actual. Target source date ends December 2026; FY2026 Q4 ended
-March 2026 and is not calendar Q4 2026. Forecast values are a current snapshot.
+The configured Burberry preview now selects **FY2026 Q4** as the target forecast
+and **FY2025 Q4** as the prior-year actual, as requested. In the saved Light
+extract these rows have reported dates 31 March 2026 and 31 March 2025,
+respectively. Fiscal `2026 Q4` is not calendar Q4 2026. Forecast values are a
+current snapshot, not a forecast version historically frozen at the show date.
+
+The scenario reads the FMI from each configured Burberry-peer comparison and
+applies the uplift rule above to the selected FY2026 Q4 forecast. An FMI at or
+below 60 yields 0% uplift and leaves the baseline unchanged. The resulting
+adjusted value can therefore
+equal the source forecast even though the FMI-driven scenario ran. Scores above
+60 produce the nonzero uplift specified by the formula; this configuration
+change does not alter that rule.
 
 Reviewed mode requires target/actual metric, scope and currency to match and
 an explicit quarter baseline. Prior-year target must match period type and

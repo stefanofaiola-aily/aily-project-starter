@@ -1,0 +1,17 @@
+# Audited reference of Policy defaults, not a tenant override.
+# Tenant overrides: <tenant>[_<env>]__fashion_momentum__score.yaml.
+version: fmi-controlled-v1
+ir_weight: 0.5
+social_weight: 0.3
+trend_weight: 0.2
+ir_gap_multiplier: 5
+trend_change_boundary_pp: 2
+sustained_gap_pp: 5
+show_min_posts: 5
+annual_min_posts: 20
+annual_min_common_months: 3
+display_lower: 70
+display_upper: 98
+display_equal: 84
+uplift_max: 0.11
+uplift_exponent: 8
