@@ -1,0 +1,389 @@
+{
+  "source_repository": "aily-superagent-roadmap",
+  "source_commit": "0deb412f771628332f6962d8e0e1e49086464e94",
+  "copied_on": "2026-11-02",
+  "source_worktree_clean": true,
+  "excluded": [
+    "__pycache__/",
+    "*.pyc",
+    ".cache/",
+    ".DS_Store"
+  ],
+  "files": [
+    {
+      "path": "docs/research/wwd-fashion-momentum/.gitignore",
+      "bytes": 27,
+      "sha256": "97727d08ab3f0ea008b915c5596db6495162065a42d9fef0e174f36429197064"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/README.md",
+      "bytes": 68281,
+      "sha256": "cb27c3deae3a19c2b6048d50ac653965089df36430189e6152d7bb43ee2a70dc"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/arceo-enablement-inputs.json",
+      "bytes": 15285,
+      "sha256": "620bec1518ee208ca16332eb36252d39e9984b5d7337e177ea11f2bba2e571c1"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-delivery-table.py",
+      "bytes": 18375,
+      "sha256": "432058bb65aa580708f46976d628a7e2218a38875b0cfed4210d1d3c4d3b1695"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-dossier-review.py",
+      "bytes": 8924,
+      "sha256": "bb81f116adeded5f6d2016713b3db6cf61d74624853fc07af6080e51a1a0c7f4"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-prospect-packages.py",
+      "bytes": 47159,
+      "sha256": "1635a586a9a0c03da49317e7b23ec3c51d37d7a412082c8ff5a7f08f6a756306"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-public-presence-pilot.py",
+      "bytes": 16585,
+      "sha256": "2d2cafd3aa7b3b51c1bfdd96da893d7e657919cabcc9cec7aeee21d373cc0a98"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-public-presence-review.py",
+      "bytes": 15301,
+      "sha256": "3ec7cf04138ab1eac5b28b7cd7a284b496fce465261f521e69bb9ef584908c5e"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-score-results.py",
+      "bytes": 28808,
+      "sha256": "e88f6f413179824cc4385c558040883248275eab419e8856070af31c3533f467"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-weighted-delivery.py",
+      "bytes": 150054,
+      "sha256": "3c6b45a4771c2b95737dc31b77622e24669c884f9d84f258644f923f96a476d2"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build-weighted-workbook.mjs",
+      "bytes": 203181,
+      "sha256": "1d09e807737be53b3b1b151ee02035831bbb4eb0f84860a11b530947bc1fb86c"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/build.py",
+      "bytes": 2147,
+      "sha256": "73723a695032eda607cb3beae61fc7becaf1a46c590ff682ce44523baca1a3e0"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/delivery-build.json",
+      "bytes": 1150,
+      "sha256": "152bd12461a5fa92d95ece2d73b2b5bbdf9a1abf60df3d0b18737f59237adef9"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/delivery-pilot.json",
+      "bytes": 46714,
+      "sha256": "3ed16c6d521f6f5356cf5daeb0995fb78c29a163af6e53426c5e6b7d7c8266e7"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/delivery-pilot.md",
+      "bytes": 13253,
+      "sha256": "cf5cfecae03141bba84226ac2c855ea748b0af3604d55894c499f2049ea0e6d2"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/delivery-table.json",
+      "bytes": 209487,
+      "sha256": "83985aca9fbc872267579757d63dcc9aaad1458d5f7081f9a78bae6937b17796"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/delivery-table.md",
+      "bytes": 31639,
+      "sha256": "3a8f7c2737e065269c9b01903b0ece3796c8a649fe2f8eba3344533b7538a1d6"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/designer-workflow.md",
+      "bytes": 13270,
+      "sha256": "b5dba9f351850e53afaf012a60708c27b1d7dda9e967ec064facf9c4504c4582"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/dossier-evidence-manifest.json",
+      "bytes": 30213,
+      "sha256": "9835ebfcdb407432177988b7b8ea08be9927d5fa945d7b626efdb20796c30804"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/dossier-review.json",
+      "bytes": 41580,
+      "sha256": "ebba3e17fccb25007b634330e9ee4282cbcf7fa95c5282aa2dbd173855533a25"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/dossier-review.md",
+      "bytes": 9557,
+      "sha256": "070390c44f816f23d6f671f167ec7a77edd545192b0d3ac47ce68f246f24fe79"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/implementation-handoff.md",
+      "bytes": 9859,
+      "sha256": "48066578c2935de9fd3f4ac09a6399c8572d38ae954b4883114cd25b0dd863db"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/import-sales-social.py",
+      "bytes": 20515,
+      "sha256": "37e90dbc7db0ce4579756cbc87ee59037243acfc01f447215e5bc1924d541b0d"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/media-presence-observations.json",
+      "bytes": 14330,
+      "sha256": "a7813c5137c1491ffc136939b45944a6f68a25b3551c519066e3df04f191f04a"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-01.md",
+      "bytes": 14991,
+      "sha256": "a67143676f8f6feb2e9a74d222c4419adf0f9cbe75b21d2f5e5e964f77902b8b"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-02.md",
+      "bytes": 14526,
+      "sha256": "cc98827e29097b539fda136740c5c8d88a8baf7df91e877790e7027fe781a6f5"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-03.md",
+      "bytes": 20552,
+      "sha256": "6cbe8ad696d19998c81ce3c41bcb634c4b556ec163129ed5e99057ca065720db"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-04.md",
+      "bytes": 14754,
+      "sha256": "a2b6fd50d48f996c119c1eabb2f402ef60319275b76ea3abba5bdd602e2e4efc"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-05.md",
+      "bytes": 20094,
+      "sha256": "ff5b8a42715527b1546723479d409fc23e4ea5bd0ec555fa9107cd9100713d58"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-06.md",
+      "bytes": 14603,
+      "sha256": "1dc3681997b43b1a78fa47481b31c98e7b255865ed0279090cb13fa87cc9f1a3"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-07.md",
+      "bytes": 14403,
+      "sha256": "d6e0f0750adf233a9f54dd74eb53356da70697538fb0edb6c7ca05e753568882"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-08.md",
+      "bytes": 14315,
+      "sha256": "43cb0354a3e596c683df59d3e7dd5adcb1685b0ae642bcd1ca5a4a01576bd068"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-09.md",
+      "bytes": 13978,
+      "sha256": "726086adf57e1087f3a18ecefa3d3f8f802175360fd0bf447145d7bf7b1fcdcc"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-10.md",
+      "bytes": 14932,
+      "sha256": "d789518f35ec31391fe71e5505edcfe6fd48d8d9cdca02d018427e03048c9163"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-11.md",
+      "bytes": 14982,
+      "sha256": "20bd6b44b5ffaf48365494979d69773f108aa5dca4e51b335f81b63b4e11e3eb"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-12.md",
+      "bytes": 14211,
+      "sha256": "75b09b539260eb4be1e17d451a958918fb1f05a09e44c9da4ad64bafb0f8da6f"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-13.md",
+      "bytes": 14092,
+      "sha256": "125f9302e3cd405aa08dbb0c490a09a8965ec47b32daa112243c0f26a0002325"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-14.md",
+      "bytes": 15310,
+      "sha256": "ed095a633adc1cbdec457b8cd3b3a889e34ab92ebfb909101c6823ab3f78cd04"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-15.md",
+      "bytes": 14383,
+      "sha256": "946ea5eee321bd6dedcd9b4c0b3a0760e5c02c3cde6309ae666353ac760e794c"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-16.md",
+      "bytes": 14145,
+      "sha256": "13201bf0553d6bf1034fac0082286d368bde5b7a5700d00e94dca2f20145a3c2"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-17.md",
+      "bytes": 14970,
+      "sha256": "de5b7fe6606a3c37b53ede615ddbafd994318e0b9595793efd3394f14efe4807"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-18.md",
+      "bytes": 14418,
+      "sha256": "d2ec5e8dfa0a8f72adc31aad56091dc4030ecd3b139f44b8ed20088da1e866fa"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-19.md",
+      "bytes": 25158,
+      "sha256": "b0586dc5771954df7593c9873bbd433bab6eb10caaf3886ae98f237490431532"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-20.md",
+      "bytes": 13659,
+      "sha256": "38345d26dcb16e8d2ab52cdd019a5a08ee3e3699b4d0a1e25f21d8e14999d590"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-21.md",
+      "bytes": 14649,
+      "sha256": "9d2d1f4e0b6f5467f71d926480499d4473dc21f5708d025e347fa67b87b043b3"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-22.md",
+      "bytes": 14381,
+      "sha256": "e0df704532c65629d4450b649e90f8fee54c56d01cad7eaa1649ca696e87e1f7"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-23.md",
+      "bytes": 14662,
+      "sha256": "1e2e71c338df470abd20a70870b2a78e43dc296b5fb72d43827aac0d4a9ce702"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-24.md",
+      "bytes": 15043,
+      "sha256": "04f246668435d1db5e3e7f5c1dce36e4dc0cddc9c2667f9789a5c598b366f563"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prompts/prospect-25.md",
+      "bytes": 14134,
+      "sha256": "d6329b22e5be9babef9bcc9b5e92dd3b9c147cb3386d3691810b4dc45ab7eca8"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prospect-inputs.json",
+      "bytes": 6024,
+      "sha256": "a85c092551fe4fe45ba417fcd7535e9817bec52498502e49db2373d9b83bad8d"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prospect-packages.json",
+      "bytes": 775819,
+      "sha256": "1aee2850d58b646fadf175e1fc5363d550684f74f819838744c27d84079e1dbe"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prospect-update-guide.md",
+      "bytes": 35857,
+      "sha256": "f5364a884933b68ba3cf3889e12ab6efb9763679441ac38f7f4785bffd039bf5"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/prospects.json",
+      "bytes": 295642,
+      "sha256": "fe80b1bd27173d91a8c4d3a60c0c888a9997da1df9535d46bb55f5bd0c9b99cf"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/public-presence-pilot.json",
+      "bytes": 14454,
+      "sha256": "807abe17b5437f7febb8f574c518f820b777a42f3c71629ee3298a6551301f9b"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/public-presence-pilot.md",
+      "bytes": 9522,
+      "sha256": "5fe18f55aabce4ea9a3be8a9c75a7826830a3838fdb92ad4c5754bcfa068dad2"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/public-presence-review.json",
+      "bytes": 201316,
+      "sha256": "393997acb4ea2bf5521357ac0e995a2e29f1e767f4675d01d68ecd3b839c09a3"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/public-presence-review.md",
+      "bytes": 46590,
+      "sha256": "facb78dc532fde6e99fe6d511f77d3fc2eee8659896e887df081b191e5f9c22a"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/refresh-delivery.py",
+      "bytes": 20743,
+      "sha256": "dd261813f45b0e4f3b18616685134d28ae3d2bb8d087a7cc2cd507a5ea8737bb"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/report-update-2026-10-28.md",
+      "bytes": 13939,
+      "sha256": "d8880a73f2aac726c7331887742c69c75bd93eb448518796c2f27ccdfde15573"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/resource-review.json",
+      "bytes": 19374,
+      "sha256": "8f364579dd88fd114b3e3ee1b80140ff1738728e5c6f6ba4b0894e87b31906ca"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/resource-review.md",
+      "bytes": 12251,
+      "sha256": "5be85dc56f21484f6885ed37fcf9108e6c9372dec311be82fc51673578312618"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/review.md",
+      "bytes": 30554,
+      "sha256": "20735ee73225d23197c0182231745cbcae6591b1e3328c78bd46144425b3b5a5"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/score-results.json",
+      "bytes": 306982,
+      "sha256": "a2e853e3636a2f5462fd4b227f1542cde044108faae3db774578cb1bfb1b0201"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/score-results.md",
+      "bytes": 13400,
+      "sha256": "db112faf79e370e94a142fd5c2de31e58421b55cf98613071ebb254647dbf8af"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/setup.md",
+      "bytes": 16990,
+      "sha256": "314048a57eaeecdf05f8cc95183ea73b85375fdbb1da8c61ae9713261c3bf799"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/slack-handoff.md",
+      "bytes": 3442,
+      "sha256": "82601215281dbf33c9bacbc446c64e9fb537b4dbcbeb3694ba6b82ad84d3aef0"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/social-presence-observations.json",
+      "bytes": 9848,
+      "sha256": "25e6dd973c51dde66cd1c95ea1fb1dee899b555e0e8907f7eb82b8cb4a8f8808"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/test-refresh-delivery.py",
+      "bytes": 37541,
+      "sha256": "232774116e562328e52a6547d1a5effdb7132a299ef17a170238f224acd75859"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/weighted-delivery-inputs.json",
+      "bytes": 1023365,
+      "sha256": "20f239388cb011e5dbbd2a22318f3b4f7012896116fe7cedc9fbc8991201ca8c"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/weighted-delivery.json",
+      "bytes": 3133457,
+      "sha256": "63d524451c883c1ff70d2dc5a02ba4e745cb4df258b9f9cd0faa6efe21ead338"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/weighted-delivery.md",
+      "bytes": 118727,
+      "sha256": "e2aa0cf7061fa4e2eaab2f9ce4943dced23fca22497cc8eb5b56046cd533112a"
+    },
+    {
+      "path": "docs/research/wwd-fashion-momentum/weighted-delivery.xlsx",
+      "bytes": 322375,
+      "sha256": "2e89f3731a0798b6558c9e3fb51fcfeb588382221e743ec1fb15d8fd1031ffb5"
+    },
+    {
+      "path": ".agents/skills/update-fashion-momentum/SKILL.md",
+      "bytes": 2300,
+      "sha256": "9ee3da45c7d2481079636da5d1f758983ce053ac518f6514e2cc9206c53c6cfe"
+    },
+    {
+      "path": ".agents/skills/update-fashion-momentum/agents/openai.yaml",
+      "bytes": 254,
+      "sha256": "6b462d44c29ba402059f185a8c6e1fb8f77795a7ac5775d5b0003b8f599d0ab7"
+    },
+    {
+      "path": ".github/workflows/fashion-momentum-sync.yml",
+      "bytes": 876,
+      "sha256": "89b7bb86d2c832b5dc0b9b7f77dcbfef32d87f665936fb3ac20f5efe456feba9"
+    }
+  ]
+}

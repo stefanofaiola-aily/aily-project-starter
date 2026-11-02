@@ -1,0 +1,663 @@
+{
+  "source": {
+    "fileName": "list_to_enable_ARCEO.csv",
+    "sha256": "b50d901ccb1387a511cfed336f4d350574cf2164cfd1d14e0ec41efc41834704",
+    "authority": "User-supplied CSV; Peter requested expanding the delivery table on 27 October 2026",
+    "delimiter": ";",
+    "headers": [
+      "Company",
+      "Email domain",
+      "Company code"
+    ],
+    "domainMeaning": "Email domains as supplied; no website verification or authentication configuration is implied"
+  },
+  "matchRules": {
+    "caseInsensitiveExact": true,
+    "environmentAliases": {
+      "G-III Apparel": "G-III Apparel Group"
+    },
+    "basis": "Exact prospect company and Allen Light-environment matches; one explicit G-III naming alias. Keep every source company/code/domain pairing."
+  },
+  "records": [
+    {
+      "sourceRow": 2,
+      "company": "Burberry",
+      "emailDomainRaw": "burberry.com",
+      "emailDomains": [
+        "burberry.com"
+      ],
+      "companyCode": "burberry"
+    },
+    {
+      "sourceRow": 3,
+      "company": "Estée Lauder",
+      "emailDomainRaw": "estee.com",
+      "emailDomains": [
+        "estee.com"
+      ],
+      "companyCode": "esteelauder"
+    },
+    {
+      "sourceRow": 4,
+      "company": "GAP Inc",
+      "emailDomainRaw": "gap.com",
+      "emailDomains": [
+        "gap.com"
+      ],
+      "companyCode": "gapinc"
+    },
+    {
+      "sourceRow": 5,
+      "company": "J.Crew",
+      "emailDomainRaw": "jcrew.com",
+      "emailDomains": [
+        "jcrew.com"
+      ],
+      "companyCode": "jcrew"
+    },
+    {
+      "sourceRow": 6,
+      "company": "LVMH",
+      "emailDomainRaw": "lvmh.com",
+      "emailDomains": [
+        "lvmh.com"
+      ],
+      "companyCode": "lvmh"
+    },
+    {
+      "sourceRow": 7,
+      "company": "ME+EM",
+      "emailDomainRaw": "meandem.com",
+      "emailDomains": [
+        "meandem.com"
+      ],
+      "companyCode": "meem"
+    },
+    {
+      "sourceRow": 8,
+      "company": "Moncler",
+      "emailDomainRaw": "moncler.com",
+      "emailDomains": [
+        "moncler.com"
+      ],
+      "companyCode": "moncler"
+    },
+    {
+      "sourceRow": 9,
+      "company": "New Balance",
+      "emailDomainRaw": "newbalance.com",
+      "emailDomains": [
+        "newbalance.com"
+      ],
+      "companyCode": "newbalance"
+    },
+    {
+      "sourceRow": 10,
+      "company": "Ralph Lauren",
+      "emailDomainRaw": "ralphlauren.com",
+      "emailDomains": [
+        "ralphlauren.com"
+      ],
+      "companyCode": "ralphlauren"
+    },
+    {
+      "sourceRow": 11,
+      "company": "Tapestry",
+      "emailDomainRaw": "tapestry.com",
+      "emailDomains": [
+        "tapestry.com"
+      ],
+      "companyCode": "tapestry"
+    },
+    {
+      "sourceRow": 12,
+      "company": "TOM FORD",
+      "emailDomainRaw": "tomfordfashion.com; tomfordinternational.com",
+      "emailDomains": [
+        "tomfordfashion.com",
+        "tomfordinternational.com"
+      ],
+      "companyCode": "tomford"
+    },
+    {
+      "sourceRow": 13,
+      "company": "Ulta Beauty",
+      "emailDomainRaw": "ulta.com",
+      "emailDomains": [
+        "ulta.com"
+      ],
+      "companyCode": "ultabeauty"
+    },
+    {
+      "sourceRow": 14,
+      "company": "Victoria's Secret & Co.",
+      "emailDomainRaw": "victoria.com",
+      "emailDomains": [
+        "victoria.com"
+      ],
+      "companyCode": "victoriassecretco"
+    },
+    {
+      "sourceRow": 15,
+      "company": "WHP Global",
+      "emailDomainRaw": "whp-global.com",
+      "emailDomains": [
+        "whp-global.com"
+      ],
+      "companyCode": "whpglobal"
+    },
+    {
+      "sourceRow": 16,
+      "company": "Aman",
+      "emailDomainRaw": "aman.com",
+      "emailDomains": [
+        "aman.com"
+      ],
+      "companyCode": "aman"
+    },
+    {
+      "sourceRow": 17,
+      "company": "FENDI",
+      "emailDomainRaw": "fendi.com",
+      "emailDomains": [
+        "fendi.com"
+      ],
+      "companyCode": "fendi"
+    },
+    {
+      "sourceRow": 18,
+      "company": "Belmont Park Village",
+      "emailDomainRaw": "belmontparkvillage.com",
+      "emailDomains": [
+        "belmontparkvillage.com"
+      ],
+      "companyCode": "belmontparkvillage"
+    },
+    {
+      "sourceRow": 19,
+      "company": "Christian Louboutin",
+      "emailDomainRaw": "christianlouboutin.com; us.christianlouboutin.com",
+      "emailDomains": [
+        "christianlouboutin.com",
+        "us.christianlouboutin.com"
+      ],
+      "companyCode": "christianlouboutin"
+    },
+    {
+      "sourceRow": 20,
+      "company": "David Yurman",
+      "emailDomainRaw": "davidyurman.com",
+      "emailDomains": [
+        "davidyurman.com"
+      ],
+      "companyCode": "davidyurman"
+    },
+    {
+      "sourceRow": 21,
+      "company": "Exemplar Luxury Group",
+      "emailDomainRaw": "exemplarluxury.com; saks.com",
+      "emailDomains": [
+        "exemplarluxury.com",
+        "saks.com"
+      ],
+      "companyCode": "exemplarluxurygroup"
+    },
+    {
+      "sourceRow": 22,
+      "company": "G-III Apparel Group",
+      "emailDomainRaw": "g-iii.com",
+      "emailDomains": [
+        "g-iii.com"
+      ],
+      "companyCode": "giiiapparelgroup"
+    },
+    {
+      "sourceRow": 23,
+      "company": "PVH",
+      "emailDomainRaw": "pvh.com",
+      "emailDomains": [
+        "pvh.com"
+      ],
+      "companyCode": "pvh"
+    },
+    {
+      "sourceRow": 24,
+      "company": "RIMOWA",
+      "emailDomainRaw": "rimowa.com",
+      "emailDomains": [
+        "rimowa.com"
+      ],
+      "companyCode": "rimowa"
+    },
+    {
+      "sourceRow": 25,
+      "company": "Foot Locker",
+      "emailDomainRaw": "footlocker.com",
+      "emailDomains": [
+        "footlocker.com"
+      ],
+      "companyCode": "footlocker"
+    },
+    {
+      "sourceRow": 26,
+      "company": "Amazon Fashion",
+      "emailDomainRaw": "amazon.com",
+      "emailDomains": [
+        "amazon.com"
+      ],
+      "companyCode": "amazonfashion"
+    },
+    {
+      "sourceRow": 27,
+      "company": "NORDSTROM",
+      "emailDomainRaw": "nordstrom.com",
+      "emailDomains": [
+        "nordstrom.com"
+      ],
+      "companyCode": "nordstrom"
+    },
+    {
+      "sourceRow": 28,
+      "company": "Rare Beauty",
+      "emailDomainRaw": "rarebeauty.com",
+      "emailDomains": [
+        "rarebeauty.com"
+      ],
+      "companyCode": "rarebeauty"
+    },
+    {
+      "sourceRow": 29,
+      "company": "Bloomingdales",
+      "emailDomainRaw": "bloomingdales.com",
+      "emailDomains": [
+        "bloomingdales.com"
+      ],
+      "companyCode": "bloomingdales"
+    },
+    {
+      "sourceRow": 30,
+      "company": "Kohl's",
+      "emailDomainRaw": "kohls.com",
+      "emailDomains": [
+        "kohls.com"
+      ],
+      "companyCode": "kohls"
+    },
+    {
+      "sourceRow": 31,
+      "company": "Macys",
+      "emailDomainRaw": "macys.com",
+      "emailDomains": [
+        "macys.com"
+      ],
+      "companyCode": "macys"
+    },
+    {
+      "sourceRow": 32,
+      "company": "PacSun",
+      "emailDomainRaw": "pacsun.com; pacificsunwear.com",
+      "emailDomains": [
+        "pacsun.com",
+        "pacificsunwear.com"
+      ],
+      "companyCode": "pacsun"
+    },
+    {
+      "sourceRow": 33,
+      "company": "Target",
+      "emailDomainRaw": "target.com",
+      "emailDomains": [
+        "target.com"
+      ],
+      "companyCode": "target"
+    },
+    {
+      "sourceRow": 34,
+      "company": "Kith",
+      "emailDomainRaw": "kith.com; kithnyc.com",
+      "emailDomains": [
+        "kith.com",
+        "kithnyc.com"
+      ],
+      "companyCode": "kith"
+    },
+    {
+      "sourceRow": 35,
+      "company": "Marc Jacobs",
+      "emailDomainRaw": "marcjacobs.com",
+      "emailDomains": [
+        "marcjacobs.com"
+      ],
+      "companyCode": "marcjacobs"
+    },
+    {
+      "sourceRow": 36,
+      "company": "TikTok",
+      "emailDomainRaw": "tiktok.com",
+      "emailDomains": [
+        "tiktok.com"
+      ],
+      "companyCode": "tiktok"
+    },
+    {
+      "sourceRow": 37,
+      "company": "Jacquemus",
+      "emailDomainRaw": "jacquemus.com",
+      "emailDomains": [
+        "jacquemus.com"
+      ],
+      "companyCode": "jacquemus"
+    },
+    {
+      "sourceRow": 38,
+      "company": "Five Below",
+      "emailDomainRaw": "fivebelow.com",
+      "emailDomains": [
+        "fivebelow.com"
+      ],
+      "companyCode": "fivebelow"
+    },
+    {
+      "sourceRow": 39,
+      "company": "Diane von Furstenberg",
+      "emailDomainRaw": "dvf.com",
+      "emailDomains": [
+        "dvf.com"
+      ],
+      "companyCode": "dianevonfurstenberg"
+    },
+    {
+      "sourceRow": 40,
+      "company": "Caleres",
+      "emailDomainRaw": "caleres.com",
+      "emailDomains": [
+        "caleres.com"
+      ],
+      "companyCode": "caleres"
+    },
+    {
+      "sourceRow": 41,
+      "company": "Lafayette 148",
+      "emailDomainRaw": "lafayette148.com",
+      "emailDomains": [
+        "lafayette148.com"
+      ],
+      "companyCode": "lafayette148"
+    },
+    {
+      "sourceRow": 42,
+      "company": "LAGOS",
+      "emailDomainRaw": "lagos.com",
+      "emailDomains": [
+        "lagos.com"
+      ],
+      "companyCode": "lagos"
+    },
+    {
+      "sourceRow": 43,
+      "company": "Lilly Pulitzer",
+      "emailDomainRaw": "lillypulitzer.com",
+      "emailDomains": [
+        "lillypulitzer.com"
+      ],
+      "companyCode": "lillypulitzer"
+    },
+    {
+      "sourceRow": 44,
+      "company": "Veronica Beard",
+      "emailDomainRaw": "veronicabeard.com",
+      "emailDomains": [
+        "veronicabeard.com"
+      ],
+      "companyCode": "veronicabeard"
+    },
+    {
+      "sourceRow": 45,
+      "company": "Marcolin Eyewear",
+      "emailDomainRaw": "marcolin.com",
+      "emailDomains": [
+        "marcolin.com"
+      ],
+      "companyCode": "marcolineyewear"
+    },
+    {
+      "sourceRow": 46,
+      "company": "The Center",
+      "emailDomainRaw": "thecenter.com",
+      "emailDomains": [
+        "thecenter.com"
+      ],
+      "companyCode": "thecenter"
+    },
+    {
+      "sourceRow": 47,
+      "company": "The Bicester Collection",
+      "emailDomainRaw": "thebicestercollection.com; valueretail.com",
+      "emailDomains": [
+        "thebicestercollection.com",
+        "valueretail.com"
+      ],
+      "companyCode": "thebicestercollection"
+    },
+    {
+      "sourceRow": 48,
+      "company": "Santoni spa",
+      "emailDomainRaw": "santonishoesit.com; santonishoes.com",
+      "emailDomains": [
+        "santonishoesit.com",
+        "santonishoes.com"
+      ],
+      "companyCode": "santonispa"
+    },
+    {
+      "sourceRow": 49,
+      "company": "Sanderlak",
+      "emailDomainRaw": "sanderlak.com",
+      "emailDomains": [
+        "sanderlak.com"
+      ],
+      "companyCode": "sanderlak"
+    },
+    {
+      "sourceRow": 50,
+      "company": "Retrofete",
+      "emailDomainRaw": "retrofete.com",
+      "emailDomains": [
+        "retrofete.com"
+      ],
+      "companyCode": "retrofete"
+    },
+    {
+      "sourceRow": 51,
+      "company": "Rachel Zoe Creations",
+      "emailDomainRaw": "rachelzoe.com",
+      "emailDomains": [
+        "rachelzoe.com"
+      ],
+      "companyCode": "rachelzoecreations"
+    },
+    {
+      "sourceRow": 52,
+      "company": "Proenza Schouler",
+      "emailDomainRaw": "proenzaschouler.com",
+      "emailDomains": [
+        "proenzaschouler.com"
+      ],
+      "companyCode": "proenzaschouler"
+    },
+    {
+      "sourceRow": 53,
+      "company": "PMC",
+      "emailDomainRaw": "pmc.com",
+      "emailDomains": [
+        "pmc.com"
+      ],
+      "companyCode": "pmc"
+    },
+    {
+      "sourceRow": 54,
+      "company": "Nicole Miller",
+      "emailDomainRaw": "nicolemiller.com",
+      "emailDomains": [
+        "nicolemiller.com"
+      ],
+      "companyCode": "nicolemiller"
+    },
+    {
+      "sourceRow": 55,
+      "company": "Marla Aaron Jewelry",
+      "emailDomainRaw": "marlaaaron.com",
+      "emailDomains": [
+        "marlaaaron.com"
+      ],
+      "companyCode": "marlaaaronjewelry"
+    },
+    {
+      "sourceRow": 56,
+      "company": "LAMARQUE",
+      "emailDomainRaw": "lamarquecollection.com",
+      "emailDomains": [
+        "lamarquecollection.com"
+      ],
+      "companyCode": "lamarque"
+    },
+    {
+      "sourceRow": 57,
+      "company": "La Double J",
+      "emailDomainRaw": "ladoublej.com",
+      "emailDomains": [
+        "ladoublej.com"
+      ],
+      "companyCode": "ladoublej"
+    },
+    {
+      "sourceRow": 58,
+      "company": "L'AGENCE",
+      "emailDomainRaw": "lagence.com",
+      "emailDomains": [
+        "lagence.com"
+      ],
+      "companyCode": "lagence"
+    },
+    {
+      "sourceRow": 59,
+      "company": "Karla Otto",
+      "emailDomainRaw": "karlaotto.com",
+      "emailDomains": [
+        "karlaotto.com"
+      ],
+      "companyCode": "karlaotto"
+    },
+    {
+      "sourceRow": 60,
+      "company": "Global Luxury Retail Group DBA Missoni",
+      "emailDomainRaw": "missoni.com",
+      "emailDomains": [
+        "missoni.com"
+      ],
+      "companyCode": "globalluxuryretailgroupdbamissoni"
+    },
+    {
+      "sourceRow": 61,
+      "company": "Echo",
+      "emailDomainRaw": "echodesign.com; echonewyork.com",
+      "emailDomains": [
+        "echodesign.com",
+        "echonewyork.com"
+      ],
+      "companyCode": "echo"
+    },
+    {
+      "sourceRow": 62,
+      "company": "Doneger Tobe",
+      "emailDomainRaw": "doneger.com; donegertobe.com",
+      "emailDomains": [
+        "doneger.com",
+        "donegertobe.com"
+      ],
+      "companyCode": "donegertobe"
+    },
+    {
+      "sourceRow": 63,
+      "company": "Centric Brands",
+      "emailDomainRaw": "centricbrands.com",
+      "emailDomains": [
+        "centricbrands.com"
+      ],
+      "companyCode": "centricbrands"
+    },
+    {
+      "sourceRow": 64,
+      "company": "Cain International",
+      "emailDomainRaw": "cainint.com",
+      "emailDomains": [
+        "cainint.com"
+      ],
+      "companyCode": "caininternational"
+    },
+    {
+      "sourceRow": 65,
+      "company": "Burleigh",
+      "emailDomainRaw": "burleigh1851.com",
+      "emailDomains": [
+        "burleigh1851.com"
+      ],
+      "companyCode": "burleigh"
+    },
+    {
+      "sourceRow": 66,
+      "company": "Bomber Ski",
+      "emailDomainRaw": "bomberski.com",
+      "emailDomains": [
+        "bomberski.com"
+      ],
+      "companyCode": "bomberski"
+    },
+    {
+      "sourceRow": 67,
+      "company": "ASHLYN",
+      "emailDomainRaw": "ashlynnewyork.com",
+      "emailDomains": [
+        "ashlynnewyork.com"
+      ],
+      "companyCode": "ashlyn"
+    },
+    {
+      "sourceRow": 68,
+      "company": "Akris",
+      "emailDomainRaw": "akris.com; akris.ch",
+      "emailDomains": [
+        "akris.com",
+        "akris.ch"
+      ],
+      "companyCode": "akris"
+    },
+    {
+      "sourceRow": 69,
+      "company": "The Jewelry Group",
+      "emailDomainRaw": "tjgroup.com",
+      "emailDomains": [
+        "tjgroup.com"
+      ],
+      "companyCode": "thejewelrygroup"
+    },
+    {
+      "sourceRow": 70,
+      "company": "The Independents Group",
+      "emailDomainRaw": "the-independents.com",
+      "emailDomains": [
+        "the-independents.com"
+      ],
+      "companyCode": "theindependentsgroup"
+    },
+    {
+      "sourceRow": 71,
+      "company": "The Fragrance Foundation",
+      "emailDomainRaw": "fragrance.org",
+      "emailDomains": [
+        "fragrance.org"
+      ],
+      "companyCode": "thefragrancefoundation"
+    }
+  ]
+}

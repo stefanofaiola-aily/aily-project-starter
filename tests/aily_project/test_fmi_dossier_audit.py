@@ -96,6 +96,7 @@ def test_audit_contains_missing_and_excluded_prospects_and_resolved_policy(
     )
     audit = (tmp_path / "calculation-audit.md").read_text()
     assert "expm1(7 ×" in audit and "52.9959 × 0.4" in audit
+    assert "otherwise 0.03 + 0.08 × expm1(7 ×" in audit
     assert "## Longchamp (missing)" in audit
     assert (
         json.loads((tmp_path / "dossier-calculated-delivery.json").read_text())[

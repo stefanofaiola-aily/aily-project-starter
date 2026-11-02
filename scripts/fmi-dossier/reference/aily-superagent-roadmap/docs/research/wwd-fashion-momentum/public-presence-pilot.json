@@ -1,0 +1,290 @@
+{
+  "title": "Public social and media presence — feasibility pilot",
+  "asOf": "2026-10-27T05:57:32Z",
+  "scope": {
+    "brandsSampled": [
+      "J.Crew",
+      "ME+EM"
+    ],
+    "officialInstagramPostsInspected": 6,
+    "verifiedEditorialArticles": 2,
+    "allProspectSocialAuditCompleted": false,
+    "newComparableIndices": 0
+  },
+  "instagramPosts": [
+    {
+      "company": "J.Crew",
+      "handle": "jcrew",
+      "format": "Reel",
+      "published": "2026-09-22",
+      "url": "https://www.instagram.com/reel/DdlzuDBhXn4/",
+      "label": "Barn Jacket anniversary launch",
+      "likesDisplay": "14.6K",
+      "likesApproximate": 14600,
+      "likesRounded": true,
+      "comments": 414,
+      "searchSnippetLikes": 9208,
+      "note": "Search snippet was stale relative to the directly inspected post; do not use the snippet as the measured value.",
+      "classification": "direct_public_observation",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "collectionWindow": "Accumulated visible counters inspected on 27 October, not counters captured seven days after posting",
+      "views": null,
+      "reach": null,
+      "saves": null,
+      "shares": null,
+      "priorComparable": null,
+      "eligibleForMomentumFormula": false,
+      "selection": "Purposive feasibility sample; not a complete campaign or account census"
+    },
+    {
+      "company": "J.Crew",
+      "handle": "jcrew",
+      "format": "Photo/carousel post",
+      "published": "2026-09-22",
+      "url": "https://www.instagram.com/p/DdmHVwvoFH3/",
+      "label": "One iconic jacket, 160 ways",
+      "likesDisplay": "7.3K",
+      "likesApproximate": 7300,
+      "likesRounded": true,
+      "comments": 225,
+      "classification": "direct_public_observation",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "collectionWindow": "Accumulated visible counters inspected on 27 October, not counters captured seven days after posting",
+      "views": null,
+      "reach": null,
+      "saves": null,
+      "shares": null,
+      "priorComparable": null,
+      "eligibleForMomentumFormula": false,
+      "selection": "Purposive feasibility sample; not a complete campaign or account census"
+    },
+    {
+      "company": "J.Crew",
+      "handle": "jcrew",
+      "format": "Photo/carousel post",
+      "published": "2026-09-28",
+      "url": "https://www.instagram.com/p/Dd1UJHwIKQt/",
+      "label": "Barn Jacket friends follow-up",
+      "likesDisplay": "2.1K",
+      "likesApproximate": 2100,
+      "likesRounded": true,
+      "comments": 20,
+      "classification": "direct_public_observation",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "collectionWindow": "Accumulated visible counters inspected on 27 October, not counters captured seven days after posting",
+      "views": null,
+      "reach": null,
+      "saves": null,
+      "shares": null,
+      "priorComparable": null,
+      "eligibleForMomentumFormula": false,
+      "selection": "Purposive feasibility sample; not a complete campaign or account census"
+    },
+    {
+      "company": "ME+EM",
+      "handle": "meandem",
+      "format": "Reel",
+      "published": "2026-10-20",
+      "url": "https://www.instagram.com/meandem/reel/DeuUeL4EhXY/",
+      "label": "Recent public Reel",
+      "likesDisplay": "2.4K",
+      "likesApproximate": 2400,
+      "likesRounded": true,
+      "comments": 118,
+      "classification": "direct_public_observation",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "collectionWindow": "Accumulated visible counters inspected on 27 October, not counters captured seven days after posting",
+      "views": null,
+      "reach": null,
+      "saves": null,
+      "shares": null,
+      "priorComparable": null,
+      "eligibleForMomentumFormula": false,
+      "selection": "Purposive feasibility sample; not a complete campaign or account census"
+    },
+    {
+      "company": "ME+EM",
+      "handle": "meandem",
+      "format": "Photo post",
+      "published": "2026-10-19",
+      "url": "https://www.instagram.com/meandem/p/DeriH6QAc6n/",
+      "label": "The finishing touches",
+      "likesDisplay": "431",
+      "likesApproximate": 431,
+      "likesRounded": false,
+      "comments": 4,
+      "classification": "direct_public_observation",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "collectionWindow": "Accumulated visible counters inspected on 27 October, not counters captured seven days after posting",
+      "views": null,
+      "reach": null,
+      "saves": null,
+      "shares": null,
+      "priorComparable": null,
+      "eligibleForMomentumFormula": false,
+      "selection": "Purposive feasibility sample; not a complete campaign or account census"
+    },
+    {
+      "company": "ME+EM",
+      "handle": "meandem",
+      "format": "Reel",
+      "published": "2026-10-18",
+      "url": "https://www.instagram.com/meandem/reel/Deo9LUjlK1F/",
+      "label": "Recent public Reel",
+      "likesDisplay": "707",
+      "likesApproximate": 707,
+      "likesRounded": false,
+      "comments": 13,
+      "classification": "direct_public_observation",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "collectionWindow": "Accumulated visible counters inspected on 27 October, not counters captured seven days after posting",
+      "views": null,
+      "reach": null,
+      "saves": null,
+      "shares": null,
+      "priorComparable": null,
+      "eligibleForMomentumFormula": false,
+      "selection": "Purposive feasibility sample; not a complete campaign or account census"
+    }
+  ],
+  "accountSnapshot": {
+    "company": "ME+EM",
+    "primaryProfile": "https://www.instagram.com/meandem/",
+    "publicFollowersDisplay": "1.1M",
+    "followersRounded": true,
+    "classification": "direct_public_observation",
+    "observedAt": "2026-10-27T05:57:32Z",
+    "providerReport": {
+      "url": "https://hypeauditor.com/instagram/meandem/",
+      "updatedLabel": "October 2026",
+      "followersReported": 1120218,
+      "engagementRateReportedPercent": 0.87,
+      "averageLikesReported": 610,
+      "averageCommentsReported": 9,
+      "followerGrowthReportedPercent": 1.82,
+      "followerGrowthWindowVerified": false,
+      "classification": "third_party_reported",
+      "eligibleForMomentumFormula": false,
+      "qualityIssue": "Reported 0.87% ER does not reconcile with (610+9)/1,120,218 = about 0.0553%. Different windows or definitions may explain it; the public report does not establish equivalence. Do not blend or treat this as a validated rate.",
+      "excluded": "Creator income, net worth, authenticity scores and provider rank are not brand commercial performance or momentum."
+    },
+    "providerMethodology": {
+      "url": "https://hypeauditor.com/collect-analyze-influencer-data/",
+      "verified": "Public information plus statistical/proprietary processing; reports typically refresh weekly; provider says it does not access private DMs or account Insights.",
+      "limitation": "General method page does not resolve the sampled report’s ER denominator or measurement windows."
+    },
+    "visibleGrid": {
+      "postsObserved": 12,
+      "dateRange": "2026-10-17 through 2026-10-26",
+      "completeAccountCensus": false,
+      "note": "Profile links and displayed image descriptions inspected; this is not a verified total posting frequency."
+    }
+  },
+  "verifiedMediaItems": [
+    {
+      "company": "J.Crew",
+      "event": "Barn Jacket 40th anniversary campaign",
+      "publisher": "Marie Claire",
+      "title": "J.Crew's Barn Jacket Turned 40. To Celebrate, the Brand Dropped the Cult Classic in New Colors and Prints",
+      "published": "2026-09-22",
+      "url": "https://www.marieclaire.com/fashion/fall-fashion/jcrew-barn-jacket-40th-anniversary-collection/",
+      "access": "Full public article directly read",
+      "category": "Editorial shopping coverage with affiliate disclosure",
+      "usesCompanyMaterials": true,
+      "classification": "verified_public_article",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "estimatedAudience": null,
+      "eligibleForMomentumFormula": false,
+      "note": "Observed coverage item; no audience value or complete media-volume estimate inferred"
+    },
+    {
+      "company": "J.Crew",
+      "event": "Barn Jacket 40th anniversary campaign",
+      "publisher": "The Fashionisto",
+      "title": "J.Crew Goes All In on the Barn Jacket",
+      "published": "2026-09-24",
+      "url": "https://www.thefashionisto.com/story/jcrew-barn-jacket-campaign-2026/",
+      "access": "Public article and publication date directly inspected",
+      "category": "Editorial campaign commentary",
+      "usesCompanyMaterials": true,
+      "classification": "verified_public_article",
+      "observedAt": "2026-10-27T05:57:32Z",
+      "estimatedAudience": null,
+      "eligibleForMomentumFormula": false,
+      "note": "Observed coverage item; no audience value or complete media-volume estimate inferred"
+    }
+  ],
+  "observedMediaSummary": {
+    "company": "J.Crew",
+    "verifiedDistinctPublishersInThisPilot": 2,
+    "completeCoverage": false,
+    "priorComparableCount": null,
+    "eligibleForMomentumFormula": false
+  },
+  "accessNotes": [
+    "Instagram primary pages were readable without sign-in for the sampled posts and profile.",
+    "J.Crew HypeAuditor report hit a security-verification page; no challenge was solved and no metrics taken from that page.",
+    "Town & Country article navigation failed; retained as a search-discovered candidate, not a verified article.",
+    "No owner Insights, provider exports, subscription reports or private account data accessed."
+  ],
+  "method": {
+    "purpose": "Add source-backed current public-presence tiles to the prospect experience while preserving existing score eligibility.",
+    "instagram": [
+      "Verify the official brand account through the brand site or matching profile identity; retain brand, parent and division scope.",
+      "For event momentum, enumerate all relevant official posts in the same -3/+7-day event window for both editions, record format and date, and compare counters at matched ages when historic captures exist.",
+      "Without historic captures, label observed current counters as a snapshot. Do not invent seven-day historical counters or compare today’s old-post counters as though they were measured at equal age.",
+      "For a current account audit, use a predefined chronological sample such as the latest 20 eligible posts in a fixed date range; disclose sample completeness and split Reels from photo/carousel posts. Do not sample only viral posts.",
+      "Use median likes/comments per post to reduce domination by one celebrity post; report visible video views separately when accessible. A current follower-normalized interaction proxy must name its denominator and is not reach-based engagement.",
+      "Reach, impressions, saves, shares, website clicks, paid versus organic allocation and attribution are absent from this pilot. Owner Insights or a documented provider would be needed to fill these fields."
+    ],
+    "media": [
+      "Define one publisher panel, language and geography for all brands, and explicit current/reference event windows. A separate calendar-period presence view can use matched 28-day windows, but that changes the comparison from event momentum.",
+      "Record title, URL, publication date, event relevance, publisher, brand scope and editorial/press-release/shopping category for each item.",
+      "Deduplicate canonical URLs and syndicated/reprinted stories. Keep company releases and republications separate from editorial coverage; classify affiliate shopping articles visibly.",
+      "Count verified distinct stories and publishers within the defined panel. Call this observed coverage in the panel, not all internet coverage. Paywalled or inaccessible sources have explicit unknown states.",
+      "Compare current/reference counts only under the same retrieval and inclusion rules; search-engine estimated result totals are not article counts. Article counts do not establish sentiment, readership or sales."
+    ],
+    "mediaPanelProposal": [
+      "Vogue",
+      "WWD",
+      "The Impression",
+      "FashionUnited",
+      "Harper’s Bazaar",
+      "Marie Claire",
+      "InStyle",
+      "The Fashionisto",
+      "Town & Country",
+      "The Hollywood Reporter"
+    ],
+    "scoreRule": "Original indices unchanged. Add a new comparable category only after its pair and scope are validated. A separately defined current-presence score would need its own disclosed rubric; no such numeric score is assigned here.",
+    "retailers": "Keep their shared brand board. Their own social presence can be a separate audit but cannot be represented as a retailer fashion-show index."
+  },
+  "additionalIdeas": [
+    {
+      "idea": "Campaign response relative to the brand’s usual posts",
+      "value": "Shows whether an event stands out for that brand rather than rewarding the biggest follower base",
+      "requirement": "Same formats and matched counter ages, complete or clearly defined samples; keep observational and non-causal"
+    },
+    {
+      "idea": "Creator amplification",
+      "value": "Separates response on the brand’s own account from attention on creator accounts",
+      "requirement": "Verified campaign-related creator posts; label overlapping audiences and do not sum followers as unique reach"
+    },
+    {
+      "idea": "Brand and hero-product search interest",
+      "value": "Helps distinguish broad brand attention from interest in a specific bag, jacket or dress",
+      "requirement": "Same Google Trends topic/query, geography, time range and normalization; keep separate from approved score categories"
+    },
+    {
+      "idea": "Public product availability",
+      "value": "Makes the invitation tangible: attention around a hero product versus visible sizes/colors available",
+      "requirement": "Timestamped observations from official shops; a public out-of-stock state does not prove sales or demand"
+    },
+    {
+      "idea": "YouTube and TikTok video response",
+      "value": "Extends beyond Instagram where official campaign/show videos are public",
+      "requirement": "Verified official videos, matched elapsed windows and separate platforms; cumulative views are not unique audience"
+    }
+  ],
+  "conclusion": "Public signals can enrich the prospect teasers immediately. This pilot does not establish full social performance, comprehensive media volume or matched historical momentum."
+}

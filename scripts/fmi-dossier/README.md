@@ -4,11 +4,21 @@ This is independent of `scripts/fashion-momentum-index` and its FMI service.
 It has its own inputs, policy, scoring/uplift mathematics and Excel/JSON writer.
 Changing either workflow's policy or running it does not change the other.
 
+Detailed references:
+
+- [Measures and calculations](docs/MEASURES.md): source selection, components,
+  normalization, both uplift methods, forecast periods, YoY and ranking rules.
+- [Delivery columns and app field contract](docs/DELIVERY_COLUMNS.md): every
+  exported column, with recommended primary/detail fields and audit-only context.
+
 ## Input
 
 `inputs/FMI_dossier_inputs.xlsx` was populated once from the brand reports and new
-prospect documents now consolidated in `scripts/fmi-dossier/dossiers/`, with supporting
-sales workbooks. All 94 prospect rows and original values are retained. Update
+prospect documents now consolidated in `scripts/fmi-dossier/dossiers/<brand>/`, with supporting
+sales workbooks. There is no separate `New prospects info` group: each report lives
+in its brand folder. `source_document` points to its current location; the original
+handover path remains in audit history where supplied.
+All 94 prospect rows and original values are retained. Update
 source cells only when documents are new/changed. No recurring Word parser runs.
 Source dossiers and the populated input workbook stay local and are ignored by
 Git because they include tenant measurements. Share these and the generated
@@ -155,7 +165,13 @@ display bounds and both uplift parameters. Original/source display scores remain
 separate from the newly normalized display score.
 
 - Previous method: raw ≤60 →0; otherwise `0.03 + (raw−60)×0.002`.
-- Exponential: `0.11 × expm1(8×rounded_display/100) / expm1(8)`.
+- Approved exponential: `0.03 + 0.08 × expm1((rounded_display−60)/40)` above 60;
+  otherwise zero. Calibrated on the legacy raw-score scale, but deliberately
+  evaluated at the rounded normalized score. At 60+ it starts at 3%, with the
+  legacy's initial slope of 0.2 percentage points per score point, then accelerates.
+  There is **no 11% cap**: display 70–98 gives about 5.27–15.69%; 100 gives 16.75%.
+  The threshold, intercept, scale, score span and exponent are editable in
+  `policy.yaml` (policy v3). Missing scores stay missing. FMI scoring is unchanged.
 - For each method: adjustment = untreated baseline × rate; adjusted forecast =
   baseline + adjustment. Matching prior-year actuals also support forecast YoY.
 
@@ -164,6 +180,16 @@ score. Its original display/projected forecast is retained for comparison and is
 not a baseline to uplift again. Rates are business scenarios, not calibrated
 predictive accuracy. Changing the normalization cohort changes uplift; 70–98
 gives every scored brand positive exponential uplift.
+
+Excel A–AL follows the original weighted-delivery's 38-column order and headers.
+Column L retains that header but contains the **single verified Light retrieval
+key**, not the historical list of brand/parent aliases. AB–AL is the frozen source
+sales/social snapshot, including source legacy forecasts and potentially stale
+narratives. The **new exponential scenario starts at AM**, followed by context and
+audit columns. Do not use the historical AL ratio as the new forecast YoY.
+JSON field keys stay stable; `fields` now declares each column's `source_kind`,
+`source_reference`, `source_fields`, type/unit and derivation. The detailed
+[column guide](docs/DELIVERY_COLUMNS.md) maps old headings to these keys and sources.
 
 ### PY forecast comparisons
 
@@ -196,10 +222,14 @@ baselines were reconciled; the extraction evidence stays under `.work/`.
 
 ### Category rankings
 
-`leaderboard_category` is editable in the input Excel. Existing assignments were
-copied once from the supplied weighted delivery: LUXE, FAST FOLLOWER, RETAILER
-and OTHER. New/unassigned brands need an explicit category; no category is
-guessed. This is independent of the native app's LUXE/PREMIUM/MASS_MARKET taxonomy.
+`leaderboard_category` is editable in the input Excel. The revised
+`inputs/FMI index companies_tuesdaydinner.xlsx` supplies explicit LUXE, PREMIUM
+and MASS_MARKET assignments for 32 brands. Those assignments now populate both
+delivery Category (Z) and `app_category`; the exact source cell is recorded in
+`leaderboard_category_source`. Original historical LUXE, FAST FOLLOWER, RETAILER
+and OTHER assignments remain for brands outside that list. No automatic conversion
+or guessed category is applied. The list is copied into the main input once when
+you provide an update, not queried or reparsed on every calculation run.
 
 `leaderboard_rank` ranks rounded `display_fmi` descending within the current
 delivered category. Ties share competition rank (1, 2, 2, 4). Missing FMI/category
@@ -223,7 +253,12 @@ the Excel where possible; printed values take precedence. These derived context
 fields never change a reported headline or invent missing components.
 
 Final files: `outputs/fmi-dossier/dossier-calculated-delivery.xlsx` and `.json`.
-Excel is one flat Delivery sheet with scores/uplifts first. JSON contains the same
+Excel has one flat Delivery sheet with scores/uplifts first and a Column guide
+sheet documenting every field, its source, calculation, units and delivery use.
+Filter the guide's Delivery use column to Recommended delivery. **AW is the new
+adjusted Q4/selected-target forecast versus PY forecast; AV is before uplift and
+AX is the gain in percentage points. AL remains frozen historical YoY versus sales.**
+Read AM for the selected fiscal/calendar target. JSON contains the same
 typed `rows`, an independent `fields` dictionary, `policy` and `cohort`. Partial
 rows with available dossier/source data remain visible; all identities remain in
 the input. Missing forecasts do not erase FMI or uplift rates. Lookup audit and
@@ -233,7 +268,12 @@ retains the recorded ISO timestamp. Neither means a verified forecast vintage.
 
 ## Weighted reference and app handover
 
-The roadmap's `update-fashion-momentum` skill and `prospect-update-guide.md`
+All roadmap FMI documents, prompts, skill/configuration and historical delivery
+inputs/builders are saved locally in
+[reference/aily-superagent-roadmap](reference/aily-superagent-roadmap/README.md).
+This frozen archive is separate from the active dossier logic; the sibling
+repository is no longer needed for reproduction or historical comparison.
+The archived `update-fashion-momentum` skill and `prospect-update-guide.md`
 were consulted. The supplied `weighted-delivery-1606_2810.xlsx` agrees with the
 roadmap's weighted JSON on all 74 brands × 38 fields (2,812 cells). The Word
 dossiers and roadmap Markdown reports are distinct artifacts: this verifies
@@ -251,14 +291,22 @@ One-time comparison snapshot (repeat only for a new historical reference):
 uv run python scripts/fmi-dossier/check_weighted_reference.py
 ```
 
-It reads the supplied workbook and sibling roadmap JSON, checks all delivery
-cells, then saves `outputs/fmi-dossier/.work/weighted-reference.json`. Normal CLI
-and CLI delivery runs use that snapshot for comparison only; scoring does
-not depend on it or require the sibling repo. With an alternative output folder,
+It reads the archived local weighted workbook and JSON by default, checks all
+delivery cells, then saves `outputs/fmi-dossier/.work/weighted-reference.json`.
+Use `--workbook` / `--roadmap` only to check a newly supplied historical reference.
+Normal CLI delivery runs use that snapshot for comparison only; scoring does
+not depend on it. Keep an existing accepted cache unchanged unless explicitly
+refreshing it. With an alternative output folder,
 run the snapshot command with `--output <folder>/.work/weighted-reference.json`.
 When absent, comparison is explicitly marked unchecked/not matched.
 
-The same one-sheet delivery now includes core insight, component descriptors,
+For a fresh local output folder, run the comparison check above before
+`uv run aily-project fmi-dossier`. Keep the accepted input workbook available;
+it and the private dossiers are intentionally git-ignored and must be transferred
+securely to a new checkout. The archive removes the sibling-repo dependency,
+not the requirement for project dependencies and the spreadsheet runtime.
+
+The same flat Delivery sheet includes core insight, component descriptors,
 insights and typed KPI values/labels, historical scores/components/periods,
 differences and reasons. Original classifications and numeric source precision
 remain separate from app sentiments. `weighted-comparison.md` explains differences.

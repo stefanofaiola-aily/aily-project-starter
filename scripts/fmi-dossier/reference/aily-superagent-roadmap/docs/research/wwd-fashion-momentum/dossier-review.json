@@ -1,0 +1,884 @@
+{
+  "repositoryCommit": "3d27e802efd00dc33b8eb235d3a7bf59acb13703",
+  "prospects": [
+    {
+      "company": "Burberry",
+      "status": "repository_dossier_available",
+      "slug": "burberry",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "BRBY.L"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/burberry/SKILL.md",
+          "sha256": "be10944eba55c6422004c50e5cdbcb66d86bcecabda0185af3ad8d76f2842f1c"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/burberry/references/competitive_benchmark.md",
+          "sha256": "3b7635402073796221b1446d59870aecfb725416ba25827625a71f25f2c036a6"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "GAP Inc",
+      "status": "repository_dossier_available",
+      "slug": "gap",
+      "relationship": "scope_check",
+      "repositoryRoleCodes": [
+        "GAP"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/gap/SKILL.md",
+          "sha256": "b5cfb8fddc3343a24abbba0f716282fa0fc5595f58016b1667a6bb356708062b"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/gap/references/competitive_benchmark.md",
+          "sha256": "69e036b8d6f672358efd1c57aa6dda05a48595f973c13c17536aa392cc889ea3"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "The gap dossier identifies Gap Inc., and separates its four brands. A Gap-brand campaign must retain brand scope when displayed in the GAP Inc environment."
+    },
+    {
+      "company": "J.Crew",
+      "status": "repository_dossier_available",
+      "slug": "jcrew",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "JCREW"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/jcrew/SKILL.md",
+          "sha256": "7195558c9718b2145f7fec8ccedd3bf2b4071462bd30c8c12d6bccf72ec81c52"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/jcrew/references/competitive_benchmark.md",
+          "sha256": "84351627a020049f42c3cf131d4943449855cd49192322f54a657204159809a1"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Fendi",
+      "status": "repository_dossier_available",
+      "slug": "fendi",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "FENDI"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/fendi/SKILL.md",
+          "sha256": "5df1027df153241bb8ee833c2c19a5551d93956260d38421ba8f0fa53b2eceb4"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/fendi/references/competitive_benchmark.md",
+          "sha256": "19dec67dc02fdd723c91fd2d013b610f7796e88437729236791eefa6ee800d03"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "ME+EM",
+      "status": "repository_dossier_available",
+      "slug": "me_and_em",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "MEEM"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/me_and_em/SKILL.md",
+          "sha256": "8636db58e6d0c71140cf42d4240ec8040fc9ed405bfd5b1234e1de9d4fa1e3ab"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/me_and_em/references/competitive_benchmark.md",
+          "sha256": "bcfb2917908ff58b0d402da05a392e0e79fd7cf737ba13de226636749fe6136c"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Useful context for repeat purchase, wardrobe replenishment and US store economics. No matched event-attention measurements found."
+    },
+    {
+      "company": "Moncler",
+      "status": "repository_dossier_available",
+      "slug": "moncler",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "MONC.MI"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/moncler/SKILL.md",
+          "sha256": "add41a174a389a94aafcfe9347f70365a16a2fcdf6d05d8c54fe6d0e91f8d9e5"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/moncler/references/competitive_benchmark.md",
+          "sha256": "59b45169b71368a6315c177f43ebcf2ec857a5a691fdcdd53ef2fed3077583fa"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Christian Louboutin",
+      "status": "repository_dossier_available",
+      "slug": "christian_louboutin",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "LOUBOUTIN"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/christian_louboutin/SKILL.md",
+          "sha256": "d8f31ca696f8a930ad593775f598e5dd9a9dbbc9ae60b016caddf31959cbbc98"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/christian_louboutin/references/competitive_benchmark.md",
+          "sha256": "59fe5f69e96f9e9cfc2c7b9f8b630f45796e6eb05b5027cfa0146d1c2c9e15eb"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Ralph Lauren",
+      "status": "repository_dossier_available",
+      "slug": "ralph_lauren",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "RL"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/ralph_lauren/SKILL.md",
+          "sha256": "806239d16ef350a110166472341d56c0e3b800827b0a06bf90daf776e7915bfc"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/ralph_lauren/references/competitive_benchmark.md",
+          "sha256": "8e086d4dca1f30d12508a7356a86c81c5ee5085df93034a4a4684e2e771fbccc"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Useful positioning around accessories, DTC and full-price selling, with explicit Light inferred opportunity estimates. Those estimates are not momentum components."
+    },
+    {
+      "company": "Coach",
+      "status": "repository_dossier_available",
+      "slug": "tapestry",
+      "relationship": "parent_context",
+      "repositoryRoleCodes": [
+        "TPR"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/tapestry/SKILL.md",
+          "sha256": "0823ab967590d2a8bb478e4cb766811ba7664f0e26b1bcc9285e77b1a8815552"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/tapestry/references/competitive_benchmark.md",
+          "sha256": "8fa72cf5b07830e827881ac63a8b3c736fa7f49b82279798306974a10147eaf8"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use the Tapestry dossier for ownership, channels and business context. Coach event signals remain brand-specific; group revenue or margins are excluded from the momentum index."
+    },
+    {
+      "company": "TOM FORD",
+      "status": "repository_dossier_available",
+      "slug": "tom_ford",
+      "relationship": "scope_check",
+      "repositoryRoleCodes": [
+        "TOMFORD"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/tom_ford/SKILL.md",
+          "sha256": "887fd55473abbe30e49a59ce943c202ecccee476d721e5704284db1e8a792f23"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/tom_ford/references/competitive_benchmark.md",
+          "sha256": "63b7492cb12b7dcab1db47eb76263a9e5709336dace401e2dd173e0f6e09a3de"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "The dossier distinguishes ELC-owned beauty, Zegna-operated fashion and licensed eyewear. Fashion-show attention and financial reporting scopes must remain separate."
+    },
+    {
+      "company": "Victoria's Secret & Co.",
+      "status": "repository_dossier_available",
+      "slug": "victorias_secret",
+      "relationship": "direct",
+      "repositoryRoleCodes": [],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/victorias_secret/SKILL.md",
+          "sha256": "b0a58e99deff0bc1de0cf2bb5aac579ee76ce5e98b71b41fba0bf283358e8553"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/victorias_secret/references/competitive_benchmark.md",
+          "sha256": "df034a7a74bd9c7bd6ba2cb9c6f506a71a8fde128acf81d86004f244585cfae4"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "The repository dossier uses approximate financial benchmarks and estimates. It contains no matched show viewing measurements and does not validate the team screenshot candidate."
+    },
+    {
+      "company": "Marc Jacobs",
+      "status": "repository_dossier_available",
+      "slug": "marc_jacobs",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "MARCJACOBS"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/marc_jacobs/SKILL.md",
+          "sha256": "0f99e2e29423a6056ffaaa8511dd3b561e02f7250fc06971813763ef302be881"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/marc_jacobs/references/competitive_benchmark.md",
+          "sha256": "dea997f584a91204c58df1f05db55ba6c358002e9a38075638d87056de82efee"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Reuse brand context in both Allen mappings, WHP Global and Marc Jacobs. Dossier ownership claims do not authorize changing those deployment mappings."
+    },
+    {
+      "company": "DKNY",
+      "status": "repository_dossier_available",
+      "slug": "giii_apparel_group",
+      "relationship": "parent_context",
+      "repositoryRoleCodes": [
+        "GIII"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/giii_apparel_group/SKILL.md",
+          "sha256": "932982ee01335f4f2bfe0e9326d95481387fe10846b08e23eeaefc517ec0d994"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/giii_apparel_group/references/competitive_benchmark.md",
+          "sha256": "358ccbe266b86082b287c32207b2d30320d2b350a6d829d1a9911c53d8c5d873"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use G-III's dossier as parent context. DKNY is listed among owned brands. Group measurements cannot replace DKNY show/campaign measurements."
+    },
+    {
+      "company": "Calvin Klein",
+      "status": "repository_dossier_available",
+      "slug": "pvh",
+      "relationship": "parent_context",
+      "repositoryRoleCodes": [
+        "PVH"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/pvh/SKILL.md",
+          "sha256": "be037ba4a2e8924f489b308eb40f74123fccbab833da0e1f4f363ec617484630"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/pvh/references/competitive_benchmark.md",
+          "sha256": "dbdb15755993b9070c369a1a80c56ae9e593efa9741bf7f20e69486a32b7b772"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use PVH's dossier as parent context. Calvin Klein event signals remain separate from PVH group financials and Tommy Hilfiger."
+    },
+    {
+      "company": "PacSun",
+      "status": "repository_dossier_available",
+      "slug": "pacsun",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "PACSUN"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/pacsun/SKILL.md",
+          "sha256": "dc785c95449e71288c3dead6089bdc616292f51ac90dfab08637f10575b0a06f"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/pacsun/references/competitive_benchmark.md",
+          "sha256": "80faaee5e41378197a67d55e446298ff36296140d42208afc2bd876fce1c8801"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Jacquemus",
+      "status": "repository_dossier_available",
+      "slug": "jacquemus",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "JACQUEMUS"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/jacquemus/SKILL.md",
+          "sha256": "7354f7b243cadaa38913b1d941ae6c2c76e7113c297b3ef49f3797531c5612e8"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/jacquemus/references/competitive_benchmark.md",
+          "sha256": "05007943ff0b6ce1999b49477fba7c6d475f5023009a5a485042e6c2c4e293c4"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Lafayette 148",
+      "status": "repository_dossier_available",
+      "slug": "lafayette148",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "LAFAYET148"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/lafayette148/SKILL.md",
+          "sha256": "4f019d3f2b9ab71395ae982bf623388d6625bf4563577c281da2cf1b9bcc3b0d"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/lafayette148/references/competitive_benchmark.md",
+          "sha256": "a5083af249c27f4c7bb7160e57f7af7474e3da1e0c4c7a5ea2874c7cd7e4d246"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Lilly Pulitzer",
+      "status": "repository_dossier_available",
+      "slug": "lilly_pulitzer",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "LILLYPUL"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/lilly_pulitzer/SKILL.md",
+          "sha256": "d4e40a16607d788d2d4f9754cbaccb4cb1ae3ccc6f2e8cfcc2bd1d72482dd1a3"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/lilly_pulitzer/references/competitive_benchmark.md",
+          "sha256": "0501380c82ddce77f00107585dac6aeee44fd4fbf0f7b3dda4da1fcee6d1f428"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Exemplar Luxury Group",
+      "status": "no_matching_repository_dossier_found",
+      "documents": [],
+      "additionalMomentumSignalsFound": false,
+      "note": "No matching dossier directory found in this repository listing. Do not substitute another luxury group's dossier."
+    },
+    {
+      "company": "Amazon Fashion",
+      "status": "repository_dossier_available",
+      "slug": "amazon_fashion",
+      "relationship": "direct",
+      "repositoryRoleCodes": [],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/amazon_fashion/SKILL.md",
+          "sha256": "8e29e437671da3bf71a77e61078e8a93efceae6a2d87c5705fdbf235312ee470"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/amazon_fashion/references/competitive_benchmark.md",
+          "sha256": "38819c5cd8b07e81c2698f30255174f8d5897a28fae565050d7eaf02fcb3683c"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "NORDSTROM",
+      "status": "repository_dossier_available",
+      "slug": "nordstrom",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "JWN"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/nordstrom/SKILL.md",
+          "sha256": "37d59bb0405f538f74fc540f843871a3d39e80d44ac73ddb69f542202fbd0e39"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/nordstrom/references/competitive_benchmark.md",
+          "sha256": "f294411028fc3eef31cf23cf8d0756b578c0b8d6be5b93e5eed120729c64b390"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Bloomingdales",
+      "status": "repository_dossier_available",
+      "slug": "bloomingdales",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "BLOOMDALES"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/bloomingdales/SKILL.md",
+          "sha256": "1c915f59f9cc49ce136c99af0e47d1de48cc332d27cf283f13ac3ffa0de5b477"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/bloomingdales/references/competitive_benchmark.md",
+          "sha256": "0f37deed384a8489c1f13be26d1078a857e305a1b1ded145a42a5acdd35b4eb4"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Kohl's",
+      "status": "repository_dossier_available",
+      "slug": "kohls",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "KSS"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/kohls/SKILL.md",
+          "sha256": "3dedaf891cb9db4c6a5eceb13f46d792c263661371cd2bdcbc8965213dacc1bc"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/kohls/references/competitive_benchmark.md",
+          "sha256": "3c8b1374afc6aba45e9ee2a99cc5056a7d82b68123614ba95093285b1a0c053b"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Macys",
+      "status": "repository_dossier_available",
+      "slug": "macys",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "M"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/macys/SKILL.md",
+          "sha256": "dc0426a8d88dd47f00b6b116de4667ef74267908f1a76ab2938c9a48c375930e"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/macys/references/competitive_benchmark.md",
+          "sha256": "ae15237500ec076f837dc19545951808db19e4e95c7eb0e5b66af44e6a6f9ea3"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    },
+    {
+      "company": "Belmont Park Village",
+      "status": "repository_dossier_available",
+      "slug": "belmontparkvillage",
+      "relationship": "direct",
+      "repositoryRoleCodes": [
+        "BELMONTPV"
+      ],
+      "liveCompanyCodeVerified": false,
+      "liveDossierChecked": false,
+      "documents": [
+        {
+          "file": "SKILL.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/belmontparkvillage/SKILL.md",
+          "sha256": "9c261186a0588c15cc91db888f1f3bce92cab5fbf531afc6ae94634eafa70a01"
+        },
+        {
+          "file": "references/competitive_benchmark.md",
+          "githubUrl": "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/belmontparkvillage/references/competitive_benchmark.md",
+          "sha256": "2b45d15f4fdd5f4e46cb44d88a93b4f583064fb573657b1c68f08c0899330065"
+        }
+      ],
+      "additionalMomentumSignalsFound": false,
+      "use": [
+        "Company and brand/parent scope",
+        "Competitive and commercial context",
+        "Source discovery",
+        "Prospect-specific internal-data invitation"
+      ],
+      "excludeFromMomentumFormula": [
+        "Light inferred BD/opportunity scores",
+        "Annual revenue/margin benchmarks",
+        "Unmatched or estimated financial proxies"
+      ],
+      "note": "Use as sourced business context. No additional matched current/reference event-attention measurements found in this screening."
+    }
+  ],
+  "coverage": {
+    "matchedProspects": 24,
+    "allProspects": 25,
+    "brandProspectsMatched": 18,
+    "retailerProspectsMatched": 6,
+    "documentsScreened": 48,
+    "additionalMomentumScores": 0
+  },
+  "liveOpenSearchChecked": false,
+  "rebuildMode": "Replay pinned screening metadata; no source refresh or dossier re-read",
+  "screening": "Repository dossier and benchmark documents screened for event-specific audience, engagement and media measurements. Context and scope sections inspected; dossier claims and source links have not all been independently revalidated.",
+  "conclusion": "Useful context and source-discovery layer; no replacement for matched event-scoring evidence"
+}

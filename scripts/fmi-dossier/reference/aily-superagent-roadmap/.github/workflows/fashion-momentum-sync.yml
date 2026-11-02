@@ -1,0 +1,25 @@
+name: Fashion Momentum delivery freshness
+on:
+  pull_request:
+    paths:
+      - docs/research/wwd-fashion-momentum/**
+      - .agents/skills/update-fashion-momentum/**
+      - .github/workflows/fashion-momentum-sync.yml
+  push:
+    branches: [main]
+    paths:
+      - docs/research/wwd-fashion-momentum/**
+      - .agents/skills/update-fashion-momentum/**
+      - .github/workflows/fashion-momentum-sync.yml
+jobs:
+  check:
+    runs-on: aily-runner-small
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check source data and versioned Excel are current
+        run: python3 docs/research/wwd-fashion-momentum/refresh-delivery.py --check
+      - name: Verify stale-input and failed-refresh detection
+        run: python3 docs/research/wwd-fashion-momentum/test-refresh-delivery.py

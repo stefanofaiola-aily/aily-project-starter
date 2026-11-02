@@ -9,15 +9,18 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 class Policy(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
-    version: str = "fmi-dossier-v1"
+    version: str = "fmi-dossier-v3"
     ir_weight: float = Field(default=0.5, ge=0, le=1)
     social_weight: float = Field(default=0.3, ge=0, le=1)
     trend_weight: float = Field(default=0.2, ge=0, le=1)
     display_lower: float = Field(default=70, ge=0, le=100)
     display_upper: float = Field(default=98, ge=0, le=100)
     display_equal: float = Field(default=84, ge=0, le=100)
-    uplift_max: float = Field(default=0.11, ge=0, le=1)
-    uplift_exponent: float = Field(default=8, gt=0, le=50)
+    uplift_threshold: float = Field(default=60, ge=0, lt=100)
+    uplift_intercept: float = Field(default=0.03, ge=0, le=1)
+    uplift_scale: float = Field(default=0.08, ge=0, le=1)
+    uplift_score_span: float = Field(default=40, gt=0, le=100)
+    uplift_exponent: float = Field(default=1, gt=0, le=50)
     legacy_uplift_threshold: float = Field(default=60, ge=0, le=100)
     legacy_uplift_intercept: float = Field(default=0.03, ge=0, le=1)
     legacy_uplift_per_score: float = Field(default=0.002, ge=0, le=0.01)
@@ -50,10 +53,15 @@ def classify(raw: float) -> str:
 
 
 def uplift(display: float, policy: Policy) -> float:
-    return (
-        policy.uplift_max
-        * math.expm1(policy.uplift_exponent * display / 100)
-        / math.expm1(policy.uplift_exponent)
+    """Legacy-calibrated convex curve, evaluated at rounded normalized FMI."""
+    if not math.isfinite(display) or not 0 <= display <= 100:
+        raise ValueError("Uplift score must be a finite 0–100 number")
+    if display <= policy.uplift_threshold:
+        return 0
+    return policy.uplift_intercept + policy.uplift_scale * math.expm1(
+        policy.uplift_exponent
+        * (display - policy.uplift_threshold)
+        / policy.uplift_score_span
     )
 
 

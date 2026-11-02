@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update Fashion Momentum"
+  short_description: "Refresh prospect inputs, insights, KPIs and delivery"
+  default_prompt: "Use $update-fashion-momentum to process the supplied prospect report and refresh the versioned delivery."

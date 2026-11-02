@@ -8,7 +8,7 @@ from pathlib import Path
 from .model import Row, truth
 from .policy import half_up
 
-CATEGORIES = ("LUXE", "FAST FOLLOWER", "RETAILER", "OTHER")
+CATEGORIES = ("LUXE", "PREMIUM", "MASS_MARKET", "FAST FOLLOWER", "RETAILER", "OTHER")
 
 
 def rank_categories(rows: list[Row]) -> None:
@@ -193,6 +193,10 @@ def enrich(rows: list[Row], reference: Row) -> list[Row]:
     result = []
     for source in rows:
         row = dict(source)
+        snapshot = reference.get("delivery_snapshots", {}).get(identity(row["name"]))
+        if snapshot:
+            row.update(snapshot["values"])
+            row["source_snapshot_reference"] = snapshot["source_reference"]
         row.update(comparison(row, lookup.get(identity(row["name"]))))
         if not reference:
             row["weighted_reference_match_status"] = "not_checked_no_reference"
@@ -527,7 +531,8 @@ def save_handoff(rows: list[Row], reference: Row, output: Path) -> None:
         "",
         "## Data handover",
         "",
-        "Share the one-sheet Excel and matching typed JSON. company_code is "
+        "Share the Excel Delivery and Column guide sheets with the matching "
+        "typed JSON. company_code is "
         "the verified Light retrieval key; ticker/shared symbol and financial "
         "proxy subject remain separate. Unresolved keys have explicit statuses. "
         "The receiving team owns native/HTML presentation and app upload under "

@@ -13,6 +13,7 @@ const col = index => {
 };
 const columns = new Map(spec.keys.map((key, i) => [key, col(i)]));
 const fields = new Map(spec.fields.map(field => [field.field_key, field]));
+const guideSpec = payload.sheets.find(sheet => sheet.name === 'Column guide');
 const end = col(spec.keys.length - 1);
 const last = Math.max(2, spec.rows.length + 1);
 const range = sh.getRange(`A1:${end}${last}`);
@@ -77,7 +78,7 @@ for (const [index, record] of spec.rows.entries()) {
     write('cohort_max', `=MAX(${rawRange})`);
     const p = payload.policy;
     write('display_fmi', `=ROUND(IF(${cell('cohort_min')}=${cell('cohort_max')},${p.display_equal},${p.display_lower}+(${p.display_upper}-${p.display_lower})*(${cell('raw_fmi')}-${cell('cohort_min')})/(${cell('cohort_max')}-${cell('cohort_min')})),1)`);
-    write('uplift_fraction', `=${p.uplift_max}*(EXP(${p.uplift_exponent}*${cell('display_fmi')}/100)-1)/(EXP(${p.uplift_exponent})-1)`);
+    write('uplift_fraction', `=IF(${cell('display_fmi')}<=${p.uplift_threshold},0,${p.uplift_intercept}+${p.uplift_scale}*(EXP(${p.uplift_exponent}*(${cell('display_fmi')}-${p.uplift_threshold})/${p.uplift_score_span})-1))`);
     write('legacy_uplift_fraction', `=IF(${cell('raw_fmi')}<=${p.legacy_uplift_threshold},0,${p.legacy_uplift_intercept}+(${cell('raw_fmi')}-${p.legacy_uplift_threshold})*${p.legacy_uplift_per_score})`);
   }
   for (const prefix of ['', 'legacy_']) if (record[prefix + 'adjusted_forecast'] != null) {
@@ -116,7 +117,7 @@ for (const [index, record] of spec.rows.entries()) {
   sh.getRange(`A${index + 2}:${end}${index + 2}`).format.rowHeight = Math.min(409, Math.max(38, 16 * lines));
 }
 sh.freezePanes.freezeRows(1);
-sh.freezePanes.freezeColumns(3);
+sh.freezePanes.freezeColumns(1);
 sh.tables.add(`A1:${end}${last}`, true, 'DossierDelivery');
 // Exercise changed formula dependencies, then restore the authoritative inputs.
 const probeIndex = spec.rows.findIndex(r => r.source_legacy_adjusted_forecast != null);
@@ -163,6 +164,71 @@ if (rankProbe >= 0) {
   wb.recalculate();
   console.log('Category rank reassignment check passed; input restored.');
 }
+const upliftProbe = spec.rows.findIndex(r => r.adjusted_forecast != null);
+if (upliftProbe >= 0) {
+  const record = spec.rows[upliftProbe];
+  const address = key => `${columns.get(key)}${upliftProbe + 2}`;
+  const read = key => sh.getRange(address(key)).values[0][0];
+  const displayCell = sh.getRange(address('display_fmi'));
+  const displayFormula = displayCell.formulas;
+  const originalRaw = read('raw_fmi');
+  const originalLegacy = read('legacy_adjusted_forecast');
+  const p = payload.policy;
+  for (const display of [0, 60, 70, 83, 100]) {
+    displayCell.values = [[display]];
+    wb.recalculate();
+    const expected = display <= p.uplift_threshold ? 0 : p.uplift_intercept + p.uplift_scale * Math.expm1(p.uplift_exponent * (display - p.uplift_threshold) / p.uplift_score_span);
+    if (Math.abs(read('uplift_fraction') - expected) > 1e-12 || Math.abs(read('adjusted_forecast') - record.baseline_revenue * (1 + expected)) > 1e-7 || read('raw_fmi') !== originalRaw || read('legacy_adjusted_forecast') !== originalLegacy) throw new Error('Floor exponential recalculation/isolation failed');
+  }
+  displayCell.formulas = displayFormula;
+  console.log('Legacy-calibrated exponential endpoint/input-change/isolation check passed; input restored.');
+}
+if (guideSpec) {
+  const guide = wb.worksheets.add(guideSpec.name);
+  const guideLast = Math.max(5, guideSpec.rows.length + 4);
+  const guideEnd = col(guideSpec.keys.length - 1);
+  const area = guide.getRange(`A1:${guideEnd}${guideLast}`);
+  area.format.font = {name:'Arial',size:10,color:'#172D45'};
+  area.format.wrapText = true;
+  area.format.verticalAlignment = 'top';
+  guide.showGridLines = false;
+  guide.tabColor = '#8998A6';
+  const guideWidths = [11,38,38,30,66,66,72,52,24,20];
+  guideWidths.forEach((width, i) => guide.getRange(`${col(i)}1:${col(i)}${guideLast}`).format.columnWidth = width);
+  guide.getRange('B1').values = [['Column guide']];
+  guide.getRange('B1').format.font = {name:'Arial',size:14,bold:true,color:'#213D59'};
+  guide.getRange(`A1:${guideEnd}1`).format.rowHeight = 26;
+  const locators = new Map(guideSpec.locators.map(row => [row.key, row.column]));
+  guide.getRange('C2:F2').values = [[
+    `NEW Q4 / target vs PY: ${locators.get('adjusted_forecast_vs_py_forecast_yoy') ?? 'unavailable'}`,
+    `Before uplift: ${locators.get('baseline_forecast_vs_py_forecast_yoy') ?? 'unavailable'}.\nAdditional YoY pp: ${locators.get('fmi_increment_vs_py_forecast_pp') ?? 'unavailable'}.`,
+    `Filter Delivery use to Recommended delivery. ${locators.get('source_q4_sales_yoy_2026') ?? 'Original source YoY'} is historical. Read target ${guideSpec.period_column ?? 'label'} before calling it calendar Q4; fiscal proxies remain labelled.`,
+    'Blank is not zero. PY forecast is not PY sales. Read currency and unit multiplier alongside amounts.'
+  ]];
+  guide.getRange('C2').format.font = {name:'Arial',size:10,bold:true,color:'#166534'};
+  guide.getRange(`A2:${guideEnd}2`).format.rowHeight = 78;
+  guide.getRange(`A3:${guideEnd}3`).format.rowHeight = 10;
+  guide.getRange(`A4:${guideEnd}4`).values = [guideSpec.labels];
+  guide.getRange(`A4:${guideEnd}4`).format = {
+    fill:'#213D59',font:{name:'Arial',size:10,bold:true,color:'#FFFFFF'},
+    wrapText:true,rowHeight:38,horizontalAlignment:'center',verticalAlignment:'center'
+  };
+  const guideMatrix = guideSpec.rows.map(row => guideSpec.keys.map(key => {
+    const value = row[key] ?? null;
+    return typeof value === 'string' && /^[=+@]/.test(value) ? `'${value}` : value;
+  }));
+  if (guideMatrix.length) guide.getRange(`A5:${guideEnd}${guideLast}`).values = guideMatrix;
+  guideSpec.rows.forEach((row, index) => {
+    const lines = Math.max(1, ...guideSpec.keys.map((key, i) => String(row[key] ?? '').split('\n').reduce(
+      (total, line) => total + Math.max(1, Math.ceil(line.length / Math.max(8, guideWidths[i] - 5))), 0
+    )));
+    guide.getRange(`A${index + 5}:${guideEnd}${index + 5}`).format.rowHeight = 16 * lines + 10;
+  });
+  guide.freezePanes.freezeRows(4);
+  guide.freezePanes.freezeColumns(1);
+  guide.tables.add(`A4:${guideEnd}${guideLast}`, true, 'DeliveryColumnGuide');
+}
+wb.recalculate();
 console.log((await wb.inspect({kind:'table',range:'Delivery!A1:L4',include:'values,formulas',tableMaxRows:4,tableMaxCols:12,maxChars:2500})).ndjson);
 const errors = await wb.inspect({kind:'match',searchTerm:'#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A|#NUM!|#NULL!|#SPILL!|#CALC!',options:{useRegex:true,maxResults:50},maxChars:2000});
 console.log(errors.ndjson);
@@ -170,12 +236,22 @@ if (previewFlag === 'true') {
   const preview = await wb.render({sheetName:'Delivery',range:'A1:L7',scale:1.25,format:'png'});
   await fs.writeFile(destination.replace(/\.xlsx$/, '.png'), new Uint8Array(await preview.arrayBuffer()));
   for (const [view, from, to] of [
-    ['prior-forecast', 'prior_year_forecast', 'prior_year_forecast_comparison_status'],
-    ['cards', 'ir_score', 'trend_kpi_label'],
+    ['forecast', 'forecast_target_label', 'adjusted_forecast_vs_py_forecast_yoy'],
+    ['cards', 'ir_score', 'trend_sentiment'],
     ['comparison', 'weighted_reference_match_status', 'weighted_reference_comparison_reason']
   ]) {
     const image = await wb.render({sheetName:'Delivery',range:`${columns.get(from)}1:${columns.get(to)}7`,scale:1,format:'png'});
     await fs.writeFile(destination.replace(/\.xlsx$/, `-${view}.png`), new Uint8Array(await image.arrayBuffer()));
+  }
+  if (guideSpec) {
+    const forecastRow = guideSpec.rows.findIndex(row => row.key === 'baseline_revenue') + 5;
+    for (const [view, range] of [
+      ['guide','A1:F9'], ['guide-sources','G4:J10'],
+      ['guide-forecast',`A${forecastRow}:F${forecastRow + 7}`]
+    ]) {
+      const image = await wb.render({sheetName:guideSpec.name,range,scale:1,format:'png'});
+      await fs.writeFile(destination.replace(/\.xlsx$/, `-${view}.png`), new Uint8Array(await image.arrayBuffer()));
+    }
   }
 }
 await (await SpreadsheetFile.exportXlsx(wb)).save(destination);

@@ -54,6 +54,10 @@ KEYS = [
     "q4VsBaseline2025YoyV2",
     "q4VsBaseline2026YoyV2",
 ]
+REFERENCE_ROOT = (
+    Path(__file__).resolve().parent
+    / "reference/aily-superagent-roadmap/docs/research/wwd-fashion-momentum"
+)
 
 
 def main() -> None:
@@ -61,14 +65,12 @@ def main() -> None:
     parser.add_argument(
         "--workbook",
         type=Path,
-        default=Path("handover/weighted-delivery-1606_2810.xlsx"),
+        default=REFERENCE_ROOT / "weighted-delivery.xlsx",
     )
     parser.add_argument(
         "--roadmap",
         type=Path,
-        default=Path(
-            "../aily-superagent-roadmap/docs/research/wwd-fashion-momentum/weighted-delivery.json"
-        ),
+        default=REFERENCE_ROOT / "weighted-delivery.json",
     )
     parser.add_argument(
         "--output",
@@ -85,7 +87,7 @@ def main() -> None:
     finally:
         book.close()
     header_index = next(i for i, v in enumerate(values) if v[0] == "Prospect")
-    brands, discrepancies = {}, []
+    brands, discrepancies, snapshots = {}, [], {}
     verified = 0
     for cells in values[header_index + 1 :]:
         if not cells[0]:
@@ -166,6 +168,22 @@ def main() -> None:
             "roadmap Markdown and local Word are distinct artifacts, "
             "not byte-identical documents",
         }
+        snapshot_fields = {
+            "email_domains": 10,
+            "source_q4_vs_baseline_2024": 28,
+            "source_q4_vs_baseline_2025": 30,
+            "source_q4_vs_baseline_2026": 32,
+            "source_insights_descriptive": 33,
+            "source_insights_statistics": 34,
+            "source_q4_sales_yoy_2024": 35,
+            "source_q4_sales_yoy_2025": 36,
+            "source_q4_sales_yoy_2026": 37,
+        }
+        snapshots[key] = {
+            "values": {k: cells[i] for k, i in snapshot_fields.items()},
+            "source_reference": f"{args.workbook} | Delivery row "
+            f"{header_index + 2 + len(brands) - 1}",
+        }
     payload = {
         "source": str(args.workbook),
         "workbook_sha256": hashlib.sha256(args.workbook.read_bytes()).hexdigest(),
@@ -174,6 +192,7 @@ def main() -> None:
         "verified_cells": verified,
         "workbook_roadmap_differences": discrepancies,
         "brands": brands,
+        "delivery_snapshots": snapshots,
     }
     # Do not borrow roadmap periods/copy if the purported snapshots disagree.
     if discrepancies:

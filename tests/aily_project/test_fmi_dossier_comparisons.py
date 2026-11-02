@@ -119,7 +119,7 @@ def test_competition_ties_use_rounded_display_and_only_same_category():
         row(brand_id="other", reported_fmi=90, leaderboard_category="RETAILER"),
         row(brand_id="unscored", reported_fmi=None),
         row(brand_id="uncategorized", leaderboard_category=None),
-        row(brand_id="unsupported", leaderboard_category="PREMIUM"),
+        row(brand_id="unsupported", leaderboard_category="UNASSIGNED_CATEGORY"),
         row(brand_id="excluded", include=False),
     ]
     result = calculate(*inputs)
@@ -155,3 +155,33 @@ def test_comparison_and_ranking_dictionary_types_units_do_not_influence_fmi():
     assert fields["fmi_increment_vs_py_forecast_pp"].unit == "pp"
     assert not fields["prior_year_forecast"].influences_fmi
     assert not fields["leaderboard_rank"].influences_fmi
+
+
+@pytest.mark.parametrize("category", ["LUXE", "PREMIUM", "MASS_MARKET"])
+def test_revised_dinner_categories_rank_without_changing_score_or_forecast(category):
+    inputs = [
+        row(brand_id="first", reported_fmi=90),
+        row(brand_id="second", reported_fmi=50),
+        row(brand_id="unscored", reported_fmi=None),
+    ]
+    before = calculate(*inputs)
+    after = calculate(*[{**r, "leaderboard_category": category} for r in inputs])
+    assert [r["leaderboard_rank"] for r in after] == [1, 2, None]
+    assert after[0]["leaderboard_scored_count"] == 2
+    assert after[0]["leaderboard_member_count"] == 3
+    boards = leaderboards(after)
+    assert boards[category]["scored_count"] == 2
+    assert boards[category]["member_count"] == 3
+    for original, revised in zip(before, after, strict=True):
+        for key in ("raw_fmi", "display_fmi", "uplift_fraction", "adjusted_forecast"):
+            assert revised[key] == original[key]
+
+
+def test_new_categories_do_not_remap_unlisted_historical_categories():
+    result = calculate(
+        row(brand_id="premium", leaderboard_category="PREMIUM"),
+        row(brand_id="mass", leaderboard_category="MASS_MARKET"),
+        row(brand_id="historical", leaderboard_category="FAST FOLLOWER"),
+    )
+    assert [r["leaderboard_rank"] for r in result] == [1, 1, 1]
+    assert all(r["leaderboard_member_count"] == 1 for r in result)

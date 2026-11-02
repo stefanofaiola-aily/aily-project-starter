@@ -1,0 +1,263 @@
+{
+  "source": {
+    "fileId": "F0CCF1PK8L9",
+    "fileName": "Fashion Momentum Attendees.xlsx",
+    "sheet": "Sheet2",
+    "slackThread": "https://ailylabsworkspace.slack.com/archives/C0CC6BBHJMB/p1793068399761549",
+    "authority": "Allen's final attendee workbook, explicitly confirmed by Peter in this chat"
+  },
+  "counts": {
+    "environmentMappings": 26,
+    "brandMappings": 19,
+    "uniqueBrands": 18,
+    "retailerMappings": 7,
+    "uniqueProspects": 25
+  },
+  "presentation": {
+    "format": "score-and-metrics",
+    "style": "black Agent Playground",
+    "primaryCta": "Unlock November signal",
+    "commercialIntent": "Use external signals to invite internal sales and inventory data",
+    "status": "research draft generated; evidence QA and target app pending"
+  },
+  "brandContent": [
+    {
+      "company": "Burberry"
+    },
+    {
+      "company": "GAP Inc"
+    },
+    {
+      "company": "J.Crew"
+    },
+    {
+      "company": "Fendi"
+    },
+    {
+      "company": "ME+EM"
+    },
+    {
+      "company": "Moncler"
+    },
+    {
+      "company": "Christian Louboutin"
+    },
+    {
+      "company": "Ralph Lauren"
+    },
+    {
+      "company": "Coach"
+    },
+    {
+      "company": "TOM FORD"
+    },
+    {
+      "company": "Victoria's Secret & Co."
+    },
+    {
+      "company": "Marc Jacobs"
+    },
+    {
+      "company": "DKNY"
+    },
+    {
+      "company": "Calvin Klein"
+    },
+    {
+      "company": "PacSun"
+    },
+    {
+      "company": "Jacquemus"
+    },
+    {
+      "company": "Lafayette 148"
+    },
+    {
+      "company": "Lilly Pulitzer"
+    }
+  ],
+  "environments": [
+    {
+      "sourceRow": 2,
+      "company": "Burberry",
+      "lightEnvironment": "Burberry",
+      "type": "Brand",
+      "contentKey": "Burberry"
+    },
+    {
+      "sourceRow": 3,
+      "company": "GAP Inc",
+      "lightEnvironment": "GAP Inc",
+      "type": "Brand",
+      "contentKey": "GAP Inc"
+    },
+    {
+      "sourceRow": 4,
+      "company": "J.Crew",
+      "lightEnvironment": "J.Crew",
+      "type": "Brand",
+      "contentKey": "J.Crew"
+    },
+    {
+      "sourceRow": 5,
+      "company": "Fendi",
+      "lightEnvironment": "LVMH",
+      "type": "Brand",
+      "contentKey": "Fendi"
+    },
+    {
+      "sourceRow": 6,
+      "company": "ME+EM",
+      "lightEnvironment": "ME+EM",
+      "type": "Brand",
+      "contentKey": "ME+EM"
+    },
+    {
+      "sourceRow": 7,
+      "company": "Moncler",
+      "lightEnvironment": "Moncler",
+      "type": "Brand",
+      "contentKey": "Moncler"
+    },
+    {
+      "sourceRow": 8,
+      "company": "Christian Louboutin",
+      "lightEnvironment": "Christian Louboutin",
+      "type": "Brand",
+      "contentKey": "Christian Louboutin"
+    },
+    {
+      "sourceRow": 9,
+      "company": "Ralph Lauren",
+      "lightEnvironment": "Ralph Lauren",
+      "type": "Brand",
+      "contentKey": "Ralph Lauren"
+    },
+    {
+      "sourceRow": 10,
+      "company": "Coach",
+      "lightEnvironment": "Tapestry",
+      "type": "Brand",
+      "contentKey": "Coach"
+    },
+    {
+      "sourceRow": 11,
+      "company": "TOM FORD",
+      "lightEnvironment": "Tom Ford",
+      "type": "Brand",
+      "contentKey": "TOM FORD"
+    },
+    {
+      "sourceRow": 12,
+      "company": "Victoria's Secret & Co.",
+      "lightEnvironment": "Victoria's Secret & Co.",
+      "type": "Brand",
+      "contentKey": "Victoria's Secret & Co."
+    },
+    {
+      "sourceRow": 13,
+      "company": "Marc Jacobs",
+      "lightEnvironment": "WHP Global",
+      "type": "Brand",
+      "contentKey": "Marc Jacobs"
+    },
+    {
+      "sourceRow": 14,
+      "company": "Marc Jacobs",
+      "lightEnvironment": "Marc Jacobs",
+      "type": "Brand",
+      "contentKey": "Marc Jacobs"
+    },
+    {
+      "sourceRow": 15,
+      "company": "DKNY",
+      "lightEnvironment": "G-III Apparel",
+      "type": "Brand",
+      "contentKey": "DKNY"
+    },
+    {
+      "sourceRow": 16,
+      "company": "Calvin Klein",
+      "lightEnvironment": "PVH",
+      "type": "Brand",
+      "contentKey": "Calvin Klein"
+    },
+    {
+      "sourceRow": 17,
+      "company": "PacSun",
+      "lightEnvironment": "PacSun",
+      "type": "Brand",
+      "contentKey": "PacSun"
+    },
+    {
+      "sourceRow": 18,
+      "company": "Jacquemus",
+      "lightEnvironment": "Jacquemus",
+      "type": "Brand",
+      "contentKey": "Jacquemus"
+    },
+    {
+      "sourceRow": 19,
+      "company": "Lafayette 148",
+      "lightEnvironment": "Lafayette 148",
+      "type": "Brand",
+      "contentKey": "Lafayette 148"
+    },
+    {
+      "sourceRow": 20,
+      "company": "Lilly Pulitzer",
+      "lightEnvironment": "Lilly Pulitzer",
+      "type": "Brand",
+      "contentKey": "Lilly Pulitzer"
+    },
+    {
+      "sourceRow": 22,
+      "company": "Exemplar Luxury Group",
+      "lightEnvironment": "Exemplar Luxury Group",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    },
+    {
+      "sourceRow": 23,
+      "company": "Amazon Fashion",
+      "lightEnvironment": "Amazon Fashion",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    },
+    {
+      "sourceRow": 24,
+      "company": "NORDSTROM",
+      "lightEnvironment": "NORDSTROM",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    },
+    {
+      "sourceRow": 25,
+      "company": "Bloomingdales",
+      "lightEnvironment": "Bloomingdales",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    },
+    {
+      "sourceRow": 26,
+      "company": "Kohl's",
+      "lightEnvironment": "Kohl's",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    },
+    {
+      "sourceRow": 27,
+      "company": "Macys",
+      "lightEnvironment": "Macys",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    },
+    {
+      "sourceRow": 28,
+      "company": "Belmont Park Village",
+      "lightEnvironment": "Belmont Park Village",
+      "type": "Retailer",
+      "contentKey": "shared-retailer-score-experience"
+    }
+  ]
+}

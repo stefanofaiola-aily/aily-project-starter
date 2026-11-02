@@ -38,6 +38,9 @@ class Field:
     derivation: str = "Dossier input"
     required: bool = False
     influences_fmi: bool = False
+    source_kind: str = "input_excel"
+    source_reference: str = "FMI_dossier_inputs.xlsx / Inputs; match brand_id"
+    source_fields: tuple[str, ...] = ()
 
     def record(self) -> Row:
         result = asdict(self)

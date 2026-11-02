@@ -47,6 +47,8 @@ markers = ["unit: isolated tests without cloud or database access"]
 [tool.ruff]
 line-length = 88
 target-version = "py311"
+# Preserve the imported historical builders byte-for-byte, outside active code.
+extend-exclude = ["scripts/fmi-dossier/reference/aily-superagent-roadmap"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

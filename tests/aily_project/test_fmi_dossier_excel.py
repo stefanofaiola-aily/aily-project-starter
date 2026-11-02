@@ -174,8 +174,12 @@ def test_export_is_flat_and_json_field_contract_matches_excel_payload(
     )
     result = service.export_delivery(rows, cohort, Policy(), tmp_path)
     assert len(result["rows"]) == 1
-    assert len(captured[0]["sheets"]) == 1
+    assert len(captured[0]["sheets"]) == 2
     assert captured[0]["sheets"][0]["rows"] == result["rows"]
+    assert captured[0]["sheets"][1]["name"] == "Column guide"
+    assert [r["key"] for r in captured[0]["sheets"][1]["rows"]] == [
+        f["field_key"] for f in result["fields"]
+    ]
     fields = {f["field_key"]: f for f in result["fields"]}
     assert fields["uplift_fraction"]["unit"] == "fraction"
     assert (

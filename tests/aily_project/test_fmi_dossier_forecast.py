@@ -249,7 +249,7 @@ def test_dossier_service_has_no_automated_fmi_business_imports():
 def test_dossier_owned_uplift_math_and_half_up_boundaries():
     policy = Policy()
     assert half_up(84.05) == 84.1
-    assert uplift(100, policy) == pytest.approx(0.11)
+    assert uplift(100, policy) == pytest.approx(0.1674625462767236)
     assert uplift(70, policy) < uplift(84, policy) < uplift(98, policy)
     assert legacy_uplift(60, policy) == 0
     assert legacy_uplift(70, policy) == pytest.approx(0.05)

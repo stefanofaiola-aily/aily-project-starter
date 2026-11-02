@@ -8,9 +8,11 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 from .audit import traces, write_audit
+from .column_guide import build_column_guide
 from .model import Field, Row, clean, truth
 from .policy import Policy, classify, half_up, legacy_uplift, uplift
 from .presentation import enrich, leaderboards, rank_categories, save_handoff
+from .provenance import field_source
 from .workbook import write_workbook
 
 # The input is a flat table, not a second configuration/review system.
@@ -114,6 +116,12 @@ NUMBERS |= set(PY_YOY) | {
     "leaderboard_scored_count",
     "leaderboard_member_count",
 }
+SOURCE_RATIOS = {
+    f"source_{basis}_{year}"
+    for basis in ("q4_vs_baseline", "q4_sales_yoy")
+    for year in (2024, 2025, 2026)
+}
+NUMBERS |= SOURCE_RATIOS
 LABELS = {
     "raw_fmi": "Fashion Momentum Index (dossier)",
     "display_fmi": "FMI normalized (70–98)",
@@ -146,6 +154,62 @@ LABELS = {
     "weighted_reference_social_score": "Historical Social score",
     "weighted_reference_trend_score": "Historical Strength score",
 }
+WEIGHTED_COLUMNS = [
+    ("name", "Prospect"),
+    ("one_core_insight", "One core insight"),
+    ("raw_fmi", "Fashion Momentum Index"),
+    ("overall_sentiment", "Overall sentiment"),
+    ("ir_score", "Trend / Peer Trajectory score"),
+    ("ir_sentiment", "Trend / Peer Trajectory category"),
+    ("social_score", "Social / Show Attention score"),
+    ("social_sentiment", "Social / Show Attention category"),
+    ("trend_score", "Revenue / Commercial Pace score"),
+    ("trend_sentiment", "Revenue / Commercial Pace category"),
+    ("email_domains", "Email domain(s)"),
+    ("company_code", "Company code(s)"),
+    ("ir_descriptor", "Trend / Peer Trajectory descriptor"),
+    ("ir_insight", "Trend / Peer Trajectory insight"),
+    ("social_descriptor", "Social / Show Attention descriptor"),
+    ("social_insight", "Social / Show Attention insight"),
+    ("trend_descriptor", "Revenue / Commercial Pace descriptor"),
+    ("trend_insight", "Revenue / Commercial Pace insight"),
+    ("display_fmi", "Fashion Momentum Index (normalized 70–98)"),
+    ("ir_kpi", "Trend / Peer Trajectory KPI"),
+    ("ir_kpi_label", "Trend / Peer Trajectory KPI label"),
+    ("social_kpi", "Social / Show Attention KPI"),
+    ("social_kpi_label", "Social / Show Attention KPI label"),
+    ("trend_kpi", "Revenue / Commercial Pace KPI"),
+    ("trend_kpi_label", "Revenue / Commercial Pace KPI label"),
+    ("leaderboard_category", "Category"),
+    ("leaderboard_rank", "Leaderboard rank"),
+    ("source_social_2024", "SM Feb ’24"),
+    ("source_q4_vs_baseline_2024", "Q4 vs Baseline ’24 (%)"),
+    ("source_social_2025", "SM Feb ’25"),
+    ("source_q4_vs_baseline_2025", "Q4 vs Baseline ’25 (%)"),
+    ("source_social_2026", "SM Feb ’26"),
+    ("source_q4_vs_baseline_2026", "Q4 vs Baseline ’26 (%)"),
+    ("source_insights_descriptive", "Insights Descriptive"),
+    ("source_insights_statistics", "Insights Statistics"),
+    ("source_q4_sales_yoy_2024", "Q4 vs Baseline ’24 (%) YoY v2"),
+    ("source_q4_sales_yoy_2025", "Q4 vs Baseline ’25 (%) YoY v2"),
+    ("source_q4_sales_yoy_2026", "Q4 vs Baseline ’26 (%) YoY v2"),
+]
+LABELS.update(WEIGHTED_COLUMNS)
+LABELS.update(
+    baseline_revenue="Forecast baseline before FMI",
+    uplift_fraction="New exponential uplift (%) — normalized FMI",
+    adjusted_forecast="New exponential adjusted forecast",
+    adjustment="New exponential revenue adjustment",
+    legacy_uplift_fraction="Diagnostic legacy uplift (%) — raw FMI",
+    legacy_adjusted_forecast="Diagnostic legacy forecast — raw FMI",
+    source_legacy_uplift_fraction="Original legacy uplift (%) — source FMI",
+    source_legacy_adjusted_forecast="Original legacy forecast — reproduced",
+    source_display_fmi="Original sales-workbook FMI used for legacy uplift",
+    source_original_fmi="Original dossier weighted FMI — alternative",
+    reported_fmi="Selected dossier FMI — input",
+    weighted_component_fmi="Component-weighted FMI — diagnostic",
+    source_projected_forecast="Original sales-workbook adjusted forecast — frozen",
+)
 DATES = set(
     [
         "show_date",
@@ -200,6 +264,7 @@ FRACTIONS |= {
     "source_social_2026",
 }
 FRACTIONS |= set(PY_YOY)
+FRACTIONS |= SOURCE_RATIOS
 LOOKUP_ARRAYS = {"forecast_lookup_candidates", "forecast_lookup_company_candidates"}
 LOOKUP_DATES = {"forecast_lookup_target_start", "forecast_lookup_target_end"}
 HEADLINE = [
@@ -259,6 +324,37 @@ HEADLINE = [
     "weighted_reference_trend_score",
     "weighted_reference_comparison_reason",
 ]
+FORECAST_COLUMNS = [
+    "forecast_target_label",
+    "baseline_subject",
+    "baseline_currency",
+    "baseline_unit_multiplier",
+    "baseline_revenue",
+    "uplift_fraction",
+    "adjustment",
+    "adjusted_forecast",
+    "prior_year_forecast",
+    "baseline_forecast_vs_py_forecast_yoy",
+    "adjusted_forecast_vs_py_forecast_yoy",
+    "fmi_increment_vs_py_forecast_pp",
+    "source_display_fmi",
+    "source_legacy_uplift_fraction",
+    "source_legacy_adjusted_forecast",
+    "source_projected_forecast",
+    "source_legacy_adjusted_forecast_vs_py_forecast_yoy",
+    "source_projection_difference",
+    "baseline_is_parent_proxy",
+    "fmi_status",
+    "forecast_status",
+    "brand_id",
+    "fmi_required",
+    "event_invited",
+    "score_method",
+    "dossier_score_basis",
+]
+HEADLINE = list(
+    dict.fromkeys([key for key, _ in WEIGHTED_COLUMNS] + FORECAST_COLUMNS + HEADLINE)
+)
 
 
 def read_excel(path: Path) -> list[Row]:
@@ -834,8 +930,9 @@ def fields_for(rows: list[Row]) -> list[Field]:
         }:
             derivation = (
                 "Explicit supplied ranking/dinner company-list transcription; "
-                "Y/N presence is expectation, not proof of a forecast. Native app "
-                "category is separate from historical leaderboard categories."
+                "Y/N presence is expectation, not proof of a forecast. Listed brands "
+                "use the explicit app category also for delivery ranking; unlisted "
+                "historical categories are not automatically remapped."
             )
         elif key in {"light_list_check_status", "light_registry_presence"}:
             derivation = (
@@ -872,7 +969,9 @@ def fields_for(rows: list[Row]) -> list[Field]:
                 "Explicit input category copied once from supplied assignments; "
                 "provisional competition rank 1 + count of higher rounded display FMI "
                 "within current delivered category. Ties share rank, missing scores "
-                "are unranked. Not historical ranks or a native app category mapping."
+                "are unranked. Revised dinner-list categories take precedence for "
+                "listed brands; unlisted historical assignments remain. Delivery "
+                "ranks are not live app ranks."
             )
         if key in PY_YOY or key == "fmi_increment_vs_py_forecast_pp":
             derivation = (
@@ -928,7 +1027,10 @@ def fields_for(rows: list[Row]) -> list[Field]:
             )
         elif key == "uplift_fraction":
             derivation = (
-                "0.11 × expm1(8 × rounded display/100) / expm1(8). Business scenario."
+                "0 if rounded display ≤60; otherwise 0.03 + 0.08 × "
+                "expm1((rounded display −60)/40). Legacy-calibrated exponential "
+                "applied to normalized FMI. No 11% cap; 16.746% at score 100. "
+                "Parameters are recorded in resolved YAML policy. Business scenario."
             )
         elif key == "legacy_uplift_fraction":
             derivation = (
@@ -969,6 +1071,19 @@ def fields_for(rows: list[Row]) -> list[Field]:
                 "observations are comparable, current/prior − 1; missing or "
                 "nonpositive denominators remain unavailable."
             )
+        elif key in SOURCE_RATIOS:
+            derivation = (
+                "Frozen original source ratio, not recomputed from current FMI. "
+                "q4_vs_baseline: source Q4 amount / same-year untreated baseline −1; "
+                "2026 numerator is the source legacy projection. q4_sales_yoy: "
+                "source Q4 amount / preceding-year Q4 sales −1, not PY forecast."
+            )
+        elif key.startswith("source_insights_"):
+            derivation = (
+                "Verbatim historical source text, never rewritten by the new "
+                "exponential calculation. May describe superseded source values; "
+                "review before app display."
+            )
         fields.append(
             Field(
                 key,
@@ -986,6 +1101,7 @@ def fields_for(rows: list[Row]) -> list[Field]:
                     "trend_score",
                     "score_method",
                 },
+                **field_source(key),
             )
         )
     return fields
@@ -1014,7 +1130,7 @@ def export_delivery(
     calculation_traces = traces([delivered_by_id.get(r["brand_id"], r) for r in rows])
     contract = clean(
         {
-            "schema_version": "fmi-dossier-delivery-v1",
+            "schema_version": "fmi-dossier-delivery-v2",
             "source_mode": "dossier",
             "policy": policy.model_dump(),
             "cohort": cohort,
@@ -1023,7 +1139,9 @@ def export_delivery(
             "limitations": [
                 "Dynamic cohort rescaling changes uplift even if a brand's "
                 "dossier score is unchanged.",
-                "70–98 produces positive new uplift for every scored brand.",
+                "Approved legacy-calibrated exponential: 5.272–15.686% uplift "
+                "on display scores 70–98, 16.746% at 100. No 11% cap. "
+                "Raw-scale calibration is intentionally applied to normalized FMI.",
                 "Business scenario, not calibrated predictive accuracy "
                 "or strict historical replay.",
                 "Dossier measurements are accepted for this client demo. New Light "
@@ -1040,6 +1158,13 @@ def export_delivery(
                 "assignments stay unranked.",
             ],
             "fields": [f.record() for f in fields],
+            "column_layout": {
+                "reference": reference.get("source"),
+                "weighted_columns": [key for key, _ in WEIGHTED_COLUMNS],
+                "historical_snapshot_columns": "AB:AL; frozen, not new forecasts",
+                "company_code_note": "Column L is the single verified Light "
+                "company_code, not the historical list of brand/parent codes.",
+            },
             "rows": delivered,
         }
     )
@@ -1055,7 +1180,8 @@ def export_delivery(
                     "labels": [f.label for f in fields],
                     "rows": delivered,
                     "fields": [f.record() for f in fields],
-                }
+                },
+                build_column_guide(fields),
             ],
         },
         output / "dossier-calculated-delivery.xlsx",

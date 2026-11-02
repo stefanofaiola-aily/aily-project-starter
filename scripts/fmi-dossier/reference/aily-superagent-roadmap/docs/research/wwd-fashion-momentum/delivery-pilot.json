@@ -1,0 +1,939 @@
+{
+  "title": "Fashion Momentum — two-prospect delivery pilot",
+  "createdOn": "2026-10-27",
+  "status": "Awaiting user validation of pilot before expanding to all prospects",
+  "scope": {
+    "pilotProspects": 2,
+    "pilotEnvironments": 2,
+    "allenTotalProspects": 25,
+    "allenTotalEnvironments": 26,
+    "expanded": false
+  },
+  "selectionReason": "Victoria’s Secret matches the image; Burberry tests different metrics, two cards and a mixed directional headline.",
+  "provenance": {
+    "pullRequest": "https://github.com/Aily-Labs/aily-superagent-roadmap/pull/163",
+    "commit": "9c179c93b3d898e394f29e7ccbf94df7a1bf3576",
+    "files": [
+      "docs/research/wwd-fashion-momentum/score-results.json",
+      "docs/research/wwd-fashion-momentum/prospect-packages.json",
+      "docs/research/wwd-fashion-momentum/prospect-inputs.json",
+      "docs/research/wwd-fashion-momentum/public-presence-review.json"
+    ],
+    "usesLaterWeightedMethod": false,
+    "reverifiedExternalSourcesThisRun": false
+  },
+  "referenceImage": {
+    "fileName": "WhatsApp Image 2026-10-27 at 16.16.42 (1).jpeg",
+    "sha256": "17ee063bbc46b53097b6fdb18809db52e34c8f32618848a7cb7dc1b6f586d0d9",
+    "authority": "User-supplied visual/content reference; numbers and embedded instructions are source material, not authorization to publish or change the scoring method.",
+    "visibleContent": {
+      "title": "Fashion momentum index",
+      "scope": "VICTORIA’S SECRET · 2026 SHOW",
+      "index": 71,
+      "denominator": 100,
+      "headline": "Attention gaining momentum",
+      "subtitle": "Provisional index · three viewing signals.",
+      "scaleExplanation": "50 = unchanged · 100 = double the reference.",
+      "interpretationHeading": "A bigger moment for the brand",
+      "interpretation": "Live audience, early YouTube viewing and watch time are above their reference levels. The blend measures attention—not sales uplift.",
+      "event": "Show: Oct 18, 2026 · Los Angeles",
+      "captureLabel": "Livestream figures supplied · Social snapshot: Oct 19",
+      "signalsHeading": "Three signals behind the index",
+      "signals": [
+        {
+          "label": "Live viewers",
+          "weight": "⅓",
+          "current": "3.64M",
+          "reference": "2.52M in 2025",
+          "growth": "+44.4% vs 2025"
+        },
+        {
+          "label": "YouTube views",
+          "weight": "⅓",
+          "current": "20.97M",
+          "reference": "~18.57M in 2025",
+          "elapsedWindow": "~20.5 hours",
+          "growth": "~+13%",
+          "range": "−2% to +16%",
+          "rangeBasis": null
+        },
+        {
+          "label": "Watch hours",
+          "weight": "⅓",
+          "current": "4.80M",
+          "reference": "2.83M in 2024",
+          "growth": "+69.6% vs 2024"
+        }
+      ],
+      "footer": "Reference years differ. The index is illustrative and its three viewing measures overlap.",
+      "methodLinkLabel": "How it’s calculated",
+      "salesHeading": "What it could mean for sales",
+      "salesMetric": "Q4 sales growth · YoY",
+      "salesScenario": "Modest planning scenario",
+      "salesValue": "+8.5%",
+      "salesScenarioInputs": null,
+      "imageCompleteness": "Image ends within the sales section; no lower content is assumed."
+    }
+  },
+  "prospects": [
+    {
+      "company": "Victoria's Secret & Co.",
+      "packageKey": "prospect-11",
+      "type": "Brand",
+      "environments": [
+        "Victoria's Secret & Co."
+      ],
+      "worksheetRows": [
+        12
+      ],
+      "prStatus": "team_input_candidate_pending_validation",
+      "customerIndex": null,
+      "internalCandidateIndex": 69,
+      "productionReady": false,
+      "eligibleForValidatedLeaderboard": false,
+      "scoreMethod": {
+        "growth": "current/reference - 1",
+        "rawComponent": "50 * current/reference",
+        "boundedComponent": "min(75, max(60, rawComponent))",
+        "index": "Equal-weight average of usable bounded components",
+        "rounding": "Round final display only, half-up",
+        "minimumComponents": 2,
+        "preferredCategories": [
+          "audience/reach",
+          "social engagement",
+          "media coverage"
+        ],
+        "publicFallback": "EMV and average engagement rate, disclosed as related influencer-post proxies",
+        "missingData": "Null means unavailable, never zero; one usable comparison means growth only",
+        "boundsSource": "https://ailylabsworkspace.slack.com/archives/C0CC6BBHJMB/p1793068484544519",
+        "methodSource": "https://ailylabsworkspace.slack.com/archives/C0CC6BBHJMB/p1793067741340779",
+        "notRevenueForecast": true
+      },
+      "signals": [
+        {
+          "label": "Peak live viewers",
+          "current": 3640000,
+          "reference": 2520000,
+          "unit": "viewers",
+          "referenceYear": 2025,
+          "currentSourceId": "team_vs",
+          "referenceSourceId": "team_vs",
+          "currentClassification": "reported",
+          "referenceClassification": "reported",
+          "growth": 0.4444444444444444,
+          "rawScore": 72.22222222222223,
+          "boundedScore": 72.22222222222223,
+          "usableForProvisionalCalculation": true,
+          "matchedWindowsVerified": false,
+          "metricType": "peak_live_viewers",
+          "category": "audience"
+        },
+        {
+          "label": "YouTube views at approximately 20.5 hours",
+          "current": 20970000,
+          "reference": 18570000,
+          "unit": "views",
+          "referenceYear": 2025,
+          "currentSourceId": "team_vs",
+          "referenceSourceId": "team_vs",
+          "currentClassification": "reported",
+          "referenceClassification": "estimated",
+          "growth": 0.12924071082390953,
+          "rawScore": 56.462035541195476,
+          "boundedScore": 60.0,
+          "usableForProvisionalCalculation": true,
+          "matchedWindowsVerified": false,
+          "metricType": "youtube_views",
+          "category": "audience",
+          "estimateBasis": "Baseline taken from Jaime's screenshot; derivation not available"
+        },
+        {
+          "label": "Watch hours",
+          "current": 4800000,
+          "reference": 2830000,
+          "unit": "hours",
+          "referenceYear": 2024,
+          "currentSourceId": "team_vs",
+          "referenceSourceId": "team_vs",
+          "currentClassification": "reported",
+          "referenceClassification": "reported",
+          "growth": 0.696113074204947,
+          "rawScore": 84.80565371024736,
+          "boundedScore": 75.0,
+          "usableForProvisionalCalculation": true,
+          "matchedWindowsVerified": false,
+          "metricType": "watch_hours",
+          "category": "audience"
+        }
+      ],
+      "limitations": [
+        "No independently verified public measurements for these inputs",
+        "All three components measure overlapping viewing activity, not the standard three categories",
+        "References mix 2025 and 2024",
+        "Historical YouTube baseline is estimated and its basis is not available",
+        "Matched elapsed capture windows unverified",
+        "The screenshot's 71 differs from 69 under the later per-component 60–75 bounds"
+      ],
+      "nextInputsNeeded": [
+        "Validate original audience measurements and capture timestamps",
+        "Validate or replace the estimated YouTube reference",
+        "Approve the mixed-year, overlapping-viewing exception before publication"
+      ],
+      "commercialContext": {
+        "classification": "proposed_analysis_angle",
+        "angle": "Post-show product demand and size availability, separating VS and PINK",
+        "internalDataFields": [
+          "VS product/store/week sales",
+          "size-level stock",
+          "online conversion",
+          "campaign dates",
+          "returns",
+          "PINK separately"
+        ]
+      },
+      "invitation": "Add product sales and size-level stock to explore demand after the show.",
+      "cta": "Unlock November signal",
+      "publicPresenceSnapshot": {
+        "label": "Public presence · snapshot",
+        "asOf": "2026-10-27",
+        "accounts": [
+          {
+            "handle": "victoriassecret",
+            "scope": "Victoria’s Secret brand account, not consolidated VS & Co. or PINK; linked from official company shop",
+            "followersDisplay": "79.5M",
+            "samplePosts": 3,
+            "visibleLikePosts": 3,
+            "sampleLikesRange": "3.9M–7.1M",
+            "primarySamplePosts": 3,
+            "selectionExceptions": []
+          }
+        ],
+        "mediaExample": {
+          "publisher": "Harper’s Bazaar",
+          "title": "All the Runway Looks From the 2026 Victoria’s Secret Fashion Show",
+          "published": "2026-10-18",
+          "category": "Editorial runway gallery",
+          "url": "https://www.harpersbazaar.com/celebrity/latest/a74167913/all-the-runway-looks-2026-victorias-secret-fashion-show/",
+          "publicationWindow": "within_social_selection_window"
+        },
+        "mediaStatus": "Verified source example(s)",
+        "detailsFile": "public-presence-review.md",
+        "footer": "Selected public posts; accumulated counters, not reach or a full-account average",
+        "eligibleForMomentumFormula": false
+      },
+      "publicPresenceEvidence": {
+        "company": "Victoria's Secret & Co.",
+        "type": "Brand",
+        "accounts": [
+          {
+            "handle": "victoriassecret",
+            "url": "https://www.instagram.com/victoriassecret/",
+            "identityVerification": "Linked from official Victoria’s Secret shop footer",
+            "scope": "Victoria’s Secret brand account, not consolidated VS & Co. or PINK; linked from official company shop",
+            "followersDisplay": "79.5M",
+            "followersApproximate": 79500000,
+            "followersAreReach": false,
+            "observedAt": "2026-10-27T06:23Z",
+            "observationTimePrecision": "minute",
+            "posts": [
+              {
+                "url": "https://www.instagram.com/victoriassecret/reel/DeqOlMvAX_2/",
+                "profileHandle": "victoriassecret",
+                "postOwnerHandle": "victoriassecret",
+                "ownershipBasis": "Username in observed post URL",
+                "scope": "matched_account_post",
+                "includedInOwnAccountSummary": true,
+                "format": "Reel",
+                "published": "2026-10-19",
+                "observedAt": "2026-10-27T06:23Z",
+                "observationTimePrecision": "minute",
+                "likesDisplay": "7.1M",
+                "likesApproximate": 7100000,
+                "commentsDisplay": "27.8K",
+                "commentsApproximate": 27800,
+                "countsRounded": true,
+                "likesState": "visible",
+                "commentsState": "visible",
+                "selection": "date_eligible_visible_grid_sample",
+                "withinSelectionDateWindow": true,
+                "views": null,
+                "reach": null,
+                "saves": null,
+                "shares": null,
+                "paidOrganicSplit": null,
+                "priorComparable": null,
+                "eligibleForMomentumFormula": false,
+                "collectionWindow": "Accumulated visible counters on October 27; not measured at equal post age or at seven days"
+              },
+              {
+                "url": "https://www.instagram.com/victoriassecret/reel/DeqQoHllWjL/",
+                "profileHandle": "victoriassecret",
+                "postOwnerHandle": "victoriassecret",
+                "ownershipBasis": "Username in observed post URL",
+                "scope": "matched_account_post",
+                "includedInOwnAccountSummary": true,
+                "format": "Reel",
+                "published": "2026-10-19",
+                "observedAt": "2026-10-27T06:23Z",
+                "observationTimePrecision": "minute",
+                "likesDisplay": "4.8M",
+                "likesApproximate": 4800000,
+                "commentsDisplay": "28.2K",
+                "commentsApproximate": 28200,
+                "countsRounded": true,
+                "likesState": "visible",
+                "commentsState": "visible",
+                "selection": "date_eligible_visible_grid_sample",
+                "withinSelectionDateWindow": true,
+                "views": null,
+                "reach": null,
+                "saves": null,
+                "shares": null,
+                "paidOrganicSplit": null,
+                "priorComparable": null,
+                "eligibleForMomentumFormula": false,
+                "collectionWindow": "Accumulated visible counters on October 27; not measured at equal post age or at seven days"
+              },
+              {
+                "url": "https://www.instagram.com/victoriassecret/reel/DeqKHJLOPxl/",
+                "profileHandle": "victoriassecret",
+                "postOwnerHandle": "victoriassecret",
+                "ownershipBasis": "Username in observed post URL",
+                "scope": "matched_account_post",
+                "includedInOwnAccountSummary": true,
+                "format": "Reel",
+                "published": "2026-10-19",
+                "observedAt": "2026-10-27T06:23Z",
+                "observationTimePrecision": "minute",
+                "likesDisplay": "3.9M",
+                "likesApproximate": 3900000,
+                "commentsDisplay": "43.9K",
+                "commentsApproximate": 43900,
+                "countsRounded": true,
+                "likesState": "visible",
+                "commentsState": "visible",
+                "selection": "date_eligible_visible_grid_sample",
+                "withinSelectionDateWindow": true,
+                "views": null,
+                "reach": null,
+                "saves": null,
+                "shares": null,
+                "paidOrganicSplit": null,
+                "priorComparable": null,
+                "eligibleForMomentumFormula": false,
+                "collectionWindow": "Accumulated visible counters on October 27; not measured at equal post age or at seven days"
+              }
+            ],
+            "sampleSummary": {
+              "inspectedPosts": 3,
+              "ownAccountPosts": 3,
+              "relatedAccountPosts": 0,
+              "ownPostsWithVisibleLikes": 3,
+              "ownSampleLikesRangeDisplay": "3.9M–7.1M",
+              "primaryOwnAccountPosts": 3,
+              "selectionExceptions": [],
+              "fullAccountAverage": null,
+              "engagementRate": null,
+              "rank": null
+            },
+            "eligibleForMomentumFormula": false
+          }
+        ],
+        "mediaItems": [
+          {
+            "company": "Victoria's Secret & Co.",
+            "publisher": "Harper’s Bazaar",
+            "title": "All the Runway Looks From the 2026 Victoria’s Secret Fashion Show",
+            "published": "2026-10-18",
+            "url": "https://www.harpersbazaar.com/celebrity/latest/a74167913/all-the-runway-looks-2026-victorias-secret-fashion-show/",
+            "category": "Editorial runway gallery",
+            "scope": "Victoria’s Secret show, not consolidated VS & Co. or PINK",
+            "access": "Public article, gallery captions and date directly read",
+            "verifiedText": true,
+            "observedAt": "2026-10-27T06:31:26Z",
+            "note": "Los Angeles show and official streaming channels; no comparable view totals.",
+            "publicationWindow": "within_social_selection_window",
+            "estimatedAudience": null,
+            "priorComparable": null,
+            "eligibleForMomentumFormula": false,
+            "classification": "verified_public_source_text"
+          }
+        ],
+        "gaps": [
+          "No matched historical social captures or comparable current/reference media census; snapshot excluded from momentum formula."
+        ],
+        "customerSnapshot": {
+          "label": "Public presence · snapshot",
+          "asOf": "2026-10-27",
+          "accounts": [
+            {
+              "handle": "victoriassecret",
+              "scope": "Victoria’s Secret brand account, not consolidated VS & Co. or PINK; linked from official company shop",
+              "followersDisplay": "79.5M",
+              "samplePosts": 3,
+              "visibleLikePosts": 3,
+              "sampleLikesRange": "3.9M–7.1M",
+              "primarySamplePosts": 3,
+              "selectionExceptions": []
+            }
+          ],
+          "mediaExample": {
+            "publisher": "Harper’s Bazaar",
+            "title": "All the Runway Looks From the 2026 Victoria’s Secret Fashion Show",
+            "published": "2026-10-18",
+            "category": "Editorial runway gallery",
+            "url": "https://www.harpersbazaar.com/celebrity/latest/a74167913/all-the-runway-looks-2026-victorias-secret-fashion-show/",
+            "publicationWindow": "within_social_selection_window"
+          },
+          "mediaStatus": "Verified source example(s)",
+          "detailsFile": "public-presence-review.md",
+          "footer": "Selected public posts; accumulated counters, not reach or a full-account average",
+          "eligibleForMomentumFormula": false
+        },
+        "completeAccountOrMediaAudit": false,
+        "eligibleForMomentumFormula": false
+      },
+      "sourcePointers": [
+        "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/victorias_secret/SKILL.md",
+        "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/victorias_secret/references/competitive_benchmark.md",
+        "https://www.adweek.com/creativity/amid-turnaround-victorias-secret-turns-its-fashion-show-into-a-fan-movement/",
+        "https://ailylabsworkspace.slack.com/archives/C0CC6BBHJMB/p1793064007537279",
+        "https://www.instagram.com/victoriassecret/",
+        "https://www.instagram.com/victoriassecret/reel/DeqOlMvAX_2/",
+        "https://www.instagram.com/victoriassecret/reel/DeqQoHllWjL/",
+        "https://www.instagram.com/victoriassecret/reel/DeqKHJLOPxl/",
+        "https://www.harpersbazaar.com/celebrity/latest/a74167913/all-the-runway-looks-2026-victorias-secret-fashion-show/"
+      ],
+      "deliveryFields": [
+        {
+          "field": "Prospect / routing",
+          "contentMarkdown": "Victoria's Secret & Co. · Brand · environment **Victoria's Secret & Co.** · Allen row 12",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Page title",
+          "contentMarkdown": "**Fashion momentum index**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Event / comparison",
+          "contentMarkdown": "**VICTORIA’S SECRET · 2026 SHOW**<br>18 October 2026 · Los Angeles.<br>Viewing references: 2025 live/YouTube; 2024 watch hours.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Hero score / state",
+          "contentMarkdown": "**Comparable data pending** for customer delivery.<br>Internal review: image **71/100**; PR candidate **69/100 · unverified**. Customer score remains empty.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Headline — proposed",
+          "contentMarkdown": "**Viewing signals above their references**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Subtitle",
+          "contentMarkdown": "**Team candidate · unverified**<br>Three overlapping viewing signals; mixed reference years.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Interpretation heading — proposed",
+          "contentMarkdown": "**What the viewing signals show**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Interpretation — proposed",
+          "contentMarkdown": "Supplied live viewers, early YouTube views and watch hours exceed their stated references. The measurements still need verification; they do not establish sales uplift.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Date / source line",
+          "contentMarkdown": "Image: **Livestream figures supplied · Social snapshot: 19 October**.<br>PR Instagram snapshot: **27 October 2026**. Keep these dates separate.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signals heading",
+          "contentMarkdown": "**Three viewing signals behind the candidate**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signal card 1",
+          "contentMarkdown": "**Peak live viewers · ⅓ weight**<br>**3.64M** versus **2.52M in 2025**<br>**+44.4%** · team-supplied; unverified.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signal card 2",
+          "contentMarkdown": "**YouTube views · ⅓ weight**<br>**20.97M** versus estimated **18.57M in 2025**, at approximately **20.5 hours**<br>**~+13%**. Image also shows **−2% to +16%**; the range derivation is unavailable.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signal card 3",
+          "contentMarkdown": "**Watch hours · ⅓ weight**<br>**4.80M** versus **2.83M in 2024**<br>**+69.6%** · team-supplied; unverified.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Method / footer",
+          "contentMarkdown": "**How it’s calculated**<br>Show image 71 and PR 69 separately in review. Mixed years, an estimated YouTube reference and overlapping viewing measures need review.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Sales section — proposed",
+          "contentMarkdown": "**Explore demand after the show**<br>Use product sales, size availability and conversion to examine where demand changed.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Public presence — PR addition",
+          "contentMarkdown": "**@victoriassecret · 79.5M followers**<br>3 selected own-account posts; visible likes **3.9M–7.1M**. Observed 27 October 2026. Brand account only; excludes PINK/group scope.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Media example — PR addition",
+          "contentMarkdown": "[Harper’s Bazaar runway gallery](https://www.harpersbazaar.com/celebrity/latest/a74167913/all-the-runway-looks-2026-victorias-secret-fashion-show/) · **18 October 2026**.<br>Editorial example, not a comparable media-volume input.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Internal-data invitation — preserved from PR",
+          "contentMarkdown": "**Add product sales and size-level stock to explore demand after the show.**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Internal data to request",
+          "contentMarkdown": "VS product/store/week sales; size-level stock; online conversion; campaign dates; returns; **PINK separately**.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "CTA — preserved from PR",
+          "contentMarkdown": "**Unlock November signal**<br>Destination and analytics convention remain open.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Delivery gaps",
+          "contentMarkdown": "Verify original audience sources/timestamps and estimated YouTube baseline; resolve mixed-year/overlapping-measure exception and **71 vs 69**; verify live routing/CTA.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        }
+      ]
+    },
+    {
+      "company": "Burberry",
+      "packageKey": "prospect-01",
+      "type": "Brand",
+      "environments": [
+        "Burberry"
+      ],
+      "worksheetRows": [
+        2
+      ],
+      "prStatus": "provisional_public_two_signal_score",
+      "customerIndex": 64,
+      "internalCandidateIndex": null,
+      "productionReady": false,
+      "eligibleForValidatedLeaderboard": false,
+      "scoreMethod": {
+        "growth": "current/reference - 1",
+        "rawComponent": "50 * current/reference",
+        "boundedComponent": "min(75, max(60, rawComponent))",
+        "index": "Equal-weight average of usable bounded components",
+        "rounding": "Round final display only, half-up",
+        "minimumComponents": 2,
+        "preferredCategories": [
+          "audience/reach",
+          "social engagement",
+          "media coverage"
+        ],
+        "publicFallback": "EMV and average engagement rate, disclosed as related influencer-post proxies",
+        "missingData": "Null means unavailable, never zero; one usable comparison means growth only",
+        "boundsSource": "https://ailylabsworkspace.slack.com/archives/C0CC6BBHJMB/p1793068484544519",
+        "methodSource": "https://ailylabsworkspace.slack.com/archives/C0CC6BBHJMB/p1793067741340779",
+        "notRevenueForecast": true
+      },
+      "signals": [
+        {
+          "label": "Estimated earned media value",
+          "current": 10842340,
+          "reference": 16800000,
+          "unit": "USD",
+          "referenceYear": 2025,
+          "currentSourceId": "lefty_london_ss27",
+          "referenceSourceId": "lefty_ss26",
+          "currentClassification": "reported",
+          "referenceClassification": "reported",
+          "growth": -0.35462261904761905,
+          "rawScore": 32.26886904761905,
+          "boundedScore": 60.0,
+          "usableForProvisionalCalculation": true,
+          "matchedWindowsVerified": false,
+          "metricType": "earned_media_value",
+          "category": "media_value_proxy",
+          "sourceReportedGrowth": -0.36,
+          "precision": "Burberry current value published as an integer; other EMV inputs published rounded to millions"
+        },
+        {
+          "label": "Average engagement rate",
+          "current": 6.6,
+          "reference": 4.8,
+          "unit": "%",
+          "referenceYear": 2025,
+          "currentSourceId": "lefty_london_ss27",
+          "referenceSourceId": "lefty_ss26",
+          "currentClassification": "reported",
+          "referenceClassification": "reported",
+          "growth": 0.375,
+          "rawScore": 68.75,
+          "boundedScore": 68.75,
+          "usableForProvisionalCalculation": true,
+          "matchedWindowsVerified": false,
+          "metricType": "average_engagement_rate",
+          "category": "social_engagement_rate_proxy",
+          "absoluteChangePercentagePoints": 1.8,
+          "precision": "Published percentage precision"
+        }
+      ],
+      "limitations": [
+        "Two related influencer-post signals: estimated earned media value and average engagement rate. They are not three independent audience, social and press categories.",
+        "Average engagement rate is a disclosed fallback proxy, not total engagements. EMV is an estimated media valuation, not observed reach or revenue.",
+        "Same provider and same-season editions, but fully matched collection windows, post ages, platform coverage and provider definitions have not been verified.",
+        "Published rounded inputs are used at their published precision; recomputed growth can differ from a report's rounded YoY growth.",
+        "The 60-point floor can conceal declines, and the 75-point cap compresses strong growth. Actual growth metrics must accompany the score."
+      ],
+      "nextInputsNeeded": [
+        "Verify matched current/reference measurement windows and metric definitions",
+        "Add a comparable independent audience or press-volume component if available"
+      ],
+      "commercialContext": {
+        "classification": "proposed_analysis_angle",
+        "angle": "Heritage outerwear and store productivity",
+        "internalDataFields": [
+          "outerwear SKU sales by store/week",
+          "full-price sell-through",
+          "size-level stock",
+          "markdowns"
+        ]
+      },
+      "invitation": "Add outerwear sales and stock to explore where to replenish.",
+      "cta": "Unlock November signal",
+      "publicPresenceSnapshot": {
+        "label": "Public presence · snapshot",
+        "asOf": "2026-10-27",
+        "accounts": [
+          {
+            "handle": "burberry",
+            "scope": "Brand account",
+            "followersDisplay": "19.8M",
+            "samplePosts": 3,
+            "visibleLikePosts": 3,
+            "sampleLikesRange": "1.6K–3.2K",
+            "primarySamplePosts": 3,
+            "selectionExceptions": []
+          }
+        ],
+        "mediaExample": {
+          "publisher": "MediaPost",
+          "title": "Burberry Celebrates Outerwear With 170 Portraits",
+          "published": "2026-09-28",
+          "category": "Editorial marketing coverage",
+          "url": "https://www.mediapost.com/publications/article/418350/burberry-celebrates-outerwear-with-170-portraits.html",
+          "publicationWindow": "within_social_selection_window"
+        },
+        "mediaStatus": "Verified source example(s)",
+        "detailsFile": "public-presence-review.md",
+        "footer": "Selected public posts; accumulated counters, not reach or a full-account average",
+        "eligibleForMomentumFormula": false
+      },
+      "publicPresenceEvidence": {
+        "company": "Burberry",
+        "type": "Brand",
+        "accounts": [
+          {
+            "handle": "burberry",
+            "url": "https://www.instagram.com/burberry/",
+            "identityVerification": "Search-discovered profile matched by visible name/bio/domain; independent official-site link not verified in this pass",
+            "scope": "Brand account",
+            "followersDisplay": "19.8M",
+            "followersApproximate": 19800000,
+            "followersAreReach": false,
+            "observedAt": "2026-10-27T06:21Z",
+            "observationTimePrecision": "minute",
+            "posts": [
+              {
+                "url": "https://www.instagram.com/burberry/p/DerGEd_gHjj/",
+                "profileHandle": "burberry",
+                "postOwnerHandle": "burberry",
+                "ownershipBasis": "Username in observed post URL",
+                "scope": "matched_account_post",
+                "includedInOwnAccountSummary": true,
+                "format": "Photo/carousel (not separated)",
+                "published": "2026-10-19",
+                "observedAt": "2026-10-27T06:21Z",
+                "observationTimePrecision": "minute",
+                "likesDisplay": "2.4K",
+                "likesApproximate": 2400,
+                "commentsDisplay": "34",
+                "commentsApproximate": 34,
+                "countsRounded": true,
+                "likesState": "visible",
+                "commentsState": "visible",
+                "selection": "date_eligible_visible_grid_sample",
+                "withinSelectionDateWindow": true,
+                "views": null,
+                "reach": null,
+                "saves": null,
+                "shares": null,
+                "paidOrganicSplit": null,
+                "priorComparable": null,
+                "eligibleForMomentumFormula": false,
+                "collectionWindow": "Accumulated visible counters on October 27; not measured at equal post age or at seven days"
+              },
+              {
+                "url": "https://www.instagram.com/burberry/p/Deoa-5DgDB7/",
+                "profileHandle": "burberry",
+                "postOwnerHandle": "burberry",
+                "ownershipBasis": "Username in observed post URL",
+                "scope": "matched_account_post",
+                "includedInOwnAccountSummary": true,
+                "format": "Photo/carousel (not separated)",
+                "published": "2026-10-18",
+                "observedAt": "2026-10-27T06:22Z",
+                "observationTimePrecision": "minute",
+                "likesDisplay": "3.2K",
+                "likesApproximate": 3200,
+                "commentsDisplay": "34",
+                "commentsApproximate": 34,
+                "countsRounded": true,
+                "likesState": "visible",
+                "commentsState": "visible",
+                "selection": "date_eligible_visible_grid_sample",
+                "withinSelectionDateWindow": true,
+                "views": null,
+                "reach": null,
+                "saves": null,
+                "shares": null,
+                "paidOrganicSplit": null,
+                "priorComparable": null,
+                "eligibleForMomentumFormula": false,
+                "collectionWindow": "Accumulated visible counters on October 27; not measured at equal post age or at seven days"
+              },
+              {
+                "url": "https://www.instagram.com/burberry/reel/DejWwc1AsBi/",
+                "profileHandle": "burberry",
+                "postOwnerHandle": "burberry",
+                "ownershipBasis": "Username in observed post URL",
+                "scope": "matched_account_post",
+                "includedInOwnAccountSummary": true,
+                "format": "Reel",
+                "published": "2026-10-16",
+                "observedAt": "2026-10-27T06:22Z",
+                "observationTimePrecision": "minute",
+                "likesDisplay": "1.6K",
+                "likesApproximate": 1600,
+                "commentsDisplay": "26",
+                "commentsApproximate": 26,
+                "countsRounded": true,
+                "likesState": "visible",
+                "commentsState": "visible",
+                "selection": "date_eligible_visible_grid_sample",
+                "withinSelectionDateWindow": true,
+                "views": null,
+                "reach": null,
+                "saves": null,
+                "shares": null,
+                "paidOrganicSplit": null,
+                "priorComparable": null,
+                "eligibleForMomentumFormula": false,
+                "collectionWindow": "Accumulated visible counters on October 27; not measured at equal post age or at seven days"
+              }
+            ],
+            "sampleSummary": {
+              "inspectedPosts": 3,
+              "ownAccountPosts": 3,
+              "relatedAccountPosts": 0,
+              "ownPostsWithVisibleLikes": 3,
+              "ownSampleLikesRangeDisplay": "1.6K–3.2K",
+              "primaryOwnAccountPosts": 3,
+              "selectionExceptions": [],
+              "fullAccountAverage": null,
+              "engagementRate": null,
+              "rank": null
+            },
+            "eligibleForMomentumFormula": false
+          }
+        ],
+        "mediaItems": [
+          {
+            "company": "Burberry",
+            "publisher": "MediaPost",
+            "title": "Burberry Celebrates Outerwear With 170 Portraits",
+            "published": "2026-09-28",
+            "url": "https://www.mediapost.com/publications/article/418350/burberry-celebrates-outerwear-with-170-portraits.html",
+            "category": "Editorial marketing coverage",
+            "scope": "Burberry outerwear anniversary campaign",
+            "access": "Publicly visible substantial article text directly inspected; membership prompt present",
+            "verifiedText": true,
+            "observedAt": "2026-10-27T06:29:00Z",
+            "note": "Visible byline date used; no signup or bypass. Portrait count is campaign context, not audience.",
+            "publicationWindow": "within_social_selection_window",
+            "estimatedAudience": null,
+            "priorComparable": null,
+            "eligibleForMomentumFormula": false,
+            "classification": "verified_public_source_text"
+          }
+        ],
+        "gaps": [
+          "No matched historical social captures or comparable current/reference media census; snapshot excluded from momentum formula."
+        ],
+        "customerSnapshot": {
+          "label": "Public presence · snapshot",
+          "asOf": "2026-10-27",
+          "accounts": [
+            {
+              "handle": "burberry",
+              "scope": "Brand account",
+              "followersDisplay": "19.8M",
+              "samplePosts": 3,
+              "visibleLikePosts": 3,
+              "sampleLikesRange": "1.6K–3.2K",
+              "primarySamplePosts": 3,
+              "selectionExceptions": []
+            }
+          ],
+          "mediaExample": {
+            "publisher": "MediaPost",
+            "title": "Burberry Celebrates Outerwear With 170 Portraits",
+            "published": "2026-09-28",
+            "category": "Editorial marketing coverage",
+            "url": "https://www.mediapost.com/publications/article/418350/burberry-celebrates-outerwear-with-170-portraits.html",
+            "publicationWindow": "within_social_selection_window"
+          },
+          "mediaStatus": "Verified source example(s)",
+          "detailsFile": "public-presence-review.md",
+          "footer": "Selected public posts; accumulated counters, not reach or a full-account average",
+          "eligibleForMomentumFormula": false
+        },
+        "completeAccountOrMediaAudit": false,
+        "eligibleForMomentumFormula": false
+      },
+      "sourcePointers": [
+        "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/burberry/SKILL.md",
+        "https://github.com/Aily-Labs/aily-context/blob/3d27e802efd00dc33b8eb235d3a7bf59acb13703/packages/aily-semantic-layer-demos/aily_semantic_layer_demos/semantic_layer/skills/tenants/light/burberry/references/competitive_benchmark.md",
+        "https://www.launchmetrics.com/fashion-week-index/",
+        "https://lefty.io/fashion-weeks/lfw-ss27",
+        "https://lefty.io/fashion-weeks/ss26",
+        "https://www.instagram.com/burberry/",
+        "https://www.instagram.com/burberry/p/DerGEd_gHjj/",
+        "https://www.instagram.com/burberry/p/Deoa-5DgDB7/",
+        "https://www.instagram.com/burberry/reel/DejWwc1AsBi/",
+        "https://www.mediapost.com/publications/article/418350/burberry-celebrates-outerwear-with-170-portraits.html"
+      ],
+      "deliveryFields": [
+        {
+          "field": "Prospect / routing",
+          "contentMarkdown": "Burberry · Brand · environment **Burberry** · Allen row 2",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Page title",
+          "contentMarkdown": "**Fashion momentum index**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Event / comparison",
+          "contentMarkdown": "**BURBERRY · LONDON SS27**<br>September 2026 versus London SS26, September 2025.<br>Exact show dates and matched collection windows remain open.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Hero score / state",
+          "contentMarkdown": "**64/100**<br>**Provisional · 2 signals**<br>Earned media value **−35.5%**; engagement rate **+37.5% relative**, versus London SS26.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Headline — proposed",
+          "contentMarkdown": "**Engagement up; media value down**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Subtitle",
+          "contentMarkdown": "**Provisional index · two proxy signals**<br>Two related influencer-post measures; not independent audience and media categories.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Interpretation heading — proposed",
+          "contentMarkdown": "**A mixed attention picture**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Interpretation — proposed",
+          "contentMarkdown": "Average engagement rate rose from 4.8% to 6.6%, while estimated earned media value fell 35.5%. These related proxies describe attention; they do not establish reach or sales uplift.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Date / source line",
+          "contentMarkdown": "**Lefty · London SS27 vs SS26**.<br>PR Instagram snapshot: **27 October 2026**. It is separate from the September provider comparison.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signals heading",
+          "contentMarkdown": "**Two signals behind the provisional index**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signal card 1",
+          "contentMarkdown": "**Estimated earned media value · ½ weight**<br>**$10.84M** versus **$16.80M in 2025**<br>**−35.5%** · modeled media valuation, reported by Lefty. Exact current input: $10,842,340.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signal card 2",
+          "contentMarkdown": "**Average engagement rate · ½ weight**<br>**6.6%** versus **4.8% in 2025**<br>**+37.5% relative · +1.8 percentage points**. A rate proxy, not total engagements.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Signal card 3",
+          "contentMarkdown": "**Omit the third card.** No comparable independent third signal is supplied.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Method / footer",
+          "contentMarkdown": "**How it’s calculated**<br>Equal-weight average of the two component scores after the PR’s 60–75 bounds. The floor can conceal the EMV decline; retain actual growth beside the score.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Sales section — proposed",
+          "contentMarkdown": "**Explore outerwear demand and availability**<br>Use sales, sell-through and size-level stock to examine replenishment opportunities. No numeric sales forecast is supplied.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Public presence — PR addition",
+          "contentMarkdown": "**@burberry · 19.8M followers**<br>3 selected own-account posts; visible likes **1.6K–3.2K**. Observed 27 October 2026.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Media example — PR addition",
+          "contentMarkdown": "[MediaPost: Burberry Celebrates Outerwear With 170 Portraits](https://www.mediapost.com/publications/article/418350/burberry-celebrates-outerwear-with-170-portraits.html) · **28 September 2026**.<br>Campaign coverage, not a runway-attention comparison.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Internal-data invitation — preserved from PR",
+          "contentMarkdown": "**Add outerwear sales and stock to explore where to replenish.**",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Internal data to request",
+          "contentMarkdown": "Outerwear SKU sales by store/week; full-price sell-through; size-level stock; markdowns.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "CTA — preserved from PR",
+          "contentMarkdown": "**Unlock November signal**<br>Destination and analytics convention remain open.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        },
+        {
+          "field": "Delivery gaps",
+          "contentMarkdown": "Validate matched provider windows, post ages and definitions; disclose proxy use and bounds; verify live routing/CTA. A third signal would improve coverage but is not required for the permitted two-signal draft.",
+          "origin": "Image structure adapted to PR evidence; newly written copy is marked proposed"
+        }
+      ]
+    }
+  ],
+  "reviewDecisions": [
+    "Validate the field layout and proposed copy using these two prospects before generating remaining rows.",
+    "Resolve whether future delivery preserves PR bounds or adopts a revised method; this pilot preserves PR values and records image 71 separately.",
+    "Validate the sales section as an internal-data invitation; a numeric scenario needs separate inputs and approval."
+  ]
+}

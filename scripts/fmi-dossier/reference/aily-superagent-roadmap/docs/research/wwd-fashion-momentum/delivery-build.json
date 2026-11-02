@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "sources": {
+    "weighted-delivery-inputs.json": "20f239388cb011e5dbbd2a22318f3b4f7012896116fe7cedc9fbc8991201ca8c",
+    "prospect-inputs.json": "a85c092551fe4fe45ba417fcd7535e9817bec52498502e49db2373d9b83bad8d",
+    "prospect-packages.json": "1aee2850d58b646fadf175e1fc5363d550684f74f819838744c27d84079e1dbe",
+    "arceo-enablement-inputs.json": "620bec1518ee208ca16332eb36252d39e9984b5d7337e177ea11f2bba2e571c1",
+    "build-weighted-delivery.py": "3c6b45a4771c2b95737dc31b77622e24669c884f9d84f258644f923f96a476d2",
+    "build-weighted-workbook.mjs": "1d09e807737be53b3b1b151ee02035831bbb4eb0f84860a11b530947bc1fb86c",
+    "refresh-delivery.py": "dd261813f45b0e4f3b18616685134d28ae3d2bb8d087a7cc2cd507a5ea8737bb",
+    "import-sales-social.py": "37e90dbc7db0ce4579756cbc87ee59037243acfc01f447215e5bc1924d541b0d"
+  },
+  "outputs": {
+    "weighted-delivery.json": "63d524451c883c1ff70d2dc5a02ba4e745cb4df258b9f9cd0faa6efe21ead338",
+    "weighted-delivery.md": "e2aa0cf7061fa4e2eaab2f9ce4943dced23fca22497cc8eb5b56046cd533112a",
+    "weighted-delivery.xlsx": "2e89f3731a0798b6558c9e3fb51fcfeb588382221e743ec1fb15d8fd1031ffb5"
+  }
+}

@@ -172,6 +172,21 @@ GROUPS = {
         "leaderboard_rank",
         "leaderboard_status",
     ),
+    "Frozen historical delivery snapshot": (
+        "source_snapshot_reference",
+        "email_domains",
+        "source_social_2024",
+        "source_social_2025",
+        "source_social_2026",
+        "source_q4_vs_baseline_2024",
+        "source_q4_vs_baseline_2025",
+        "source_q4_vs_baseline_2026",
+        "source_q4_sales_yoy_2024",
+        "source_q4_sales_yoy_2025",
+        "source_q4_sales_yoy_2026",
+        "source_insights_descriptive",
+        "source_insights_statistics",
+    ),
 }
 
 
@@ -231,7 +246,9 @@ def write_audit(records: list[Row], cohort: Row, policy: Policy, output: Path) -
         "```",
         "",
         "Dynamic cohort normalization can change an unchanged brand's uplift. "
-        "The 70–98 display range gives every scored brand positive exponential uplift. "
+        "The approved exponential is calibrated on the legacy raw-score scale but "
+        "applied to rounded normalized FMI. Default scores 70–98 give about "
+        "5.27–15.69% uplift; score 100 gives 16.75%. There is no 11% cap. "
         "Uplifts are business scenarios, not calibrated predictions or verified "
         "historical replay.",
         "",
@@ -277,9 +294,11 @@ def write_audit(records: list[Row], cohort: Row, policy: Policy, output: Path) -
                 f"adjustment = {v('baseline_revenue')} × {v('legacy_uplift_fraction')} "
                 f"= {v('legacy_adjustment')}; "
                 f"adjusted = {v('legacy_adjusted_forecast')}.",
-                f"5. Exponential rate: {policy.uplift_max:g} × "
-                f"expm1({policy.uplift_exponent:g} × {v('display_fmi')} / 100) / "
-                f"expm1({policy.uplift_exponent:g}) = {v('uplift_fraction')}; "
+                f"5. Exponential rate: 0 if display ≤{policy.uplift_threshold:g}; "
+                f"otherwise {policy.uplift_intercept:g} + {policy.uplift_scale:g} × "
+                f"expm1({policy.uplift_exponent:g} × "
+                f"({v('display_fmi')} − {policy.uplift_threshold:g}) / "
+                f"{policy.uplift_score_span:g}) = {v('uplift_fraction')}; "
                 f"adjustment = {v('baseline_revenue')} × {v('uplift_fraction')} "
                 f"= {v('adjustment')}; "
                 f"baseline + adjustment = {v('adjusted_forecast')}. "

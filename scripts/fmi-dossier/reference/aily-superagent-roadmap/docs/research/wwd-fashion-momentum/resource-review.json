@@ -1,0 +1,447 @@
+{
+  "researchCutoff": "2026-10-27T05:23:32Z",
+  "newlyVerifiedResources": [
+    {
+      "id": "launchmetrics_public_index",
+      "title": "Launchmetrics Fashion Week Index",
+      "url": "https://www.launchmetrics.com/fashion-week-index/",
+      "access": "Public interactive board directly inspected; city controls and full tables used",
+      "classification": "observed_provider_report",
+      "companies": [
+        "Burberry",
+        "Fendi",
+        "Calvin Klein",
+        "Ralph Lauren",
+        "Coach",
+        "TOM FORD",
+        "Lafayette 148"
+      ],
+      "usableFor": "Supplementary city-level share of MIV; optional AI visibility context",
+      "measurementScope": "Selected city · after the shows · cumulative. Board year and exact measurement cutoff were not explicitly verified",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "No matched historical board collected",
+        "MIV share is not absolute EMV or a growth measure",
+        "Each city has its own denominator; do not sum cities or create a cross-city rank",
+        "Calvin Klein Collection is narrower than Calvin Klein",
+        "Coach and Ralph Lauren marked not on official show calendar",
+        "Lafayette 148 is censored below 0.1%; retain the less-than sign",
+        "AI visibility is outside the agreed momentum categories"
+      ]
+    },
+    {
+      "id": "exemplar_official",
+      "title": "Exemplar Luxury Group — company",
+      "url": "https://www.exemplarluxurygroup.com/company",
+      "access": "Official page directly read",
+      "classification": "official_company_context",
+      "companies": [
+        "Exemplar Luxury Group"
+      ],
+      "usableFor": "Identity and banner scope: formerly Saks Global; Neiman Marcus, Saks Fifth Avenue and Bergdorf Goodman",
+      "measurementScope": "Company context observed at research cutoff; no event metrics",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "No matching Light repository dossier; this source supplies public context only",
+        "Keep Allen's deployment mapping"
+      ]
+    },
+    {
+      "id": "gap_campaign_2025",
+      "title": "Marketing Dive — Gap viral marketing results",
+      "url": "https://www.marketingdive.com/news/3-stats-show-how-gaps-viral-marketing-is-delivering-retail-results/806153/",
+      "published": "2025-11-21",
+      "access": "Secondary article directly read",
+      "classification": "reported_secondary",
+      "companies": [
+        "GAP Inc"
+      ],
+      "usableFor": "Historical Gap-brand Better in Denim campaign context: 8B media impressions and more than 500M views across platforms",
+      "measurementScope": "2025 KATSEYE campaign totals; capture window and cross-platform deduplication unspecified",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Not 2026 data",
+        "No comparable previous/current pair",
+        "Impressions and views are overlapping totals, not unique audience",
+        "Gap-brand scope does not cover the four-brand Gap Inc group"
+      ]
+    },
+    {
+      "id": "gap_ir_2025",
+      "title": "Gap Inc. Q3 fiscal 2025 results",
+      "url": "https://www.prnewswire.com/news-releases/gap-inc-reports-third-quarter-fiscal-2025-results-raises-full-year-outlook-for-operating-margin-302622290.html",
+      "published": "2025-11-20",
+      "access": "Company-issued release directly read",
+      "classification": "official_financial_context",
+      "companies": [
+        "GAP Inc"
+      ],
+      "usableFor": "Banner and financial reporting scope",
+      "measurementScope": "Q3 fiscal 2025; financial context",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Accessible release does not provide the Marketing Dive attention totals",
+        "Financial results are excluded from the momentum formula"
+      ]
+    },
+    {
+      "id": "moncler_9m2026",
+      "title": "Moncler Group 9M 2026 presentation",
+      "url": "https://www.monclergroup.com/v3/assets/blt61bda6b71f29a239/blt1947ed8727089d53/6ad8de2f7632aa4f79881804/Moncler-Group-9M-2026-Interim-Management-Statement-Presentation.pdf",
+      "published": "2026-10-21",
+      "access": "Public official PDF downloaded and all 19 pages screened",
+      "classification": "official_campaign_context",
+      "companies": [
+        "Moncler"
+      ],
+      "usableFor": "Pioneers in Moncler global campaign and Fifth Avenue flagship context, page 2",
+      "measurementScope": "9M 2026 update",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "No numeric campaign attention measures found",
+        "FY2025 Warmer Together and Grenoble figures concern different campaigns, not a matched pair"
+      ]
+    },
+    {
+      "id": "vs_show2026",
+      "title": "Adweek — Victoria's Secret fan movement",
+      "url": "https://www.adweek.com/creativity/amid-turnaround-victorias-secret-turns-its-fashion-show-into-a-fan-movement/",
+      "published": "2026-10-18",
+      "access": "Accessible subscription preview directly read",
+      "classification": "reported_secondary_event_metadata",
+      "companies": [
+        "Victoria's Secret & Co."
+      ],
+      "usableFor": "2026 show metadata: Los Angeles, October 18; global YouTube/social streaming and post-show TikTok Live",
+      "measurementScope": "Event metadata only",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Preview provides no matched view totals",
+        "Does not validate the team-input score candidate"
+      ]
+    },
+    {
+      "id": "jcrew_barnjacket2026",
+      "title": "J.Crew — 40 years of the Barn Jacket",
+      "url": "https://www.prnewswire.com/news-releases/jcrew-celebrates-40-years-of-the-barn-jacket-with-its-most-ambitious-portrait-campaign-to-date-302885442.html",
+      "published": "2026-09-22",
+      "access": "Company-issued campaign release directly read",
+      "classification": "official_campaign_context",
+      "companies": [
+        "J.Crew"
+      ],
+      "usableFor": "Campaign definition: 160 people, five cities, 29 styles",
+      "measurementScope": "2026 Barn Jacket campaign; 2025 Rollneck reference is a different campaign",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Cast, cities and styles are not attention measures",
+        "No comparable engagement or audience pair"
+      ]
+    },
+    {
+      "id": "pacsun_cuker",
+      "title": "Cuker — PacSun activation case study",
+      "url": "https://www.cukeragency.com/work/pacsun/",
+      "access": "Agency case study directly read",
+      "classification": "agency_reported_case_study",
+      "companies": [
+        "PacSun"
+      ],
+      "usableFor": "Measurement planning: music platform and five-day US Open of Surfing activation",
+      "measurementScope": "Event year undisclosed; qualitative thousands of impressions/interactions, several hundred QR scans, reported 8% conversion",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "No verified event year",
+        "No matched reference",
+        "Conversion is a separate commercial measure, not a momentum component"
+      ]
+    },
+    {
+      "id": "lafayette_fall2026",
+      "title": "Lafayette 148 — Fall 2026 Time, Honored",
+      "url": "https://www.lafayette148ny.com/fa26-collection",
+      "access": "Official collection page directly read",
+      "classification": "official_collection_context",
+      "companies": [
+        "Lafayette 148"
+      ],
+      "usableFor": "Newer collection context: 30-year heritage, arrives August 2026",
+      "measurementScope": "Fall 2026 collection description",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "No quantitative attention comparisons"
+      ]
+    },
+    {
+      "id": "lilly_ss26_chronology",
+      "title": "Marie Claire — Lilly Pulitzer Spring 2026 show",
+      "url": "https://www.marieclaire.com/fashion/lilly-pulitzer-spring-2026-fashion-show/",
+      "published": "2025-11-22",
+      "access": "Article directly read",
+      "classification": "reported_secondary_event_metadata",
+      "companies": [
+        "Lilly Pulitzer"
+      ],
+      "usableFor": "Chronology: show held November 19, 2025 in Key West; 84 looks",
+      "measurementScope": "SS26 collection shown in calendar year 2025",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Collection season does not establish event year",
+        "Look counts do not measure audience or engagement",
+        "Public video reuploads and unmatched live counters would not provide a comparable baseline"
+      ]
+    },
+    {
+      "id": "google_trends_method",
+      "title": "Google Trends — FAQ about data",
+      "url": "https://support.google.com/trends/answer/4365533?hl=en",
+      "access": "Official methodology directly read; no brand dataset collected",
+      "classification": "methodology_resource",
+      "companies": [],
+      "usableFor": "Possible separately labelled search-interest context",
+      "measurementScope": "Sampled normalized relative interest 0–100, geography and time dependent",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Not absolute reach or search volume",
+        "Low-volume zero does not mean no demand",
+        "Do not substitute search interest into the agreed score without a methodology change"
+      ]
+    },
+    {
+      "id": "gdelt_doc_method",
+      "title": "GDELT DOC 2.0 API documentation",
+      "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/",
+      "published": "2017",
+      "access": "Official documentation directly read; no prospect article-count dataset collected",
+      "classification": "methodology_resource",
+      "companies": [],
+      "usableFor": "Source discovery and future news-volume measurement",
+      "measurementScope": "Documented rolling last-three-month window; TimelineVolRaw for article counts, TimelineVol for share of global coverage",
+      "eligibleForMomentumFormula": false,
+      "limitations": [
+        "Documentation is old; verify current service behavior before use",
+        "Documented start/end dates must fall within last three months, so it does not supply a 2025 comparison",
+        "ArticleList capped at 250; list size is not total coverage",
+        "Historical archive or BigQuery would require separate access and reproducible scope"
+      ]
+    }
+  ],
+  "launchmetricsContext": [
+    {
+      "company": "Burberry",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Burberry",
+      "city": "London",
+      "mivShareDisplay": "21.1%",
+      "providerCityMivRank": 1,
+      "aivShareDisplay": "13.5%",
+      "providerCityAivRank": 1,
+      "notOnOfficialShowCalendar": false,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": false
+    },
+    {
+      "company": "Fendi",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Fendi",
+      "city": "Milan",
+      "mivShareDisplay": "7.0%",
+      "providerCityMivRank": 3,
+      "aivShareDisplay": "11.7%",
+      "providerCityAivRank": 3,
+      "notOnOfficialShowCalendar": false,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": false
+    },
+    {
+      "company": "Calvin Klein",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Calvin Klein Collection",
+      "city": "New York",
+      "mivShareDisplay": "12.5%",
+      "providerCityMivRank": 2,
+      "aivShareDisplay": "5.0%",
+      "providerCityAivRank": 8,
+      "notOnOfficialShowCalendar": false,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": false
+    },
+    {
+      "company": "Ralph Lauren",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Ralph Lauren*",
+      "city": "New York",
+      "mivShareDisplay": "7.2%",
+      "providerCityMivRank": 3,
+      "aivShareDisplay": "7.3%",
+      "providerCityAivRank": 2,
+      "notOnOfficialShowCalendar": true,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": false
+    },
+    {
+      "company": "Coach",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Coach*",
+      "city": "New York",
+      "mivShareDisplay": "7.1%",
+      "providerCityMivRank": 4,
+      "aivShareDisplay": "5.5%",
+      "providerCityAivRank": 6,
+      "notOnOfficialShowCalendar": true,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": false
+    },
+    {
+      "company": "TOM FORD",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Tom Ford",
+      "city": "Paris",
+      "mivShareDisplay": "2.0%",
+      "providerCityMivRank": 11,
+      "aivShareDisplay": "0.9%",
+      "providerCityAivRank": 24,
+      "notOnOfficialShowCalendar": false,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": false
+    },
+    {
+      "company": "Lafayette 148",
+      "sourceId": "launchmetrics_public_index",
+      "providerLabel": "Lafayette 148",
+      "city": "New York",
+      "mivShareDisplay": "<0.1%",
+      "providerCityMivRank": 88,
+      "aivShareDisplay": null,
+      "providerCityAivRank": null,
+      "notOnOfficialShowCalendar": false,
+      "boardMode": "after the shows · cumulative",
+      "boardYearVerified": false,
+      "measurementCutoffVerified": false,
+      "observedAt": "2026-10-27T05:23:32Z",
+      "eligibleForMomentumFormula": false,
+      "classification": "observed_provider_report",
+      "censored": true
+    }
+  ],
+  "discoveredButNotRead": [
+    {
+      "url": "https://www.launchmetrics.com/resources/reports/fw26-fashion-week",
+      "purpose": "Seasonal report pointer; not read or used in calculations; FW26 differs from current SS27"
+    },
+    {
+      "url": "https://www.launchmetrics.com/resources/reports/ss26-fashion-week-data",
+      "purpose": "Potential historical report pointer; content/data access not validated"
+    },
+    {
+      "url": "https://media.launchmetrics.com/resources/ebook/2026/fashionweek_fw26/fw26_milan.pdf",
+      "purpose": "Public PDF link discovered; not downloaded or used; different season"
+    },
+    {
+      "url": "https://www.pacsun.com/youth-report",
+      "purpose": "Official audience-research pointer discovered; not read or used as a measured input"
+    },
+    {
+      "url": "https://www.prnewswire.com/news-releases/pacsun-captures-the-electric-spirit-of-gen-z-in-its-spring-2026-campaign-302680023.html",
+      "purpose": "Spring 2026 campaign pointer discovered; not directly read in this pass"
+    }
+  ],
+  "focusedResearchLog": [
+    {
+      "focus": "Gap campaign impressions and views, 2025 versus 2026",
+      "outcome": "2025 Marketing Dive totals found; no matched current/reference pair"
+    },
+    {
+      "focus": "Moncler Q3/9M 2026 campaign reach",
+      "outcome": "Latest official PDF screened; campaign context, no attention totals"
+    },
+    {
+      "focus": "Victoria's Secret 2026 versus 2025 show views",
+      "outcome": "Event metadata located; public pair not independently verified"
+    },
+    {
+      "focus": "TOM FORD SS26 earned media value and engagement rate",
+      "outcome": "No historical ER pair found; Lefty public SS26 Paris summary gives top five only, full rank gated"
+    },
+    {
+      "focus": "Christian Louboutin 2026/2025 media impact",
+      "outcome": "No comparable historical pair located"
+    },
+    {
+      "focus": "Jacquemus and Marc Jacobs 2026 show media results",
+      "outcome": "No matched quantitative event pair located in focused searches"
+    },
+    {
+      "focus": "Exemplar Luxury Group identity",
+      "outcome": "Official identity and banner scope located"
+    },
+    {
+      "focus": "PacSun campaign case studies",
+      "outcome": "Agency activation example located; event year and reference absent"
+    },
+    {
+      "focus": "J.Crew 2026 Barn Jacket",
+      "outcome": "Official campaign description located; cast is not reach"
+    },
+    {
+      "focus": "ME+EM campaign metrics",
+      "outcome": "Unquoted search produced irrelevant results; none used. Dossier and official references retained"
+    },
+    {
+      "focus": "DKNY 2026 Twin Muses campaign",
+      "outcome": "Official description reviewed earlier; no quantitative pair"
+    },
+    {
+      "focus": "Lafayette 148 and Lilly Pulitzer 2026 media/show results",
+      "outcome": "Collection and event chronology found; public current MIV share for Lafayette, no historical pair"
+    },
+    {
+      "focus": "Launchmetrics public boards and seasonal reports",
+      "outcome": "Seven prospect rows observed; no historical paired data collected; report pages discovered but not used as measured inputs"
+    },
+    {
+      "focus": "Google Trends and GDELT methods",
+      "outcome": "Official methods verified; search interest kept separate and GDELT documented historic limitation recorded"
+    }
+  ],
+  "resourcePriorities": [
+    "Use the existing Lefty pairs as provisional drafts; validate collection windows, platforms and definitions before treating them as comparable.",
+    "For gaps, seek publicly accessible same-provider current/reference event summaries or exports with at least two matched categories. A gated report pointer is not evidence.",
+    "Use official company/IR and campaign sources to establish event and brand scope. Retain financial and campaign-description data as context.",
+    "Use official-account social measures only with reproducible post selection and matched counter ages; present-day counters on old posts do not recreate historical capture windows.",
+    "Use Launchmetrics MIV share as separate city context until a matched baseline and scope are available. Keep AI visibility separate from Fashion Momentum.",
+    "Google Trends can support a separate search-interest view. GDELT historic comparisons require an archive, not the documented three-month DOC search window."
+  ],
+  "newComparableIndicesAdded": 0,
+  "scopeNote": "No-match search outcomes describe this pass, not proof that no data exists. No purchases, lead-form submissions or private provider exports were used."
+}
