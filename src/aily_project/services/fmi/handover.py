@@ -68,6 +68,7 @@ def read_reports(root: Path) -> list[Row]:
                     if match[1].lower() not in {"p", "reel", "reels", "stories"}:
                         handles.add(match[1].lower())
             shows = []
+            financial_period_labels = set()
             for table in doc.findall(".//w:tbl", WORD):
                 rows = [
                     [text(c) for c in r.findall("w:tc", WORD)]
@@ -76,6 +77,11 @@ def read_reports(root: Path) -> list[Row]:
                 if not rows:
                     continue
                 headings = rows[0]
+                # Read period labels only, never table amounts or component scores.
+                for heading in headings:
+                    financial_period_labels.update(
+                        re.findall(r"\b(?:FY\s*)?20\d{2}(?:\s*Q[1-4])?\b", heading)
+                    )
                 date_col = next(
                     (
                         i
@@ -99,6 +105,30 @@ def read_reports(root: Path) -> list[Row]:
                             )
             stem = path.stem.split("_momentum")[0].split("_show")[0].split("_fiscal")[0]
             report_name = path.parent.name if "02_Brand_reports" in str(path) else stem
+            annual_windows = []
+            joined = " ".join(paragraphs)
+            match = re.search(
+                r"Prior period\s+(\d{4}-\d{2}-\d{2})\s+to\s+(\d{4}-\d{2}-\d{2})"
+                r"[;,. ]*current period\s+(\d{4}-\d{2}-\d{2})"
+                r"\s+to\s+(\d{4}-\d{2}-\d{2})",
+                joined,
+                re.I,
+            )
+            if match:
+                annual_windows.append(
+                    dict(
+                        zip(
+                            (
+                                "baseline_start",
+                                "baseline_end",
+                                "current_start",
+                                "current_end",
+                            ),
+                            match.groups(),
+                            strict=True,
+                        )
+                    )
+                )
             reports.append(
                 {
                     "report_name": report_name,
@@ -107,6 +137,8 @@ def read_reports(root: Path) -> list[Row]:
                     "handles": sorted(handles),
                     "preferred_handles": sorted(preferred_handles),
                     "shows": shows,
+                    "annual_windows": annual_windows,
+                    "financial_period_labels": sorted(financial_period_labels),
                     "date_evidence": [
                         p
                         for p in paragraphs
@@ -140,6 +172,7 @@ def read_reports(root: Path) -> list[Row]:
 def matched_reports(entity: Row, reports: list[Row]) -> list[Row]:
     variants = names(str(entity["name"])) | names(str(entity["entity_id"]))
     aliases = {
+        "abercrombie-fitch": "abercrombie_and_fitch",
         "victorias-secret-co": "victorias_secret",
         "g-iii-apparel-group": "g_iii",
         "global-luxury-retail-group-dba-missoni": "missoni",

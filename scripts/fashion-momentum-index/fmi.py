@@ -1,4 +1,4 @@
-"""One-off FMI calculations and small read-only CSV exports. No cloud setup here."""
+"""Legacy CSV/demo FMI helpers; the active JSON notebooks do not import this file."""
 
 from __future__ import annotations
 
@@ -797,7 +797,7 @@ def comparison_analyses(
     for pair in pairs.to_dict("records"):
         entity = pair["financial_entity"]
         if entity not in settings.index:
-            raise ValueError(f"Add {entity} to inputs/analyses.csv.")
+            raise ValueError(f"Add {entity} to inputs/legacy/analyses.csv.")
         analysis = settings.loc[entity].to_dict()
         if str(analysis["brand"]).strip() != pair["brand"]:
             raise ValueError(f"{entity}: brand name differs between input CSVs.")
@@ -829,7 +829,7 @@ def entity_period_choices(
     choices = []
     for entity in names:
         if entity not in indexed.index:
-            raise ValueError(f"Add {entity} to inputs/entities.csv.")
+            raise ValueError(f"Add {entity} to inputs/legacy/entities.csv.")
         row = indexed.loc[entity]
         for role in roles:
             year = pd.to_numeric(row.get(f"{role}_year"), errors="coerce")

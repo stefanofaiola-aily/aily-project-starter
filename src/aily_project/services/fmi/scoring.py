@@ -46,6 +46,25 @@ def half_up(value: float) -> float:
     return float(Decimal(str(value)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
 
 
+def complete_score(result: FMIResult) -> None:
+    """Shared weighted-score implementation for replay and presentation scenarios."""
+    v = result.values
+    for component in ("ir", "social", "trend"):
+        score = v.get(f"{component}_score")
+        v[f"{component}_status"] = "available" if score is not None else "unavailable"
+        v[f"{component}_contribution"] = (
+            score * v[f"{component}_weight"] if score is not None else None
+        )
+    if not result.gaps and all(
+        v.get(f"{c}_score") is not None for c in ("ir", "social", "trend")
+    ):
+        v["raw_fmi"] = sum(v[f"{c}_contribution"] for c in ("ir", "social", "trend"))
+        v["raw_classification"] = classify(v["raw_fmi"])
+        v["fmi_status"] = "available"
+    else:
+        v["fmi_status"] = "unavailable"
+
+
 def uplift(display: float, policy: Policy) -> float:
     if not 0 <= display <= 100:
         raise ValueError("Display score must be in 0–100")
@@ -53,6 +72,18 @@ def uplift(display: float, policy: Policy) -> float:
         policy.uplift_max
         * math.expm1(policy.uplift_exponent * display / 100)
         / math.expm1(policy.uplift_exponent)
+    )
+
+
+def legacy_uplift(raw: float, policy: Policy) -> float:
+    """Historical scenario uses unrounded raw FMI, not the rescaled index."""
+    if not 0 <= raw <= 100:
+        raise ValueError("Raw score must be in 0–100")
+    if raw <= policy.legacy_uplift_threshold:
+        return 0.0
+    return (
+        policy.legacy_uplift_intercept
+        + (raw - policy.legacy_uplift_threshold) * policy.legacy_uplift_per_score
     )
 
 
@@ -119,6 +150,9 @@ def raw_result(
         "proxy_label",
         "handle",
         "profile_id",
+        "event_category",
+        "event_invited",
+        "fmi_required",
     ):
         v[column] = entity.get(column)
     v["proxy"] = truth(entity.get("proxy"))
@@ -177,6 +211,28 @@ def raw_result(
         if entity.get("handle")
         and str(r.get("profile_username", "")).lower() == str(entity["handle"]).lower()
     ]
+    from .collection import financial_candidates
+    from .handover import candidate_symbols
+
+    candidates = financial_candidates(entity, snapshot)
+    financial_query_values = {
+        str(value)
+        for q in snapshot.metadata.get("queries", [])
+        if "financial" in q.get("source_relation", "")
+        for value in q.get("scope", [])
+    }
+    v.update(
+        data_extracted_at=snapshot.metadata.get("extracted_at"),
+        financial_candidate_count=len(candidates),
+        social_capture_count=len(source_posts),
+        source_query_coverage_status=(
+            "financial_candidates_present"
+            if candidates
+            else "requested_financial_identifiers_no_rows"
+            if financial_query_values & candidate_symbols(entity)
+            else "financial_identifiers_not_in_saved_query_scope"
+        ),
+    )
     retained = social.observations(source_posts, cutoff)[0] if cutoff else []
     v["social_history_status"] = (
         "missing_handle_or_cutoff"
@@ -314,20 +370,7 @@ def raw_result(
     v.update(social_values)
     result.social_posts = posts
     result.gaps.extend(social_reasons)
-    for component in ("ir", "social", "trend"):
-        score = v.get(f"{component}_score")
-        v[f"{component}_status"] = "available" if score is not None else "unavailable"
-        v[f"{component}_contribution"] = (
-            score * v[f"{component}_weight"] if score is not None else None
-        )
-    if not result.gaps and all(
-        v.get(f"{c}_score") is not None for c in ("ir", "social", "trend")
-    ):
-        v["raw_fmi"] = sum(v[f"{c}_contribution"] for c in ("ir", "social", "trend"))
-        v["raw_classification"] = classify(v["raw_fmi"])
-        v["fmi_status"] = "available"
-    else:
-        v["fmi_status"] = "unavailable"
+    complete_score(result)
     v["historical_status"] = (
         "strict_inputs_eligible"
         if v["fmi_status"] == "available"
@@ -391,6 +434,9 @@ def rescale(results: list[FMIResult], policy: Policy) -> Row:
         )
         r.values["display_fmi"] = None
         r.values["uplift_fraction"] = None
+        r.values["legacy_uplift_fraction"] = None
+        r.values["legacy_uplift_score_basis"] = "unrounded_raw_fmi"
+        r.values["uplift_score_basis"] = "rounded_display_fmi"
     for r in cohort:
         assert lo is not None and hi is not None
         display = (
@@ -403,6 +449,9 @@ def rescale(results: list[FMIResult], policy: Policy) -> Row:
         )
         r.values["display_fmi"] = half_up(display)
         r.values["uplift_fraction"] = uplift(r.values["display_fmi"], policy)
+        r.values["legacy_uplift_fraction"] = legacy_uplift(
+            float(r.values["raw_fmi"]), policy
+        )
     return {"cohort_id": cohort_id, "members": membership, "minimum": lo, "maximum": hi}
 
 
@@ -448,11 +497,6 @@ def forecast(
                 "forecast_scope_units_target_or_alignment_incompatible",
             )
     if baseline:
-        result.financial_periods.append(baseline)
-        v.update(
-            baseline_revenue=baseline["amount"],
-            forecast_vintage=baseline["available_at"],
-        )
         prior, _ = financial.select(
             inputs,
             snapshot,
@@ -462,7 +506,7 @@ def forecast(
             "revenue",
             cutoff,
         )
-        if (
+        compatible_prior = (
             prior
             and all(
                 prior[k] == baseline[k]
@@ -474,25 +518,52 @@ def forecast(
                 - (prior["period_end"] - prior["period_start"]).days
             )
             <= 10
-        ):
-            result.financial_periods.append(prior)
-            v["prior_year_actual"] = prior["amount"]
-            v["baseline_forecast_yoy"] = baseline["amount"] / prior["amount"] - 1
-        rate = v.get("uplift_fraction")
-        if rate is not None:
-            v.update(
-                adjustment=baseline["amount"] * rate,
-                adjusted_forecast=baseline["amount"] * (1 + rate),
-                forecast_status="available",
-            )
-            if v.get("prior_year_actual"):
-                v["adjusted_forecast_yoy"] = (
-                    v["adjusted_forecast"] / v["prior_year_actual"] - 1
-                )
-            return
-        status = "missing_reviewed_display_fmi"
+        )
+        if not compatible_prior:
+            prior = None
+        apply_baseline(result, baseline, prior)
+        return
     v["forecast_status"] = "unavailable"
     v["forecast_missing_reason"] = status
+
+
+def apply_baseline(result: FMIResult, baseline: Row, prior: Row | None) -> None:
+    """Both release modes use identical uplift amount and YoY mathematics."""
+    v = result.values
+    result.financial_periods.append(baseline)
+    v.update(
+        baseline_revenue=baseline["amount"],
+        forecast_vintage=baseline.get("available_at"),
+    )
+    if prior and prior["amount"] > 0:
+        if prior not in result.financial_periods:
+            result.financial_periods.append(prior)
+        v["prior_year_actual"] = prior["amount"]
+        v["baseline_forecast_yoy"] = baseline["amount"] / prior["amount"] - 1
+    rate = v.get("uplift_fraction")
+    if rate is None:
+        v.update(
+            forecast_status="unavailable",
+            forecast_missing_reason="missing_available_display_fmi",
+        )
+        return
+    v.update(
+        adjustment=baseline["amount"] * rate,
+        adjusted_forecast=baseline["amount"] * (1 + rate),
+        forecast_status="available",
+    )
+    legacy_rate = v.get("legacy_uplift_fraction")
+    if legacy_rate is not None:
+        v.update(
+            legacy_adjustment=baseline["amount"] * legacy_rate,
+            legacy_adjusted_forecast=baseline["amount"] * (1 + legacy_rate),
+        )
+    if v.get("prior_year_actual"):
+        v["adjusted_forecast_yoy"] = v["adjusted_forecast"] / v["prior_year_actual"] - 1
+        if v.get("legacy_adjusted_forecast") is not None:
+            v["legacy_adjusted_forecast_yoy"] = (
+                v["legacy_adjusted_forecast"] / v["prior_year_actual"] - 1
+            )
 
 
 def build_raw(
@@ -515,7 +586,12 @@ def build_raw(
         ]
         if len(analyses) == 1:
             analysis = analyses[0]
-            result = raw_result(
+            implementation = raw_result
+            if analysis.get("calculation_mode") in {"presentation", "dossier"}:
+                from .scenario import raw_scenario
+
+                implementation = raw_scenario
+            result = implementation(
                 inputs, snapshot, analysis, entity, entities, policy, run_id
             )
             selections[entity["entity_id"]] = analysis
@@ -544,7 +620,15 @@ def calculate(
     cohort = rescale(results, policy)
     for result in results:
         if result.brand_id in selections:
-            forecast(
+            implementation = forecast
+            if selections[result.brand_id].get("calculation_mode") in {
+                "presentation",
+                "dossier",
+            }:
+                from .scenario import forecast_scenario
+
+                implementation = forecast_scenario
+            implementation(
                 result,
                 inputs,
                 snapshot,

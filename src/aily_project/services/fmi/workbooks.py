@@ -4,11 +4,13 @@ import json
 import os
 import subprocess
 import tempfile
+from collections import Counter
+from dataclasses import asdict
 from pathlib import Path
 
 from .contract import FIELDS, canonical_record
 from .inputs import SHEETS
-from .models import FMIResult, Inputs, Row, Snapshot, clean
+from .models import FMIResult, Inputs, Row, Snapshot, clean, fingerprint
 from .policy import Policy
 
 
@@ -149,29 +151,31 @@ def delivery_payload(
                 "details": json.dumps(clean(row), sort_keys=True),
             }
         )
-    # All late/unreviewed values stay evidence, never in app metric columns.
+    # Full captures remain in the authenticated snapshot. Evidence records their
+    # scope/count/hash, avoiding a second giant copy of the same archive in Excel.
+    captures = Counter(
+        (r.get("source_relation"), r.get("profile_username"))
+        for r in snapshot.posts + snapshot.profiles
+    )
+    snapshot_hash = fingerprint(asdict(snapshot))
     evidence.extend(
         {
-            "kind": "social_capture",
-            "reference": str(r.get("source_row_id")),
+            "kind": "social_capture_manifest",
+            "reference": snapshot_hash,
             "details": json.dumps(
                 {
-                    k: clean(r.get(k))
-                    for k in (
-                        "source_relation",
-                        "profile_username",
-                        "profile_id",
-                        "post_id",
-                        "date_posted",
-                        "crawled_at",
-                        "post_url",
-                        "extracted_at",
-                    )
+                    "source_relation": relation,
+                    "profile_username": handle,
+                    "capture_rows": count,
+                    "extracted_at": snapshot.metadata.get("extracted_at"),
+                    "status": "source_archive_not_released_historical_metrics",
                 },
                 sort_keys=True,
             ),
         }
-        for r in snapshot.posts + snapshot.profiles
+        for (relation, handle), count in sorted(
+            captures.items(), key=lambda item: str(item[0])
+        )
     )
     return {
         "kind": "delivery",
@@ -192,17 +196,26 @@ def delivery_payload(
                 social_keys,
             ),
             sheet("Evidence", evidence),
+            sheet(
+                "Policy",
+                [{"parameter": k, "value": v} for k, v in policy.model_dump().items()],
+            ),
             sheet("Fields", [f.record() for f in FIELDS]),
         ],
     }
 
 
-def write_workbook(payload: Row, path: Path, *, previews: bool = False) -> None:
+def write_workbook(
+    payload: Row, path: Path, *, previews: bool = False, work_dir: Path | None = None
+) -> None:
     """Configured managed artifact runtime; no repo-local dependency installation."""
     node = os.environ.get("FMI_NODE", "node")
     modules = os.environ.get("FMI_NODE_MODULES")
     builder = Path(__file__).with_name("workbook.mjs")
     path.parent.mkdir(parents=True, exist_ok=True)
+    artifacts = work_dir or path.parent / ".work"
+    artifacts.mkdir(parents=True, exist_ok=True)
+    staged = artifacts / path.name
     with tempfile.TemporaryDirectory(prefix="fmi-workbook-") as temp:
         work = Path(temp)
         script = work / "workbook.mjs"
@@ -217,7 +230,7 @@ def write_workbook(payload: Row, path: Path, *, previews: bool = False) -> None:
             node,
             str(script),
             str(source),
-            str(path.resolve()),
+            str(staged.resolve()),
             str(previews).lower(),
         ]
         try:
@@ -234,3 +247,4 @@ def write_workbook(payload: Row, path: Path, *, previews: bool = False) -> None:
                 "Workbook generation failed: " + "\n".join(lines[-12:])
             ) from exc
         print(completed.stdout)
+        staged.replace(path)

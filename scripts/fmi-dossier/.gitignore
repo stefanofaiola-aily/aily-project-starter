@@ -1,0 +1,5 @@
+data/*
+!data/.gitignore
+# Source reports and the populated workbook include tenant measurements.
+dossiers/
+inputs/FMI_dossier_inputs.xlsx

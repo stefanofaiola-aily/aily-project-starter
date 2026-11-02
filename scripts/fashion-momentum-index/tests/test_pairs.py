@@ -183,7 +183,7 @@ def test_entity_periods_and_forecast_roles_are_csv_driven() -> None:
 def test_burberry_sales_scenario_targets_fy2026_q4_forecast(
     score: float, uplift_pct: float
 ) -> None:
-    entities = pd.read_csv(Path(__file__).parents[1] / "inputs/entities.csv")
+    entities = pd.read_csv(Path(__file__).parents[1] / "inputs/legacy/entities.csv")
     choices = FMI["entity_period_choices"](
         entities, ["burberry"], ("target", "last_year_target")
     )

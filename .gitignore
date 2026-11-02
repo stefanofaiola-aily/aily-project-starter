@@ -15,6 +15,10 @@ dist/
 .DS_Store
 .ipynb_checkpoints/
 data/
+!scripts/fashion-momentum-index/data/
 outputs/
+.work/
+# Local source reports and historical database-derived handover artifacts.
+/handover/
 .scratch/
 .vscode/

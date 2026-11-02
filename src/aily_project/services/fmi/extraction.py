@@ -67,6 +67,20 @@ LIGHT_COLUMNS = [
     "type_filter_code",
     "type_filter_value",
 ]
+DOCUMENT_RELATION = "denormalized.finance_specific_investor_relations"
+DOCUMENT_COLUMNS = [
+    "company_code",
+    "company_name",
+    "document_type",
+    "report_type",
+    "fiscal_period",
+    "fiscal_year",
+    "period_start",
+    "period_end",
+    "url",
+    "created_at",
+    "crawled_at",
+]
 SPECS = {
     "light.light_companies": [
         "company_code",
@@ -80,6 +94,7 @@ SPECS = {
     ],
     "light.light_financial_statements_actuals": LIGHT_COLUMNS,
     "ai.light_financial_statements_forecast": LIGHT_COLUMNS,
+    DOCUMENT_RELATION: DOCUMENT_COLUMNS,
     **{
         f"normalized.{name}": FINANCE_COLUMNS
         for name in (
@@ -238,6 +253,7 @@ def extract(
             "authenticated": True,
             "first_year": first_year,
             "last_year": last_year,
+            "row_limit": limit,
             "queries": [],
             "limitations": [],
             "discovered_columns": {
@@ -301,11 +317,22 @@ def extract(
     codes = sorted(
         {str(e["light_code"]) for e in inputs.entities if e.get("light_code")}
         | {str(r["company_code"]) for r in mappings}
+        | {
+            str(e["parent"]["light_code"])
+            for e in inputs.entities
+            if e.get("parent", {}).get("light_code")
+        }
     )
     symbols = sorted(
         {str(e["shared_symbol"]) for e in inputs.entities if e.get("shared_symbol")}
         | {str(r.get("company_ticker") or r["company_code"]) for r in mappings}
         | set(codes)
+        | {
+            str(e["parent"].get("shared_symbol") or e["parent"].get("ticker"))
+            for e in inputs.entities
+            if e.get("parent", {}).get("shared_symbol")
+            or e.get("parent", {}).get("ticker")
+        }
     )
     symbols = sorted(
         set(symbols)
@@ -325,11 +352,34 @@ def extract(
             if e.get("handle")
         }
         | {h.lower().lstrip("@") for h in candidate_handles}
+        | {
+            str(member["handle"]).lower().lstrip("@")
+            for analysis in inputs.analyses
+            if analysis.get("calculation_mode") == "dossier"
+            and analysis.get("dossier", {}).get("social", {}).get("platform")
+            == "instagram"
+            for member in analysis["dossier"]["social"].get("members", [])
+            if member.get("handle")
+        }
     )
 
     def slots(items: list[str]) -> str:
         return ",".join(["%s"] * len(items))
 
+    # Source-document metadata is inventory, not financial measurements. Native
+    # metadata can be inconsistent with the body; only a verified adapter/review
+    # may establish scope, units and discrete periods from the actual disclosure.
+    document_codes = sorted(set(codes) | set(symbols))
+    if document_codes:
+        result.metadata["financial_source_documents"] = read(
+            shared,
+            shared_schema,
+            DOCUMENT_RELATION,
+            f"company_code IN ({slots(document_codes)}) "
+            "AND period_end >= %s AND period_end < %s",
+            (*document_codes, f"{first_year}-01-01", f"{last_year + 1}-01-01"),
+            {"company_code", "period_end", "url"},
+        )
     if codes:
         for relation in (
             "light.light_financial_statements_actuals",
@@ -353,7 +403,7 @@ def extract(
                     source_classification="current_snapshot",
                     available_at=None,
                     vintage_verified=False,
-                    period_label=f"Light fiscal {r['year']} {r.get('quarter')}",
+                    period_label=f"Light native {r['year']} {r.get('quarter')}",
                 )
             result.financials.extend(rows)
     if symbols:
@@ -401,8 +451,7 @@ def extract(
                             "kind": "actual",
                             "source_classification": classification,
                             "period_label": (
-                                f"Shared calendar {r['calendar_year']} "
-                                f"{r.get('period')}"
+                                f"Shared native {r['calendar_year']} {r.get('period')}"
                             ),
                             "available_at": max(captures).isoformat()
                             if captures

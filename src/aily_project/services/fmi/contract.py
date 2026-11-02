@@ -59,14 +59,147 @@ def dictionary() -> list[Field]:
 
     add("brand_id analysis_id name", "Headline", required=True)
     add(
+        "dossier_source dossier_parameter_status",
+        "Analysis",
+        derivation="Editable dossier business parameters and linked report",
+    )
+    add(
+        "headline_method dossier_score_basis dossier_headline_replication_status",
+        "Analysis",
+        derivation="Current weighted headline method and separate frozen dossier "
+        "normalization basis. Weighted components do not replicate historical "
+        "percentiles.",
+    )
+    add(
+        "social_used_members social_member_missing_reasons",
+        "Social",
+        derivation="Dossier portfolio members used/excluded; one lift per member",
+    )
+    add(
+        "trend_basis trend_comparison",
+        "Trend",
+        derivation="Dossier peer gap, company growth or labelled assumption",
+        influences=True,
+    )
+    add(
+        "social_scoring_metric",
+        "Social",
+        derivation="Dossier metric; likes by default, explicitly selected comments",
+        influences=True,
+    )
+    add(
+        "financial_currency_status",
+        "Quality",
+        derivation="Source currency takes precedence. Missing source currency may "
+        "use registry denomination in presentation only: assumption, not verification.",
+    )
+    add(
+        "baseline_currency_basis",
+        "Forecast",
+        derivation="Source currency, consistent same-subject actual-source currency "
+        "assumption, or registry denomination assumption. Never FX conversion or "
+        "verified forecast reporting currency without source evidence.",
+    )
+    add(
+        "parent_name parent_mapping_evidence parent_fallback_status "
+        "used_peer_financial_subjects social_month_selection",
+        "Mapping and selection",
+        derivation="Evidenced presentation parent fallback and actual peer subjects. "
+        "Parent amounts are NOT standalone brand amounts; common months are explicit.",
+    )
+    add(
         "raw_fmi display_fmi",
         "Headline",
         "number",
         "score_0_100",
-        "controlled score; display uses reviewed selected cohort",
+        "weighted score; display uses available selected cohort in declared mode",
         influences=True,
     )
     add("raw_classification fmi_status forecast_status", "Headline")
+    add(
+        "calculation_mode release_status",
+        "Headline",
+        derivation="Current-source simulation, never reviewed historical replay",
+    )
+    add(
+        "scenario_as_of signal_window_cutoff",
+        "Analysis",
+        "datetime",
+        "UTC",
+        "Current snapshot time and original document-derived signal cutoff",
+    )
+    add(
+        "scenario_quarter_tolerance_days scenario_forecast_tolerance_days",
+        "Analysis",
+        "integer",
+        "days",
+        "Maximum YoY end-date drift / selected forecast distance from requested target",
+    )
+    add(
+        "revenue_alignment_status financial_selection_basis financial_unit_status "
+        "financial_scope_status social_selection_basis baseline_validation_status",
+        "Quality",
+        derivation="Simulation selection and unverified scope/scale/vintage",
+    )
+    add(
+        "used_peer_count",
+        "Peer comparison",
+        "integer",
+        "count",
+        "Assigned peers with both comparable growth measurements; not approval",
+    )
+    add(
+        "used_peer_names peer_exclusion_reasons",
+        "Peer comparison",
+        derivation="Same usable assigned subset; excluded peers and reasons",
+    )
+    add(
+        "baseline_period_start",
+        "Forecast",
+        "date",
+        "calendar_date",
+        "Native quarter proxy boundaries; not verified source boundaries",
+    )
+    add("baseline_source_row_id baseline_source_relation baseline_currency", "Forecast")
+    add(
+        "baseline_period_label baseline_native_quarter",
+        "Headline",
+        derivation="Selected forecast's original fiscal/retail source label, "
+        "not requested calendar label",
+    )
+    add("baseline_period_end", "Headline", "date", "calendar_date")
+    add("baseline_fiscal_year", "Forecast", "integer", "source_fiscal_year")
+    add(
+        "forecast_selection_basis forecast_calendar_alignment_status "
+        "prior_year_actual_status",
+        "Forecast",
+        derivation="Requested calendar target versus actual native forecast "
+        "and matching YoY actual",
+    )
+    add("forecast_target_end_difference_days", "Forecast", "integer", "days")
+    add("prior_year_actual_period_label", "Forecast")
+    add("prior_year_actual_period_end", "Forecast", "date", "calendar_date")
+    add("financial_basis financial_freshness_status", "Revenue")
+    add(
+        "latest_actual_age_days",
+        "Revenue",
+        "integer",
+        "days",
+        "Snapshot date minus latest actual end; over 180 days is flagged, not excluded",
+    )
+    add(
+        "used_peer_periods peer_calendar_alignment_status",
+        "Peer comparison",
+        derivation="Each used peer's native labels/end dates; "
+        "different dates are explicitly disclosed",
+    )
+    add(
+        "baseline_unit_multiplier",
+        "Forecast",
+        "number",
+        "currency_units_per_stored_unit",
+        "Unknown native source scale stays null; uplift preserves native amount",
+    )
     add(
         "uplift_fraction",
         "Headline",
@@ -82,6 +215,46 @@ def dictionary() -> list[Field]:
         "eligible baseline; adjustment = baseline * uplift; "
         "adjusted = baseline + adjustment",
     )
+    add(
+        "legacy_uplift_fraction",
+        "Headline",
+        "number",
+        "fraction",
+        "0 if unrounded raw FMI <= threshold; otherwise intercept "
+        "+ (raw FMI - threshold) * per-score slope",
+    )
+    add(
+        "legacy_adjustment legacy_adjusted_forecast",
+        "Headline",
+        "number",
+        "currency_times_unit_multiplier",
+        "Same eligible baseline as new method, multiplied by legacy raw-score uplift",
+    )
+    add("legacy_uplift_score_basis uplift_score_basis", "Forecast")
+    add(
+        "legacy_adjusted_forecast_yoy",
+        "Forecast",
+        "number",
+        "fraction",
+        "legacy adjusted forecast / compatible prior-year actual - 1",
+    )
+    add("event_category", "Event")
+    add("event_invited fmi_required", "Event", "boolean", "boolean")
+    add(
+        "data_extracted_at",
+        "Quality",
+        "datetime",
+        "UTC",
+        "Authenticated snapshot extraction time; not a historical measurement vintage",
+    )
+    add(
+        "financial_candidate_count social_capture_count",
+        "Quality",
+        "integer",
+        "count",
+        "Source candidate/capture row counts, not eligible sample counts",
+    )
+    add("source_query_coverage_status", "Quality")
     add(
         "entity_id light_code ticker shared_symbol financial_subject scope "
         "proxy_label handle profile_id social_platform",
@@ -147,6 +320,11 @@ def dictionary() -> list[Field]:
             influences=True,
         )
         add(f"{role}_period_label {role}_source_classification", "Revenue")
+        add(
+            f"{role}_source_row_id {role}_source_relation {role}_source_url",
+            "Revenue",
+            derivation="Selected source ID, database relation and issuer URL",
+        )
         add(f"{role}_currency", "Revenue")
         add(
             f"{role}_unit_multiplier",

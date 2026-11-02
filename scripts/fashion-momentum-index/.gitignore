@@ -1,4 +1,5 @@
-data/
+# Keep folder documentation versioned; data/.gitignore excludes measurements.
+!data/
 results/
 .env
 .ipynb_checkpoints/

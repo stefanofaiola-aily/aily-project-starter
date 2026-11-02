@@ -1,5 +1,12 @@
 # Controlled FMI pipeline and operating plan
 
+Current instructions: [SIMPLE_WORKFLOW.md](SIMPLE_WORKFLOW.md). The detailed
+methodology below remains reference material; its old folder layout is superseded.
+
+For the current per-brand JSON workflow, both uplift methods and expanded app
+contract, start with [Step-by-step delivery](STEPWISE_DELIVERY.md). This document
+also retains the original Excel-review route for compatibility.
+
 For full prospect discovery, report-derived metadata and ungated database
 collection, see [FMI source data collection](FMI_DATA_COLLECTION.md). Data collection
 and score-release approval are separate operations.
@@ -141,10 +148,11 @@ uplift; the70–98 range gives every scored brand positive uplift. The scenario 
 not calibrated predictive accuracy. No validation claim should be inferred.
 
 `weighted-delivery.xlsx` and matching JSON come from the same result objects.
-Delivery has one row per prospect and headline columns first. Supporting sheets
-have distinct grains: selected Financial periods, analysis-peer diagnostics,
-retained Social posts, Evidence, and Fields. Fields is the versioned app handover
-dictionary: types, units, derivations and influence flags. Rates are fractions,
+Delivery has one sheet, one row per prospect and headline columns first. Matching
+JSON is a plain row array. Different-grain selected financials, peer diagnostics,
+retained posts and evidence remain in local `delivery-audit.json` and the source
+snapshot. `output-dictionary.json` is the versioned app handover dictionary:
+types, units, derivations and influence flags. Rates are fractions,
 gaps pp, scores0–100, money carries explicit currency and unit multiplier.
 
 Optional comments/views include usable denominators; format and paid-status
@@ -152,7 +160,15 @@ counts include unknown/other. Followers need eligible timestamped captures of th
 same reviewed profile. Context never replaces likes or changes FMI. No inferred
 engagement rates. Financial context requires its own scope-compatible selection.
 
+Separately labelled `observed_*` columns expose current unreviewed source context,
+not historical app drivers. They never change FMI/weights/uplift. Excel and JSON
+are snapshots; rerun the delivery notebook after changing reviewed inputs.
+
 ## Running
+
+For the current compact JSON/policy/review bundle and three notebooks, follow
+[the stepwise guide](STEPWISE_DELIVERY.md). The commands below preserve the
+supported Excel-input route; old CSV migration is explicit under `inputs/legacy`.
 
 Authenticate using the approved cloud profile and fill project `.env` (never
 commit it). Set `AILY_TENANT`, `AILY_ENV`, `AILY_CLOUD_PROVIDER`, region and prefix
@@ -161,7 +177,7 @@ and `FMI_NODE_MODULES` to its managed module directory containing
 `@oai/artifact-tool`. Do not install spreadsheet dependencies into the repo.
 
 ```sh
-uv run aily-project fmi seed --prospects 'scripts/fashion-momentum-index/handover/brand_peers_dinner prospects.xlsx' --legacy scripts/fashion-momentum-index/inputs --output outputs/fmi-controlled/FMI_inputs.xlsx
+uv run aily-project fmi seed --prospects 'scripts/fashion-momentum-index/handover/brand_peers_dinner prospects.xlsx' --legacy scripts/fashion-momentum-index/inputs/legacy --output outputs/fmi-controlled/FMI_inputs.xlsx
 uv run aily-project fmi extract --inputs outputs/fmi-controlled/FMI_inputs.xlsx --output outputs/fmi-controlled/snapshot.json --first-year 2022 --last-year 2026
 uv run aily-project fmi score --inputs outputs/fmi-controlled/FMI_inputs.xlsx --snapshot outputs/fmi-controlled/snapshot.json --output outputs/fmi-controlled/raw-score.json
 uv run aily-project fmi deliver --inputs outputs/fmi-controlled/FMI_inputs.xlsx --snapshot outputs/fmi-controlled/snapshot.json --output outputs/fmi-controlled/weighted-delivery.xlsx --previews
@@ -172,6 +188,14 @@ before ConfigRepository/DAL. Tenant uses `ro`; shared credentials resolve throug
 DAL. Both transaction read-only settings are checked before schema discovery.
 Explicit-column SELECTs are bounded and recorded. No DDL/DML. The shared secret
 may use `dbo`; session read-only is not database-enforced read-only grants.
+
+For separate local AWS accounts, set `AWS_PROFILE` for Light and
+`FMI_SHARED_AWS_PROFILE` for shared scanner secrets. The confirmed configuration
+is `demos/light`, `aws-demos` and `aws-shared`; keep it in the ignored `.env`.
+Run `uv run aily-project fmi check-connections` before extraction. This uses
+separate profile sessions and verifies read-only metadata, without reading
+business tables. See [the stepwise guide](STEPWISE_DELIVERY.md) for JSON inputs,
+the environment example and notebook order.
 
 ## Refreshing review tasks
 

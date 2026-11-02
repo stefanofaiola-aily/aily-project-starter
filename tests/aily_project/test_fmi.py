@@ -3,7 +3,7 @@
 from copy import deepcopy
 from datetime import UTC, datetime
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pandas as pd
 import pytest
@@ -27,6 +27,75 @@ from aily_project.services.fmi.scoring import (
 from aily_project.services.fmi.workbooks import delivery_payload
 
 pytestmark = pytest.mark.unit
+
+
+def test_financial_source_documents_are_inventory_not_measurements():
+    from aily_project.services.fmi.extraction import DOCUMENT_RELATION, SPECS
+
+    class DocumentReader:
+        def __init__(self):
+            self.queries = []
+
+        def fetch_data_as_df(self, query, *, bind_params=()):
+            self.queries.append((query, bind_params))
+            if "current_setting" in query:
+                return pd.DataFrame(
+                    [
+                        {
+                            "transaction_read_only": "on",
+                            "default_transaction_read_only": "on",
+                        }
+                    ]
+                )
+            if "information_schema" in query:
+                return pd.DataFrame(
+                    [
+                        {
+                            "table_schema": rel.split(".")[0],
+                            "table_name": rel.split(".")[1],
+                            "column_name": col,
+                        }
+                        for rel, cols in SPECS.items()
+                        for col in cols
+                    ]
+                )
+            if f"FROM {DOCUMENT_RELATION} " in query:
+                return pd.DataFrame(
+                    [
+                        {
+                            "company_code": "B",
+                            "period_start": "2025-04-01",
+                            "period_end": "2025-06-30",
+                            "url": "https://issuer.example/q2.pdf",
+                            "document_type": "press release",
+                        }
+                    ]
+                )
+            return pd.DataFrame()
+
+    light, shared = DocumentReader(), DocumentReader()
+    snapshot = extract(
+        light,
+        shared,
+        Inputs(entities=[{"entity_id": "brand", "name": "Brand", "light_code": "B"}]),
+        2022,
+        2027,
+        10,
+    )
+    assert not snapshot.financials
+    documents = snapshot.metadata["financial_source_documents"]
+    assert documents[0]["source_relation"] == DOCUMENT_RELATION
+    assert documents[0]["source_row_id"]
+    query = next(
+        q
+        for q in snapshot.metadata["queries"]
+        if q["source_relation"] == DOCUMENT_RELATION
+    )
+    assert "content" not in query["columns"]
+    assert "period_end >= %s AND period_end < %s" in query["query"]
+    assert query["scope"][-2:] == ["2022-01-01", "2028-01-01"]
+    assert shared.queries[0][0].startswith("SELECT current_setting")
+    assert "information_schema" in shared.queries[1][0]
 
 
 @pytest.fixture
@@ -199,6 +268,95 @@ def test_end_to_end(case):
     assert len(payload["sheets"][3]["rows"]) == 10
     assert results[0].peers[0]["pair_raw_fmi"] == 94
     assert set(payload["sheets"][0]["rows"][0]) == {f.key for f in FIELDS}
+
+
+def test_flat_context_does_not_change_reviewed_fmi_or_uplift(case):
+    from aily_project.services.fmi.flat_delivery import flat_payload
+    from aily_project.services.fmi.run_records import monthly_context
+
+    inputs, snapshot = case
+    results, _ = calculate(inputs, snapshot, Policy(), "run")
+    expected = results[0].values
+    for likes in (1, 100000):
+        snapshot.posts.append(
+            {
+                "profile_username": "brand",
+                "profile_id": "p",
+                "post_id": "context-only",
+                "date_posted": "2026-09-01T00:00:00Z",
+                "crawled_at": "2026-10-01T00:00:00Z",
+                "like_count": likes,
+            }
+        )
+        payload = flat_payload(
+            results, inputs, snapshot, monthly_context(inputs, snapshot)
+        )
+        row = payload["sheets"][0]["rows"][0]
+        for key in ("raw_fmi", "display_fmi", "uplift_fraction", "adjusted_forecast"):
+            assert row[key] == expected[key]
+        assert row["observed_context_historical_eligible"] is False
+
+
+def test_flat_excel_json_parity_and_service_refresh(case, tmp_path):
+    import json
+    import os
+
+    from openpyxl import load_workbook
+
+    from aily_project.services.fmi.tasks.pipeline import deliver
+
+    if not os.environ.get("FMI_NODE_MODULES"):
+        pytest.skip("Managed artifact runtime must be explicitly configured")
+    inputs, snapshot = case
+    path = tmp_path / "weighted-delivery.xlsx"
+    old_score = None
+    for likes in (150, 120):
+        for post in snapshot.posts[:5]:
+            post["like_count"] = likes
+        deliver(inputs, snapshot, path, Policy())
+        rows = json.loads(path.with_suffix(".json").read_text())
+        fields = json.loads((tmp_path / ".work/output-dictionary.json").read_text())
+        result, _ = calculate(inputs, snapshot, Policy(), "run")
+        assert rows[0]["raw_fmi"] == result[0].values["raw_fmi"]
+        if old_score is not None:
+            assert rows[0]["raw_fmi"] != old_score
+        old_score = rows[0]["raw_fmi"]
+        book = load_workbook(path, data_only=True)
+        assert book.sheetnames == ["Delivery"]
+        sheet = book["Delivery"]
+        assert sheet.freeze_panes == "C2"
+        assert sheet.max_row == 2
+        assert [c.value for c in sheet[1]] == [f["excel_label"] for f in fields]
+        for cell, field in zip(sheet[2], fields, strict=True):
+            key = field["field_key"]
+            value = rows[0][key]
+            if field["type"] in {"date", "datetime"} and value is not None:
+                assert isinstance(cell.value, datetime)
+            elif isinstance(value, float):
+                assert cell.value == pytest.approx(value, rel=1e-12)
+            else:
+                assert cell.value == value
+            assert cell.data_type != "e"
+        book.close()
+        assert {p.name for p in tmp_path.iterdir()} == {
+            "weighted-delivery.xlsx",
+            "weighted-delivery.json",
+            ".work",
+        }
+
+
+def test_compact_configuration_preserves_score_and_both_uplifts(case, tmp_path):
+    from aily_project.services.fmi.compact_inputs import write_bundle
+    from aily_project.services.fmi.configuration import document
+    from aily_project.services.fmi.inputs import read_inputs
+
+    inputs, snapshot = case
+    path = tmp_path / "FMI_inputs.json"
+    write_bundle(document(inputs, Policy()), path)
+    before, _ = calculate(inputs, snapshot, Policy(), "parity")
+    after, _ = calculate(read_inputs(path), snapshot, Policy(), "parity")
+    assert after[0].record() == before[0].record()
+    assert after[0].values["raw_fmi"] == 94
 
 
 @pytest.mark.parametrize(
@@ -416,11 +574,16 @@ def test_identity_candidates_and_aliases():
 
 
 def test_seed_92_and_preserve_reviews():
-    root = Path(__file__).resolve().parents[2]
-    inputs = seed_inputs(
-        root
-        / "scripts/fashion-momentum-index/handover/brand_peers_dinner prospects.xlsx"
-    )
+    # Unit tests must not require the user's ignored local handover workbook.
+    book = MagicMock()
+    book.active.values = [
+        ("brand", "peer1", "peer2"),
+        ("Chanel", "Peer A", "Peer B"),
+        ("Valentino", "Peer A", "Peer B"),
+        *((f"Prospect {i}", "Peer A", "Peer B") for i in range(90)),
+    ]
+    with patch("aily_project.services.fmi.inputs.load_workbook", return_value=book):
+        inputs = seed_inputs(Path("prospects.xlsx"))
     assert sum(r.get("prospect") is True for r in inputs.entities) == 92
     assert len(inputs.analyses) == 92
     handles = {e["entity_id"]: e.get("handle") for e in inputs.entities}
@@ -745,6 +908,7 @@ def test_schema_discovery_bounded_history_fallback_and_provenance():
         if r["source_relation"] == "normalized.v_finance_financial_statements"
     )
     assert len(view["source_candidates"]) == 3
+    assert view["period_label"] == "Shared native 2024 FY"
     assert view["source_classification"] == "corrected_requires_vintage_review"
     assert view["available_at"] == "2026-01-01T00:00:00+00:00"
     assert not view["vintage_verified"]
@@ -831,10 +995,14 @@ def test_excel_cached_values_and_refresh_match_service(case, tmp_path, monkeypat
         "raw_fmi",
         "display_fmi",
         "uplift_fraction",
+        "legacy_uplift_fraction",
         "adjustment",
         "adjusted_forecast",
+        "legacy_adjustment",
+        "legacy_adjusted_forecast",
         "baseline_forecast_yoy",
         "adjusted_forecast_yoy",
+        "legacy_adjusted_forecast_yoy",
     ):
         label = next(f.label for f in FIELDS if f.key == key)
         assert values[4][headers.index(label)] == pytest.approx(

@@ -1,4 +1,4 @@
-"""Excel-only review inputs; never accept manually entered measurements."""
+"""Excel or JSON review inputs; never accept manually entered measurements."""
 
 import csv
 import re
@@ -46,6 +46,10 @@ def key(name: str) -> str:
 
 
 def read_inputs(path: Path) -> Inputs:
+    if path.suffix.lower() == ".json":
+        from .configuration import read_json_inputs
+
+        return read_json_inputs(path)
     book = load_workbook(path, read_only=True, data_only=False)
     result = Inputs()
     try:

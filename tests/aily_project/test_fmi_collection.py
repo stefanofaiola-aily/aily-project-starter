@@ -14,6 +14,105 @@ from aily_project.services.fmi.models import Inputs, Snapshot, clean
 pytestmark = pytest.mark.unit
 
 
+def test_inventory_discovers_shared_only_symbol_by_name_without_approving():
+    class DB:
+        def __init__(self, light):
+            self.light = light
+            self.calls = []
+
+        def fetch_data_as_df(self, query, *, bind_params=()):
+            self.calls.append((query, bind_params))
+            if "current_setting" in query:
+                return pd.DataFrame(
+                    [
+                        {
+                            "transaction_read_only": "on",
+                            "default_transaction_read_only": "on",
+                        }
+                    ]
+                )
+            if "information_schema" in query:
+                relations = (
+                    {
+                        "light.light_companies": [
+                            "company_code",
+                            "company_name",
+                            "company_ticker",
+                        ]
+                    }
+                    if self.light
+                    else {
+                        "normalized.finance_fmp_financial_company_symbols": [
+                            "name",
+                            "symbol",
+                            "crawled_at",
+                        ],
+                        "normalized.v_finance_financial_statements": [
+                            "symbol",
+                            "calendar_year",
+                        ],
+                    }
+                )
+                return pd.DataFrame(
+                    [
+                        {
+                            "table_schema": r.split(".")[0],
+                            "table_name": r.split(".")[1],
+                            "column_name": c,
+                        }
+                        for r, cs in relations.items()
+                        for c in cs
+                    ]
+                )
+            if self.light:
+                return pd.DataFrame(
+                    [
+                        {
+                            "company_code": "LIGHT",
+                            "company_name": "Other",
+                            "company_ticker": "TICKER",
+                        }
+                    ]
+                )
+            if "financial_company_symbols" in query:
+                assert "ILIKE ANY(%s)" in query
+                assert "%Brand\\_\\%%" in bind_params[0]
+                return pd.DataFrame(
+                    [
+                        {
+                            "name": "Brand_% Inc.",
+                            "symbol": "SHARED",
+                            "crawled_at": "2026-10-01",
+                        }
+                    ]
+                )
+            assert "SHARED" in bind_params
+            return pd.DataFrame([{"symbol": "SHARED"}])
+
+    inputs = Inputs(
+        entities=[{"entity_id": "brand", "name": "Brand_%", "mapping_approved": False}]
+    )
+    before = deepcopy(inputs)
+    light, shared = DB(True), DB(False)
+    result = inventory(light, shared, 2022, 2026, inputs)
+    assert inputs == before
+    assert result["identity_candidates"][0]["symbol"] == "SHARED"
+    assert "SHARED" in result["financial_symbol_search_scope"]
+    assert result["financial_symbols"][0]["symbol"] == "SHARED"
+    assert "mapping_approved" not in result["identity_candidates"][0]
+    assert all(
+        q.startswith("SELECT ") and "SELECT *" not in q
+        for db in (light, shared)
+        for q, _ in db.calls
+    )
+    assert all(
+        "LIMIT %s" in q
+        for db in (light, shared)
+        for q, _ in db.calls
+        if "current_setting" not in q
+    )
+
+
 def test_nat_datetime_is_missing_not_a_date_string():
     assert clean(pd.NaT) is None
 

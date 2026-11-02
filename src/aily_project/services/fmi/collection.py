@@ -30,6 +30,39 @@ SOCIAL_RELATIONS = (
     "denormalized.social_media_bright_data_instagram_posts",
     "denormalized.social_media_bright_data_instagram_profiles",
 )
+IDENTITY_RELATIONS = {
+    "normalized.finance_fmp_financial_company_symbols": (
+        "symbol",
+        "name",
+        "exchange",
+        "exchange_short_name",
+        "type",
+        "crawled_at",
+    ),
+    "normalized.finance_investor_relations_config": (
+        "company_code",
+        "company_name",
+        "ticker",
+        "exchange",
+        "url",
+        "updated_at",
+    ),
+    "denormalized.finance_bright_data_crunchbase_companies": (
+        "company_code",
+        "configured_company_name",
+        "name",
+        "legal_name",
+        "profile_url",
+        "last_seen_at",
+    ),
+    "denormalized.finance_bright_data_pitchbook_companies": (
+        "company_code",
+        "configured_company_name",
+        "company_name",
+        "profile_url",
+        "last_seen_at",
+    ),
+}
 
 
 def inventory(
@@ -48,7 +81,9 @@ def inventory(
     finance_relations = [
         r for r in SPECS if r.startswith("normalized.") and "financial_statements" in r
     ]
-    schema = discover(shared, list(SOCIAL_RELATIONS) + finance_relations)
+    schema = discover(
+        shared, list(SOCIAL_RELATIONS) + finance_relations + list(IDENTITY_RELATIONS)
+    )
     stamp = datetime.now(UTC).isoformat()
     result: Row = {
         "authenticated": True,
@@ -58,6 +93,7 @@ def inventory(
         "registry": [],
         "queries": [],
         "financial_symbols": [],
+        "identity_candidates": [],
     }
     columns = [
         c
@@ -134,6 +170,58 @@ def inventory(
     }
     if inputs:
         probes.update(s for e in inputs.entities for s in candidate_symbols(e))
+        # Name metadata discovers alternate listings and shared-only identities.
+        # Hits are query candidates, never identity/scope approvals.
+        terms = sorted(
+            {
+                str(value).strip()
+                for e in inputs.entities
+                for value in [e["name"], *str(e.get("aliases") or "").split(";")]
+                if len(str(value).strip()) >= 3
+            }
+        )
+        patterns = [
+            "%" + t.replace("%", r"\%").replace("_", r"\_") + "%" for t in terms
+        ]
+        for relation, allowed in IDENTITY_RELATIONS.items():
+            present = schema.get(relation, set())
+            selected = [c for c in allowed if c in present]
+            name_columns = [
+                c
+                for c in selected
+                if c
+                in {"name", "company_name", "configured_company_name", "legal_name"}
+            ]
+            id_columns = [
+                c for c in selected if c in {"symbol", "ticker", "company_code"}
+            ]
+            if not name_columns or not id_columns:
+                continue
+            clauses = [f"{c} ILIKE ANY(%s)" for c in name_columns]
+            identity_params: list[object] = [patterns for _ in name_columns]
+            clauses.extend(f"{c} = ANY(%s)" for c in id_columns)
+            identity_params.extend(sorted(probes) for _ in id_columns)
+            query = (
+                f"SELECT DISTINCT {', '.join(selected)} FROM {relation} "
+                f"WHERE ({' OR '.join(clauses)}) LIMIT %s"
+            )
+            identity_params.append(10001)
+            frame = shared.fetch_data_as_df(query, bind_params=tuple(identity_params))
+            if len(frame) > 10000:
+                raise ValueError("Identity inventory exceeded limit")
+            result["queries"].append(
+                {"query": query, "scope": identity_params, "row_count": len(frame)}
+            )
+            rows = clean(frame.to_dict("records"))
+            result["identity_candidates"].extend(
+                {**r, "source_relation": relation} for r in rows
+            )
+            probes.update(
+                str(r[c])
+                for r in rows
+                for c in ("symbol", "ticker", "company_code")
+                if r.get(c)
+            )
     result["financial_symbol_search_scope"] = sorted(probes)
     for relation in finance_relations:
         if not {"symbol", "calendar_year"}.issubset(schema.get(relation, set())):
@@ -486,7 +574,7 @@ def collection_payload(
         "kind": "collection",
         "sheets": [
             sheet("Collection coverage", coverage),
-            sheet("Revenue candidates", financial),
+            sheet("Financial candidates", financial),
             sheet("Social annual snapshots", social),
             sheet("Report facts", facts),
             sheet("Collection evidence", metadata),

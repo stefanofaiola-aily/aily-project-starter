@@ -1,0 +1,4 @@
+# Retrieved measurements and generated notebook results stay local.
+*
+!.gitignore
+!README.md
