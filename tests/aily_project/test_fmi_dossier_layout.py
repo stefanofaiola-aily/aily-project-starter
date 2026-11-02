@@ -76,7 +76,8 @@ def test_origins_distinguish_scores_forecasts_and_comparison():
             ]
         )
     }
-    assert fields["raw_fmi"].source_fields[0] == "score_method"
+    assert "score_source" in fields["raw_fmi"].source_fields
+    assert "published_raw_fmi" in fields["raw_fmi"].source_fields
     assert fields["uplift_fraction"].source_fields == ("display_fmi", "policy.uplift_*")
     assert (
         fields["source_legacy_uplift_fraction"].source_fields[0] == "source_display_fmi"

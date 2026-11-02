@@ -299,6 +299,9 @@ def test_dossier_cli_recalculates_edits_without_cloud_or_source_writes(
     records = [keys, list(source.values())]
     monkeypatch.setattr(service, "load_workbook", lambda *a, **kw: Book(records))
     monkeypatch.setattr(service, "write_workbook", lambda *a, **kw: None)
+    monkeypatch.setattr(
+        "aily_project.services.fmi_dossier.runner.read_categories", lambda path: {}
+    )
 
     def no_cloud(*args, **kwargs):
         raise AssertionError("Offline dossier CLI must not initialize cloud settings")
@@ -324,6 +327,8 @@ def test_dossier_cli_recalculates_edits_without_cloud_or_source_writes(
             fmi_dossier,
             [
                 "--inputs",
+                str(tmp_path / "input.xlsx"),
+                "--categories",
                 str(tmp_path / "input.xlsx"),
                 "--policy",
                 str(policy_path),

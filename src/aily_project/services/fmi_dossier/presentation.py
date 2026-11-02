@@ -8,7 +8,7 @@ from pathlib import Path
 from .model import Row, truth
 from .policy import half_up
 
-CATEGORIES = ("LUXE", "PREMIUM", "MASS_MARKET", "FAST FOLLOWER", "RETAILER", "OTHER")
+CATEGORIES = ("LUXE", "PREMIUM", "MASS_MARKET")
 
 
 def rank_categories(rows: list[Row]) -> None:
@@ -22,6 +22,9 @@ def rank_categories(rows: list[Row]) -> None:
             "current dossier delivery only; not the historical/app board",
             leaderboard_status="excluded_from_delivery"
             if not row.get("include") or not row.get("has_dossier_data")
+            else "not_in_current_category_list"
+            if row.get("leaderboard_category_assignment_status")
+            == "not_in_current_category_list"
             else "missing_category_assignment"
             if not row.get("leaderboard_category")
             else "unsupported_category_assignment"
@@ -159,7 +162,10 @@ def comparison(row: Row, reference: Row | None) -> Row:
         )
     if row.get("display_fmi") != reference.get("display_fmi"):
         notes.append(
-            "New display uses the dossier cohort, not the historical 20–96 "
+            "Selected published HTML display differs from this separate historical "
+            "handover revision. Current cohort rescaling is not applied to it."
+            if row.get("score_source") == "published_delivery"
+            else "New display uses the dossier cohort, not the historical 20–96 "
             "cohort or its explicit display overrides."
         )
     period_differences = [
@@ -187,6 +193,25 @@ def comparison(row: Row, reference: Row | None) -> Row:
     return result
 
 
+HISTORY_KEYS = {
+    *[f"source_social_{year}" for year in (2024, 2025, 2026)],
+    *[f"source_q4_vs_baseline_{year}" for year in (2024, 2025, 2026)],
+    "source_insights_descriptive",
+    "source_insights_statistics",
+}
+
+PUBLISHED_CARD_KEYS = {
+    "one_core_insight",
+    "overall_sentiment",
+    *[
+        c + suffix
+        for c in ("ir", "social", "trend")
+        for suffix in ("_sentiment", "_descriptor", "_insight", "_kpi", "_kpi_label")
+    ],
+    *HISTORY_KEYS,
+}
+
+
 def enrich(rows: list[Row], reference: Row) -> list[Row]:
     """Readable cards/KPIs from current dossier metrics, not stale source copy."""
     lookup = reference.get("brands", {})
@@ -195,8 +220,13 @@ def enrich(rows: list[Row], reference: Row) -> list[Row]:
         row = dict(source)
         snapshot = reference.get("delivery_snapshots", {}).get(identity(row["name"]))
         if snapshot:
-            row.update(snapshot["values"])
-            row["source_snapshot_reference"] = snapshot["source_reference"]
+            # Reviewed input history takes precedence, including real zeroes.
+            for key, value in snapshot["values"].items():
+                if row.get(key) is None and value is not None:
+                    row[key] = value
+            row["source_snapshot_reference"] = (
+                row.get("source_snapshot_reference") or snapshot["source_reference"]
+            )
         row.update(comparison(row, lookup.get(identity(row["name"]))))
         if not reference:
             row["weighted_reference_match_status"] = "not_checked_no_reference"
@@ -267,6 +297,23 @@ def enrich(rows: list[Row], reference: Row) -> list[Row]:
             else f"{row['name']}: complete dossier FMI unavailable "
             f"({row.get('fmi_status')})."
         )
+        if row.get("score_source") == "published_delivery":
+            # Explicit input snapshot, not comparison/audit output. Never import
+            # historical company aliases, categories, ranks or forecast amounts.
+            for key, value in (row.get("published_card_values") or {}).items():
+                # An older score/card workbook can have no history. Those blank
+                # cells must not erase the separately supplied sales/social data.
+                # Non-history card blanks still deliberately clear stale KPIs.
+                if key not in HISTORY_KEYS or (
+                    row.get(key) is None and value is not None
+                ):
+                    row[key] = value
+            row["source_snapshot_reference"] = (
+                row.get("source_snapshot_reference")
+                or row["published_source_reference"]
+            )
+        elif row.get("raw_fmi") is None and row.get("limitations"):
+            row["one_core_insight"] = f"{row['name']}: {row['limitations']}"
         result.append(row)
     return result
 
@@ -318,7 +365,7 @@ def app_plan(rows: list[Row]) -> Row:
                     or "Dossier-reported score; financial scope requires review"
                 ),
                 str(row.get("source_document")),
-                "New normalization uses this dossier cohort. "
+                "Published displays are preserved; new brands use this dossier cohort. "
                 "Exponential uplift is a business scenario; undated forecasts "
                 "do not establish historical availability.",
                 str(

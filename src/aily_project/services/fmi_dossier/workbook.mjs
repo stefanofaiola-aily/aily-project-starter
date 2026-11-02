@@ -54,7 +54,7 @@ for (const [index, key] of spec.keys.entries()) {
   else if (field.unit === 'score_0_100') cells.setNumberFormat('0.0####');
   else if (field.unit === 'score_points') cells.setNumberFormat('0.0####');
   else if (field.type === 'number') cells.setNumberFormat('#,##0.0;(#,##0.0);0.0');
-  const longest = Math.max(0, ...spec.rows.map(r => typeof r[key] === 'string' ? r[key].length : field.type === 'array' && r[key] ? JSON.stringify(r[key]).length : 0));
+  const longest = Math.max(0, ...spec.rows.map(r => typeof r[key] === 'string' ? r[key].length : ['array', 'object'].includes(field.type) && r[key] ? JSON.stringify(r[key]).length : 0));
   const width = Math.min(150, Math.max(key === 'name' ? 38 : 23, Math.ceil(longest / 4) + 3));
   sh.getRange(`${col(index)}1:${col(index)}${last}`).format.columnWidth = width;
   widths.set(key, width);
@@ -65,19 +65,23 @@ const displayRange = `$${columns.get('display_fmi')}$2:$${columns.get('display_f
 for (const [index, record] of spec.rows.entries()) {
   const cell = key => `${columns.get(key)}${index + 2}`;
   const write = (key, formula) => sh.getRange(cell(key)).formulas = [[formula]];
+  if (record.score_source === 'published_delivery') {
+    for (const component of ['ir', 'social', 'trend']) write(component + '_score', `=${cell('published_' + component + '_score')}`);
+  }
   for (const component of ['ir', 'social', 'trend']) {
     if (record[`${component}_score`] != null) write(`${component}_contribution`, `=${cell(component + '_score')}*${cell(component + '_weight')}`);
   }
   if (record.weighted_component_fmi != null) {
     write('weighted_component_fmi', `=${cell('ir_contribution')}+${cell('social_contribution')}+${cell('trend_contribution')}`);
-    if (record.reported_fmi != null) write('reported_component_difference', `=${cell('weighted_component_fmi')}-${cell('reported_fmi')}`);
+    if (record.reported_component_difference != null) write('reported_component_difference', `=${cell('weighted_component_fmi')}-${cell(record.score_source === 'published_delivery' ? 'published_raw_fmi' : 'reported_fmi')}`);
   }
   if (record.raw_fmi != null) {
-    write('raw_fmi', `=${cell(record.score_method === 'reported' ? 'reported_fmi' : 'weighted_component_fmi')}`);
+    write('raw_fmi', `=${cell(record.score_source === 'published_delivery' ? 'published_raw_fmi' : record.score_method === 'reported' ? 'reported_fmi' : 'weighted_component_fmi')}`);
+    if (record.dossier_reported_fmi_difference != null) write('dossier_reported_fmi_difference', `=${cell('raw_fmi')}-${cell('reported_fmi')}`);
     write('cohort_min', `=MIN(${rawRange})`);
     write('cohort_max', `=MAX(${rawRange})`);
     const p = payload.policy;
-    write('display_fmi', `=ROUND(IF(${cell('cohort_min')}=${cell('cohort_max')},${p.display_equal},${p.display_lower}+(${p.display_upper}-${p.display_lower})*(${cell('raw_fmi')}-${cell('cohort_min')})/(${cell('cohort_max')}-${cell('cohort_min')})),1)`);
+    write('display_fmi', record.score_source === 'published_delivery' ? `=${cell('published_display_fmi')}` : `=ROUND(IF(${cell('cohort_min')}=${cell('cohort_max')},${p.display_equal},${p.display_lower}+(${p.display_upper}-${p.display_lower})*(${cell('raw_fmi')}-${cell('cohort_min')})/(${cell('cohort_max')}-${cell('cohort_min')})),1)`);
     write('uplift_fraction', `=IF(${cell('display_fmi')}<=${p.uplift_threshold},0,${p.uplift_intercept}+${p.uplift_scale}*(EXP(${p.uplift_exponent}*(${cell('display_fmi')}-${p.uplift_threshold})/${p.uplift_score_span})-1))`);
     write('legacy_uplift_fraction', `=IF(${cell('raw_fmi')}<=${p.legacy_uplift_threshold},0,${p.legacy_uplift_intercept}+(${cell('raw_fmi')}-${p.legacy_uplift_threshold})*${p.legacy_uplift_per_score})`);
   }
@@ -111,7 +115,7 @@ for (const [index, record] of spec.rows.entries()) {
     if (record[difference] != null) write(difference, `=${cell(key)}-${cell('weighted_reference_' + key)}`);
   }
   const lines = Math.max(1, ...spec.keys.map(key => {
-    const value = fields.get(key).type === 'array' && record[key] ? JSON.stringify(record[key]) : record[key];
+    const value = ['array', 'object'].includes(fields.get(key).type) && record[key] ? JSON.stringify(record[key]) : record[key];
     return typeof value === 'string' ? value.split('\n').reduce((total, line) => total + Math.max(1, Math.ceil(line.length / Math.max(10, widths.get(key) - 3))), 0) : 1;
   }));
   sh.getRange(`A${index + 2}:${end}${index + 2}`).format.rowHeight = Math.min(409, Math.max(38, 16 * lines));

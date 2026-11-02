@@ -3,8 +3,21 @@
 from .model import Row
 
 DEPENDENCIES = {
-    "raw_fmi": ("score_method", "reported_fmi", "weighted_component_fmi"),
-    "display_fmi": ("raw_fmi", "cohort_min", "cohort_max", "policy.display_*"),
+    "raw_fmi": (
+        "published_raw_fmi",
+        "score_source",
+        "score_method",
+        "reported_fmi",
+        "weighted_component_fmi",
+    ),
+    "display_fmi": (
+        "published_display_fmi",
+        "display_fmi_basis",
+        "raw_fmi",
+        "cohort_min",
+        "cohort_max",
+        "policy.display_*",
+    ),
     "cohort_min": ("included scored rows.raw_fmi",),
     "cohort_max": ("included scored rows.raw_fmi",),
     "uplift_fraction": ("display_fmi", "policy.uplift_*"),
@@ -27,7 +40,11 @@ DEPENDENCIES = {
         "social_contribution",
         "trend_contribution",
     ),
-    "reported_component_difference": ("weighted_component_fmi", "reported_fmi"),
+    "reported_component_difference": (
+        "weighted_component_fmi",
+        "published_raw_fmi or reported_fmi",
+    ),
+    "dossier_reported_fmi_difference": ("raw_fmi", "reported_fmi"),
     "raw_classification": ("raw_fmi", "dossier_score_basis"),
     "overall_sentiment": ("raw_fmi",),
     "one_core_insight": (
@@ -132,6 +149,60 @@ for key in (
 
 def field_source(key: str) -> Row:
     """Do not claim dossier values were freshly extracted from a live database."""
+    if key.startswith("published_") or key in {
+        "score_source",
+        "display_fmi_basis",
+        "score_context_note",
+    }:
+        return {
+            "source_kind": "published_input_snapshot",
+            "source_reference": "FMI_dossier_inputs.xlsx / Inputs; one-time copy of "
+            "weighted-delivery-1300.xlsx, the workbook behind existing v6 HTML. "
+            "Exact cells in published_source_reference. "
+            "Published scores/displays/cards "
+            "are preserved independently of dossier alternatives and cohort changes.",
+            "source_fields": (key, "published_source_reference"),
+        }
+    if (
+        key
+        in {
+            "raw_fmi",
+            "display_fmi",
+            "ir_score",
+            "social_score",
+            "trend_score",
+            "one_core_insight",
+        }
+        or key.endswith(("_kpi", "_kpi_label", "_descriptor", "_insight", "_sentiment"))
+        and not key.startswith("weighted_reference_")
+    ):
+        return {
+            "source_kind": "selected_input",
+            "source_reference": "Published input snapshot when score_source is "
+            "published_delivery; otherwise selected dossier values/derived context. "
+            "published_source_reference or source_document records provenance. "
+            "Unselected dossier measurements do not recompute published cards.",
+            "source_fields": (
+                "score_source",
+                "published_" + key,
+                "published_card_values",
+                *DEPENDENCIES.get(key, (key,)),
+            ),
+        }
+    if key in {
+        "leaderboard_category",
+        "leaderboard_category_source",
+        "leaderboard_category_assignment_status",
+        "app_category",
+        "in_ranking_company_list",
+    }:
+        return {
+            "source_kind": "input_excel",
+            "source_reference": "Current FMI index companies_tuesdaydinner.xlsx "
+            "columns A/B; exact category cell in leaderboard_category_source. "
+            "Only LUXE/PREMIUM/MASS_MARKET. Unlisted brands have no category/rank.",
+            "source_fields": ("company_list column A", "company_list column B"),
+        }
     if key.startswith("weighted_reference_"):
         difference = key.endswith("_difference")
         comparison = difference or key in {
@@ -150,9 +221,16 @@ def field_source(key: str) -> Row:
             if comparison
             else ("historical reference",),
         }
+    if key == "email_domains":
+        return {
+            "source_kind": "reviewed_input",
+            "source_reference": "Inputs.email_domains; supplied mappings. First "
+            "domain is the HTML filename; alternatives remain manifest metadata. "
+            "Frozen weighted-delivery domains are a fill-missing fallback only.",
+            "source_fields": (key,),
+        }
     if (
-        key == "email_domains"
-        or key.startswith(("source_q4_", "source_insights_"))
+        key.startswith(("source_q4_", "source_insights_"))
         or key == "source_snapshot_reference"
     ):
         return {
@@ -212,9 +290,9 @@ def field_source(key: str) -> Row:
         "leaderboard_category_assignment_status",
     }:
         origin = (
-            "Explicit saved assignment; leaderboard_category_source identifies "
-            "the revised dinner list or preserved historical weighted delivery. "
-            "No automatic taxonomy conversion."
+            "Current FMI index companies_tuesdaydinner.xlsx column B assignment; "
+            "leaderboard_category_source identifies the exact cell. Only LUXE, "
+            "PREMIUM and MASS_MARKET are allowed. Unlisted brands have no category."
         )
     elif key in {
         "fmi_required",

@@ -8,6 +8,7 @@ import click
 import yaml
 from dotenv import load_dotenv
 
+from .categories import apply_categories, read_categories
 from .excel import export_delivery, finalize, read_excel, score_rows
 from .model import clean
 from .policy import Policy
@@ -20,6 +21,14 @@ from .policy import Policy
     type=click.Path(exists=True, path_type=Path),
     default="scripts/fmi-dossier/inputs/FMI_dossier_inputs.xlsx",
     show_default=True,
+)
+@click.option(
+    "--categories",
+    "categories_path",
+    type=click.Path(exists=True, dir_okay=False, path_type=Path),
+    default="scripts/fmi-dossier/inputs/FMI index companies_tuesdaydinner.xlsx",
+    show_default=True,
+    help="Authoritative company/category assignments in columns A/B; no guessing.",
 )
 @click.option(
     "--policy",
@@ -45,6 +54,7 @@ from .policy import Policy
 @click.option("--previews", is_flag=True)
 def fmi_dossier(
     inputs_path: Path,
+    categories_path: Path,
     policy_path: Path,
     output: Path,
     query_missing_forecasts: bool,
@@ -54,7 +64,7 @@ def fmi_dossier(
 ) -> None:
     """Dossier Excel → metrics, normalized FMI, both uplifts and Excel/JSON."""
     load_dotenv(override=False)
-    rows = read_excel(inputs_path)
+    rows = apply_categories(read_excel(inputs_path), read_categories(categories_path))
     policy = Policy.model_validate(yaml.safe_load(policy_path.read_text()))
     if query_missing_forecasts and any(
         r.get("include")

@@ -6,12 +6,88 @@ Changing either workflow's policy or running it does not change the other.
 
 Detailed references:
 
+- [Future-agent handover skill](skills/fmi-delivery/SKILL.md): workflow separation,
+  accepted score/uplift decisions, source mappings, HTML regeneration and regression
+  checks. In a new chat, ask the agent to read this file first if the skill is not
+  listed automatically. The skill is saved with the repo, not installed globally.
 - [Measures and calculations](docs/MEASURES.md): source selection, components,
   normalization, both uplift methods, forecast periods, YoY and ranking rules.
 - [Delivery columns and app field contract](docs/DELIVERY_COLUMNS.md): every
   exported column, with recommended primary/detail fields and audit-only context.
 
+## Small Excel for the HTML prototype
+
+After generating the full delivery, run:
+
+```sh
+uv run aily-project fmi-dossier-html --previews
+```
+
+This reads the completed dossier delivery JSON and creates
+`outputs/fmi-dossier-html/html-delivery.xlsx`: one `Delivery` sheet, 50 columns,
+plus `html-delivery.json` with exactly the same typed fields and rows.
+It never queries AWS, changes dossier inputs, recalculates scores, or overwrites
+the full delivery. It copies scores, cards, identities, categories/ranks and social
+history unchanged. The presentation-only `Q4 vs Baseline ’24/’25 (%)` headers
+contain source **Q4 sales YoY v2**, not same-year forecast-baseline variance.
+Missing sales YoY remains blank; there is no fallback to a baseline comparison.
+The presentation-only `Q4 vs Baseline ’26 (%)`
+header contains **exponential-adjusted forecast / matching PY forecast − 1**,
+not the frozen legacy uplift. `Insights Descriptive` is a concise business summary
+from available social history, latest historical sales YoY and the new forecast.
+`Insights Statistics` retains calculation details; `Revenue methodology` retains
+scope/provenance. The HTML shows only the business description, comparison table
+and one comparison-basis note, not the audit paragraphs. Missing comparisons remain blank, even when
+a legacy projection exists. Forecast amounts, currency/units, target, methodology
+and evidence references are included in the same row.
+
+Copy this Excel into `aily-ux-protos/wwd-2026-fashion-index/data/`, then select it
+explicitly from `templates/v6-projection-explainer-sheet`:
+
+```sh
+python3 generate-data.py ../../data/html-delivery.xlsx
+python3 generate-standalone.py
+```
+
+The workbook preserves the current importer's headers. Its current category values
+are only LUXE, PREMIUM and MASS_MARKET; unlisted brands remain uncategorized.
+The v6 importer preserves exact company-code case. Edit `email_domains` in Inputs
+to control filenames: first domain gives `domainname.html`, or the stable
+company-name slug gives `company-name.html` when no domain is supplied. Each brand
+gets one file. Alternate domains remain in the manifest, with no `brand-` copies.
+Missing domains and company keys are not guessed. Detailed revenue methodology
+remains in Excel/JSON and the projection button uses `Projection label`
+("Adjusted forecast vs PY forecast"). Its history
+mixes historical 2024/2025 sales YoY with the new 2026 forecast comparison,
+so `Historical comparison basis` and `Insights Statistics` state that distinction.
+Do not describe these rows as one like-for-like historical growth series.
+
 ## Input
+
+Previously published **scored** brands now have explicit `published_raw_fmi`,
+`published_display_fmi`, `published_ir_score`, `published_social_score` and
+`published_trend_score` input columns. They were copied once from
+`weighted-delivery-1300.xlsx`, the source behind the existing v6 HTML. Their
+`published_card_values` preserves its card copy, typed KPIs and history;
+`published_source_reference` records the original cells. No prototype-repo file
+is read on ordinary runs. These values take precedence for those 26 brands and
+are not re-normalized when another brand is added. Dossier values remain intact
+as alternative audit evidence. Clear `published_raw_fmi` only when deliberately
+switching that brand back to dossier scoring. New/unpublished scores continue
+through the dossier workflow. Forecasts, exact Light keys and current categories
+are not overwritten by the historical snapshot.
+
+Historical social/revenue fields are separate from locked score/card values.
+Populated Inputs history takes precedence; published history only fills missing
+values. Blank history cells in an older score workbook never erase supplied
+history. The newer `handover/weighted-delivery-1606_2810.xlsx` history was
+transcribed once into Inputs, with `source_snapshot_reference`, so ordinary runs
+do not need that workbook or a cached comparison file to recover it. Genuine
+missing years stay blank; zero is a valid supplied comparison, not missing.
+
+Armani's new dossier is linked to its existing row, without duplication. It
+explicitly reports missing main-account social history and incomplete revenues,
+so its saved Q4 forecast is available but FMI/uplift remain unavailable.
 
 `inputs/FMI_dossier_inputs.xlsx` was populated once from the brand reports and new
 prospect documents now consolidated in `scripts/fmi-dossier/dossiers/<brand>/`, with supporting
@@ -125,7 +201,8 @@ The agent reconciled `inputs/FMI index companies_tuesdaydinner.xlsx` once and
 carried its Light-presence flags, explicit app categories and dinner flags into
 the input Excel. All 23 Y and 9 N flags agree with the live brand registry.
 Presence does not guarantee a revenue forecast. Spelling aliases preserve stable
-IDs. App categories do not silently remap historical leaderboard categories.
+IDs. Current category assignments are read from this workbook on every dossier run,
+independently of those saved flags. Historical categories do not override column B.
 
 Selection prefers a native quarter ending within seven days of 31 December 2026,
 retaining its real fiscal year/quarter (which may be Q2/Q3). Otherwise an upcoming
@@ -222,14 +299,16 @@ baselines were reconciled; the extraction evidence stays under `.work/`.
 
 ### Category rankings
 
-`leaderboard_category` is editable in the input Excel. The revised
-`inputs/FMI index companies_tuesdaydinner.xlsx` supplies explicit LUXE, PREMIUM
-and MASS_MARKET assignments for 32 brands. Those assignments now populate both
-delivery Category (Z) and `app_category`; the exact source cell is recorded in
-`leaderboard_category_source`. Original historical LUXE, FAST FOLLOWER, RETAILER
-and OTHER assignments remain for brands outside that list. No automatic conversion
-or guessed category is applied. The list is copied into the main input once when
-you provide an update, not queried or reparsed on every calculation run.
+Edit categories in column B of `inputs/FMI index companies_tuesdaydinner.xlsx`.
+Every dossier run reads columns A/B (`--categories` selects another file).
+Only LUXE, PREMIUM and MASS_MARKET are accepted. These assignments populate both
+delivery Category (Z) and `app_category`, with the exact source cell recorded in
+`leaderboard_category_source`. The current list names 32 companies, of which 27
+are in the 59-brand delivery. The other 32 delivered brands retain all their
+scores/forecasts, but have blank category and no rank; their assignment status is
+`not_in_current_category_list`. Add their names and a category to this workbook
+if they should be ranked. Original input/historical category cells remain audit
+references and cannot override the current list. No taxonomy mapping is guessed.
 
 `leaderboard_rank` ranks rounded `display_fmi` descending within the current
 delivered category. Ties share competition rank (1, 2, 2, 4). Missing FMI/category

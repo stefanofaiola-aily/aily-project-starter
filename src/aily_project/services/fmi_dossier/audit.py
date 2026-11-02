@@ -13,6 +13,19 @@ GROUPS = {
         "source_score_locator",
         "source_measurement_locators",
         "score_method",
+        "score_source",
+        "score_context_note",
+        "published_source_reference",
+        "published_raw_fmi",
+        "published_display_fmi",
+        "published_ir_score",
+        "published_social_score",
+        "published_trend_score",
+        "published_card_values",
+        "dossier_ir_score",
+        "dossier_social_score",
+        "dossier_trend_score",
+        "dossier_reported_fmi_difference",
         "dossier_score_basis",
         "score_evidence",
         "include",
@@ -144,6 +157,7 @@ GROUPS = {
         "raw_classification",
         "fmi_status",
         "display_fmi",
+        "display_fmi_basis",
         "cohort_min",
         "cohort_max",
         "policy_version",
@@ -228,7 +242,9 @@ def write_audit(records: list[Row], cohort: Row, policy: Policy, output: Path) -
         "# Dossier calculation audit",
         "",
         "This file covers every input prospect, including missing/excluded results. "
-        "Component scores and printed headlines are transcribed from dossiers, not "
+        "Published brands preserve explicitly transcribed published scores, displays "
+        "and cards. Other component scores and printed headlines come from dossiers, "
+        "not "
         "independently rebuilt from database measurements. Missing source locators or "
         "sample counts remain missing. Printed growth and lift take precedence over "
         "calculations from rounded amounts. `derived_context_fields` identifies "
@@ -245,7 +261,8 @@ def write_audit(records: list[Row], cohort: Row, policy: Policy, output: Path) -
         json.dumps(clean({"policy": policy.model_dump(), "cohort": cohort}), indent=2),
         "```",
         "",
-        "Dynamic cohort normalization can change an unchanged brand's uplift. "
+        "Published normalized scores are locked. Dynamic cohort normalization can "
+        "change an unchanged new dossier brand's uplift. "
         "The approved exponential is calibrated on the legacy raw-score scale but "
         "applied to rounded normalized FMI. Default scores 70–98 give about "
         "5.27–15.69% uplift; score 100 gives 16.75%. There is no 11% cap. "
@@ -263,9 +280,22 @@ def write_audit(records: list[Row], cohort: Row, policy: Policy, output: Path) -
             lines.extend(f"| `{k}` | {display(value)} |" for k, value in fields.items())
             lines.append("")
         selection = (
-            "Selected raw FMI preserves the printed dossier headline"
+            "Selected raw FMI preserves the published delivery headline"
+            if r.get("score_source") == "published_delivery"
+            else "Selected raw FMI preserves the printed dossier headline"
             if r.get("score_method") == "reported"
             else "Selected raw FMI uses the explicit weighted-components method"
+        )
+        normalization = (
+            f"3. Display preserves the published normalized score {v('display_fmi')} "
+            f"from {v('published_source_reference')}; no new cohort rescaling."
+            if r.get("score_source") == "published_delivery"
+            else f"3. Display: half-up to one decimal of {policy.display_lower:g} + "
+            f"({policy.display_upper:g} − {policy.display_lower:g}) × "
+            f"({v('raw_fmi')} − {v('cohort_min')}) / "
+            f"({v('cohort_max')} − {v('cohort_min')}) = {v('display_fmi')}. "
+            f"Equal/single cohorts use {policy.display_equal:g}; "
+            "missing/excluded scores stay missing."
         )
         lines.extend(
             [
@@ -276,15 +306,10 @@ def write_audit(records: list[Row], cohort: Row, policy: Policy, output: Path) -
                 f"{v('trend_score')} × {v('trend_weight')} = "
                 f"{v('weighted_component_fmi')}. "
                 "A missing component makes this diagnostic unavailable.",
-                f"2. {selection}: {v('raw_fmi')}. Diagnostic minus printed headline = "
+                f"2. {selection}: {v('raw_fmi')}. Diagnostic minus selected headline = "
                 f"{v('reported_component_difference')}; "
                 "the diagnostic never silently replaces it.",
-                f"3. Display: half-up to one decimal of {policy.display_lower:g} + "
-                f"({policy.display_upper:g} − {policy.display_lower:g}) × "
-                f"({v('raw_fmi')} − {v('cohort_min')}) / "
-                f"({v('cohort_max')} − {v('cohort_min')}) = {v('display_fmi')}. "
-                f"Equal/single cohorts use {policy.display_equal:g}; "
-                "missing/excluded scores stay missing.",
+                normalization,
                 f"4. Legacy rate: 0 if raw ≤ {policy.legacy_uplift_threshold:g}; "
                 "otherwise "
                 f"{policy.legacy_uplift_intercept:g} + "

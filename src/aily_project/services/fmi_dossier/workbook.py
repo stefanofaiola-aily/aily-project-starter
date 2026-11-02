@@ -9,7 +9,13 @@ from pathlib import Path
 from .model import Row, clean
 
 
-def write_workbook(payload: Row, path: Path, *, previews: bool = False) -> None:
+def write_workbook(
+    payload: Row,
+    path: Path,
+    *,
+    previews: bool = False,
+    template: str = "workbook.mjs",
+) -> None:
     node = os.environ.get("FMI_NODE", "node")
     modules = os.environ.get("FMI_NODE_MODULES")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -18,7 +24,7 @@ def write_workbook(payload: Row, path: Path, *, previews: bool = False) -> None:
     with tempfile.TemporaryDirectory(prefix="dossier-workbook-") as folder:
         work = Path(folder)
         script = work / "workbook.mjs"
-        script.write_bytes(Path(__file__).with_name("workbook.mjs").read_bytes())
+        script.write_bytes(Path(__file__).with_name(template).read_bytes())
         if modules:
             (work / "node_modules").symlink_to(Path(modules), target_is_directory=True)
         source = work / "payload.json"

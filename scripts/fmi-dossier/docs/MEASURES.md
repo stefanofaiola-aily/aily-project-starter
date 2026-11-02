@@ -7,8 +7,8 @@ Methodology reference, 2 November 2026. This describes the independent **dossier
 The workflow is:
 
 1. Read the dossier values transcribed once into `inputs/FMI_dossier_inputs.xlsx`.
-2. Select the dossier's reported headline, or explicitly recompute from its component scores.
-3. Normalize the selected headlines together onto 70–98.
+2. Preserve explicitly supplied published scores for existing scored brands. Otherwise select the dossier's reported headline, or explicitly recompute from its component scores.
+3. Preserve the published normalized scores; normalize only new/unpublished headlines onto 70–98 using the selected-score cohort.
 4. Apply both legacy and exponential uplift to the same unadjusted forecast baseline.
 5. Export one Excel row and one JSON `rows` record per included prospect with available measurement, score or forecast data.
 
@@ -22,17 +22,36 @@ The current Excel contains `Delivery` and `Column guide` sheets. The guide docum
 
 | Information | Source in this workflow | Treatment |
 | --- | --- | --- |
-| Reported FMI and component scores | Dossier/source workbook | Preserve original precision and source method. |
+| Selected FMI and component scores | Explicit published input snapshot for existing scored brands; dossier/source workbook otherwise | Preserve published scores and card metrics. Keep alternative dossier values separately. |
 | Revenue, growth, peers and social measurements | Dossier/source workbook | Keep amounts, definitions, selected windows and limitations. Do not silently replace them with current database observations. |
 | Collection/show dates and financial/social periods | Dossier | Keep their actual meaning. Collection date, selling period and forecast period need not coincide. |
 | Company identity | Light company registry and supplied mappings | App retrieval key is `light.light_companies.company_code`; ticker/shared symbol remain separate. |
 | Dinner membership, expected Light presence and app category | Supplied company list | Routing/coverage metadata, not scoring inputs. Registry presence does not prove that every metric exists. |
 | Unadjusted forecast baseline | Accepted source workbook, or a separate Light forecast check | Preserve existing accepted amounts. Missing baselines may be supplemented with a current Q4 scenario. |
 | PY forecast | Matching Light forecast observation for the prior fiscal year | Current snapshot of the earlier target period, not necessarily the forecast originally issued that year. |
-| Normalization, uplift, rankings and narrative KPIs | Dossier service | Calculate from final selected values; never copy stale calculated text. |
+| Normalization, uplift, rankings and narrative KPIs | Published display/cards or dossier service | Preserve published displays/cards for existing scored brands. Always regenerate forecast narrative from final uplifted values. |
 | Historical weighted-delivery reference | Original historical artifact | Comparison only. Does not feed current scoring, normalization or uplift. |
 
 No forecast lookup changes the financial/social periods used in the dossier score. The score may describe an earlier collection or annual period while uplift is applied to a current forecast. This is a labelled business scenario, not proof that the older score predicts the current quarter.
+
+### Published HTML reconciliation: why the values differed
+
+The current v6 HTML is based on `weighted-delivery-1300.xlsx` in the prototype's data archive. The separate handover `weighted-delivery-1606_2810.xlsx` contains some different normalized scores. It is not an exact substitute for the HTML baseline. The previous dossier run selected alternative document methods/revisions and then rescaled every headline using 41 scores with minimum 6.41 and maximum 94. Neither operation was limited to uplift. The category update did not cause the score differences.
+
+| Brand | Previous dossier selection / cause | Restored published values |
+| --- | --- | --- |
+| Fendi | Selected component-percentile headline 47, IR 60, Social 50, Strength 10 instead of the accepted original-method result. Re-normalized to 83.0. | Raw 47.3; IR 50.4; Social 53.6; Strength 30; normalized 81.6. |
+| ME+EM | Raw 86 and components were already the same. Fresh cohort scaling replaced the published display override with 95.4. | Normalized 86.2; raw/components unchanged. |
+| Marc Jacobs | Selected percentile-method headline 25 and components 10/30/55, instead of published original-method scores. | Raw 20; IR 11.5; Social 0.7; Strength 70; normalized 70.0. |
+| Coach | Selected dossier Strength 70; the business-approved published revision used 80. | Raw 70.2; IR 100; Social 13.9; Strength 80; normalized 91.3. |
+| New Balance | Selected percentile Strength 55 and Social 10, instead of the published 80 and 0. | Raw 66; IR 100; Social 0; Strength 80; normalized 89.5. |
+| Estée Lauder | Selected another dossier calculation: headline 79.3 and components 75.65/91.72/70; changed periods/account selection and new cohort scaling produced 93.3. | Raw 78.3; IR 72.7; Social 86.7; Strength 75; normalized 86.5. |
+
+Correction: the 26 published scored rows were transcribed once into the existing Excel input's five `published_*` score columns, plus `published_card_values` and exact `published_source_reference`. `score_source=published_delivery` selects them. The original `reported_fmi`, source method and financial/social context are retained. Output `dossier_ir_score`, `dossier_social_score`, `dossier_trend_score` and `dossier_reported_fmi_difference` show the alternatives explicitly. Those alternative measurements do **not** claim to reconstruct the published cards. Published KPIs and insights identify their own periods and proxy scope.
+
+This is preservation of an accepted delivered snapshot, not a new validation of its source queries. New/unpublished brands still use their dossier inputs. Old company aliases, categories and ranks are not imported: exact Light keys and the new three-category list remain authoritative. Existing accepted forecast baselines are unchanged. The new exponential uplift is calculated from the **preserved published normalized score**, so Fendi uses 81.6, not 83.0. Adding a new brand cannot silently change that display or its uplift.
+
+Armani's new document is `dossiers/armani/armani_momentum_score.docx`, linked to the existing single input row. It reports approximately EUR 2,190m FY2025 revenue and rounded EUR 2,300m FY2024, but no FY2023 amount, no approved peers and no comparable FY2024/FY2025 Giorgio Armani Instagram history. Its stated 2025 decline of 4.6% is retained instead of recomputing growth from rounded amounts. Emporio Armani's separate account is not substituted. The saved Q4 forecast (USD 578.026m) and PY forecast (USD 558.259m) remain available, with baseline YoY +3.54%; no FMI or adjusted forecast is invented. EUR dossier revenues and USD forecasts are separate contexts, without FX conversion.
 
 ## 3. Units and notation
 
@@ -174,11 +193,13 @@ Current component presentation rules are:
 
 These labels describe scores. Source-specific percentile and portfolio semantics still need their method label. For those methods the service also generates the presentation labels, but they must not be interpreted as newly validated absolute performance bands.
 
-App KPIs: `ir_kpi = latest_gap_pp`; `social_kpi = social_lift_fraction`; `trend_kpi = latest_growth`. Narratives are generated from final selected values; a source component may be available while its underlying KPI is unavailable. A narrative never supplies a missing measurement.
+Published scored brands preserve their exact published sentiments, descriptors, insights and typed KPIs. For other brands, app KPIs are `ir_kpi = latest_gap_pp`, `social_kpi = social_lift_fraction`, `trend_kpi = latest_growth`, with narratives generated from final selected values. A source component may be available while its underlying KPI is unavailable. A narrative never supplies a missing measurement.
 
 ## 10. Normalize the selected headlines
 
 The cohort contains every included row with an available selected raw headline, irrespective of forecast availability, category or dinner membership. Pair diagnostics and missing headlines do not enter it.
+
+For the 26 published scored brands, `display_fmi = published_display_fmi` unchanged. `display_fmi_basis=published_delivery_preserved` identifies this selection; `cohort.published_members` records those IDs. The following rescaling applies only to new/unpublished scores, using all selected headlines for its extrema:
 
 ```text
 display_fmi = 70 + 28 × (raw_fmi − cohort_min)/(cohort_max − cohort_min)
@@ -186,7 +207,7 @@ display_fmi = 70 + 28 × (raw_fmi − cohort_min)/(cohort_max − cohort_min)
 
 Round **half-up to one decimal** before calculating exponential uplift. The minimum maps to 70.0 and maximum to 98.0. A single/equal-score cohort maps to 84.0; an empty cohort has no display results. Membership/extrema are recorded in JSON `cohort`, with row-level `cohort_min` and `cohort_max`.
 
-This is relative display rescaling, not a new component score or probability. It does not change raw classification. Adding/removing another scored brand can change an unchanged brand's display and uplift. All categories share this normalization cohort; ranking is subsequently category-specific. Historical displays use their own cohort and may have overrides, so they need not match.
+This is relative display rescaling, not a new component score or probability. It does not change raw classification. Adding/removing another scored brand can change an unchanged **unpublished** brand's display and uplift; locked published displays are unaffected. All categories share this normalization cohort; ranking is subsequently category-specific. Preserving published overrides is intentional, not recalculation against the new cohort.
 
 ## 11. Forecast baseline and period selection
 
@@ -221,7 +242,7 @@ adjusted_forecast = baseline_revenue + adjustment
 
 `expm1(x)` means `exp(x) − 1`. Policy **v3** is the user-approved legacy-calibrated exponential. The curve is calibrated on the legacy's **raw 0–100 score scale**, with a threshold of 60, an intercept of 3% immediately above 60 and the same initial slope as legacy: 0.08/40 = 0.002 (0.2 percentage points per score point). Convex growth rewards higher scores more strongly than the linear legacy rule on the same score. It is deliberately **applied to the rounded normalized display FMI**, not the selected raw headline. The current display range 70–98 is entirely above the threshold, so available scores have uplift; missing scores remain null. The 11% ceiling from earlier versions is removed: 100 gives 16.746%, not 11%. The approved 70–98 range gives about 5.27–15.69%.
 
-This is an explicit commercial extension to `handover/FMI_handover_plan_v2 (1).docx`: section 6 says to use raw weighted FMI without rescaling and section 7 defines the linear legacy. This delivery keeps the user's selected dossier headlines and normalization, then applies the newly approved exponential. It does not claim to implement the plan's unchanged raw-score sales rule. The roadmap skill is used for column/card vocabulary and frozen-source separation, not to replace dossier scores with its selected calculations or revisions.
+This is an explicit commercial extension to `handover/FMI_handover_plan_v2 (1).docx`: section 6 says to use raw weighted FMI without rescaling and section 7 defines the linear legacy. This delivery keeps the approved published scores/displays for existing scored brands and dossier scores for new brands, then applies the newly approved exponential. It does not claim to implement the plan's unchanged raw-score sales rule. Roadmap vocabulary and accepted published revisions remain identifiable; alternative dossier calculations do not silently replace them.
 
 General YAML form: `uplift_intercept + uplift_scale × expm1(uplift_exponent × (display_fmi−uplift_threshold)/uplift_score_span)` above the threshold, otherwise zero. Defaults are threshold 60, intercept 0.03, scale 0.08, span 40 and exponent 1. These are not statistically calibrated parameters. Full resolved policy is recorded in JSON and the audit. No already-adjusted forecast is used as baseline. Original source-legacy comparisons remain unchanged.
 
@@ -231,13 +252,14 @@ Policy benchmarks (not prospect observations):
 | --- | --- |
 | 70.0 | 5.272% |
 | 80.0 | 8.190% |
-| 83.0, Fendi's current display | 9.217% |
+| 81.6, Fendi's preserved published display | 8.728% |
+| 83.0 | 9.217% |
 | 84.0 | 9.577% |
 | 90.0 | 11.936% |
 | 98.0 | 15.686% |
 | 100.0, outside current display range | 16.746% |
 
-Fendi uses three **different** score inputs: selected dossier headline `reported_fmi=47.0` becomes `raw_fmi=47.0`; current cohort normalization gives `display_fmi=83.0`; the original sales workbook's `source_display_fmi=81.6` remains frozen for legacy reproduction. Its untreated baseline is EUR 517.275m. New exponential = 9.217%, adjusted forecast = EUR 564.952m. Original source legacy = 7.32%, original/reproduced forecast = EUR 555.140m. The raw-score legacy diagnostic is 0%. These are separate scenarios, never compounded. Original source YoY −1.3085% uses prior-year Q4 **sales** of 562.5m; new forecast-vs-PY-forecast uses the separately checked Light **forecast** of 562.5m. Equal numbers do not make these the same source classification.
+Fendi preserves published `raw_fmi=47.3`, components 50.4/53.6/30 and `display_fmi=81.6`. Alternative dossier `reported_fmi=47.0` and 60/50/10 remain audit context. Its untreated baseline is EUR 517.275m. New exponential = **8.728%**, adjusted forecast = **EUR 562.423m**. Original source legacy = 7.32%, original/reproduced forecast = EUR 555.140m. The raw-score legacy diagnostic is 0%. These are separate scenarios, never compounded. Original source YoY −1.3085% uses prior-year Q4 **sales** of 562.5m; new forecast-vs-PY-forecast uses the separately checked Light **forecast** of 562.5m and is **−0.0137%** (approximately −0.01%, near flat). Equal amounts do not make these the same source classification. The prior +0.436% result came from the unintended new normalized score 83.0 and is superseded.
 
 ### Legacy, the previous code scenario
 
@@ -290,11 +312,11 @@ A current stored observation for a prior target year is not necessarily the fore
 
 ## 14. Rankings and app interpretation
 
-Provisional ranking uses the rounded `display_fmi`, descending within explicit `leaderboard_category`. The revised company list explicitly assigns LUXE, PREMIUM and MASS_MARKET to 32 brands, overriding their older/blank delivery assignments. Unlisted brands retain their historical LUXE, FAST FOLLOWER, RETAILER or OTHER assignments without guessed conversions. `leaderboard_category_source` records the assignment's exact source. Rank is `1 + number of strictly higher displayed scores`; ties share rank (1, 2, 2, 4). Missing FMI/category gives no rank. Missing forecast does not block a rank. Category changes do not affect the normalization cohort, FMI or uplift.
+Provisional ranking uses rounded `display_fmi`, descending within `leaderboard_category`. Every dossier run reads the current company-list columns A/B. Only LUXE, PREMIUM and MASS_MARKET are accepted; column B overrides older input assignments. Unlisted brands keep their scores/forecasts but have blank category and no rank, with `not_in_current_category_list` status. The current list names 32 brands; 27 appear in the 59-brand delivery. Historical categories remain audit references, not fallback assignments. `leaderboard_category_source` records the exact source cell. Rank is `1 + number of strictly higher displayed scores`; ties share rank (1, 2, 2, 4). Missing FMI/category gives no rank. Missing forecast does not block a rank. Category changes do not affect the normalization cohort, FMI or uplift.
 
 `leaderboard_scored_count` counts ranked rows; `leaderboard_member_count` includes delivered category rows without a headline. These ranks describe this delivery cohort, not all brands or the live app.
 
-`app_category` accepts the app taxonomy LUXE/PREMIUM/MASS_MARKET. For the 32 brands explicitly assigned in the revised company list, delivery Category and app category use the same supplied value. Unlisted historical categories are not automatically converted into app categories. Native app rankings still require separate preparation and approval by the receiving team. Per-company native content must not contain stored `rank`/`brands`/`rankings`/`boardStatus`; the app composes them from its shared category table.
+`app_category` and delivery Category use the same current column-B value: LUXE/PREMIUM/MASS_MARKET. Unlisted brands have both fields blank; no historical-category conversion is inferred. Native app rankings still require separate preparation and approval by the receiving team. Per-company native content must not contain stored `rank`/`brands`/`rankings`/`boardStatus`; the app composes them from its shared category table.
 
 ## 15. Worked example, illustrative only
 

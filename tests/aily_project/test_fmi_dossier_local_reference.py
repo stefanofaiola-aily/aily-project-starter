@@ -44,6 +44,10 @@ def test_historical_comparison_defaults_to_local_snapshot(tmp_path, monkeypatch)
     assert Path(result["source"]) == RESEARCH / "weighted-delivery.xlsx"
     assert Path(result["roadmap_source"]) == RESEARCH / "weighted-delivery.json"
     assert result["brands"]["fendi"]["raw_fmi"] is not None
+    history = result["delivery_snapshots"]["fendi"]["values"]
+    assert [history[f"source_social_{year}"] for year in (2024, 2025, 2026)] == (
+        pytest.approx([0.383404284073248, 0.0361996392062538, -0.41613563950842])
+    )
     assert result["delivery_snapshots"]["fendi"]["values"][
         "source_q4_sales_yoy_2026"
     ] == pytest.approx(-0.01308528)

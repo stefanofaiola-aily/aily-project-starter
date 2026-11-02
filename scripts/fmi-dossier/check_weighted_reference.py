@@ -170,8 +170,11 @@ def main() -> None:
         }
         snapshot_fields = {
             "email_domains": 10,
+            "source_social_2024": 27,
             "source_q4_vs_baseline_2024": 28,
+            "source_social_2025": 29,
             "source_q4_vs_baseline_2025": 30,
+            "source_social_2026": 31,
             "source_q4_vs_baseline_2026": 32,
             "source_insights_descriptive": 33,
             "source_insights_statistics": 34,

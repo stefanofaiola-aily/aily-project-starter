@@ -11,7 +11,13 @@ from .audit import traces, write_audit
 from .column_guide import build_column_guide
 from .model import Field, Row, clean, truth
 from .policy import Policy, classify, half_up, legacy_uplift, uplift
-from .presentation import enrich, leaderboards, rank_categories, save_handoff
+from .presentation import (
+    PUBLISHED_CARD_KEYS,
+    enrich,
+    leaderboards,
+    rank_categories,
+    save_handoff,
+)
 from .provenance import field_source
 from .workbook import write_workbook
 
@@ -122,6 +128,17 @@ SOURCE_RATIOS = {
     for year in (2024, 2025, 2026)
 }
 NUMBERS |= SOURCE_RATIOS
+NUMBERS |= {
+    "published_raw_fmi",
+    "published_display_fmi",
+    "published_ir_score",
+    "published_social_score",
+    "published_trend_score",
+    "dossier_ir_score",
+    "dossier_social_score",
+    "dossier_trend_score",
+    "dossier_reported_fmi_difference",
+}
 LABELS = {
     "raw_fmi": "Fashion Momentum Index (dossier)",
     "display_fmi": "FMI normalized (70–98)",
@@ -435,6 +452,52 @@ def score_rows(inputs: list[Row], policy: Policy) -> list[Row]:
     rows = []
     for source in inputs:
         row = dict(source)
+        published = row.get("published_raw_fmi") is not None
+        if published:
+            if not row.get("published_source_reference"):
+                raise ValueError(
+                    f"{row['brand_id']}: published scores need a source reference"
+                )
+            for key in (
+                "raw_fmi",
+                "display_fmi",
+                "ir_score",
+                "social_score",
+                "trend_score",
+            ):
+                value = row.get("published_" + key)
+                if (
+                    isinstance(value, bool)
+                    or not isinstance(value, (int, float))
+                    or not math.isfinite(value)
+                    or not 0 <= value <= 100
+                ):
+                    raise ValueError(
+                        f"{row['brand_id']}: published_{key} must be "
+                        "a finite score in 0–100"
+                    )
+            for component in ("ir", "social", "trend"):
+                key = component + "_score"
+                row.setdefault("dossier_" + key, row.get(key))
+                row[key] = row["published_" + key]
+        row["score_source"] = "published_delivery" if published else "dossier"
+        cards = row.get("published_card_values")
+        if isinstance(cards, str):
+            cards = json.loads(cards)
+        if cards is not None and not isinstance(cards, dict):
+            raise ValueError(
+                f"{row['brand_id']}: published_card_values must be a JSON object"
+            )
+        if cards and not set(cards) <= PUBLISHED_CARD_KEYS:
+            raise ValueError(f"{row['brand_id']}: unsupported published card fields")
+        row["published_card_values"] = cards
+        row["score_context_note"] = (
+            "Scores, display and cards preserve the published delivery. Original "
+            "dossier revenue/social context is alternative evidence, not a "
+            "recalculation of the published score. See published_source_reference."
+            if published
+            else "Scores and context use the selected dossier input."
+        )
         # Derive descriptive metrics only when the dossier supplies comparable
         # source amounts. Existing printed measurements always take precedence.
         derived = []
@@ -515,16 +578,23 @@ def score_rows(inputs: list[Row], policy: Policy) -> list[Row]:
             sum(contributions) if all(v is not None for v in contributions) else None
         )
         row["weighted_component_fmi"] = weighted
-        reported = row.get("reported_fmi")
+        reported = (
+            row.get("published_raw_fmi") if published else row.get("reported_fmi")
+        )
         row["reported_component_difference"] = (
             weighted - reported
             if weighted is not None and reported is not None
             else None
         )
-        raw = reported if method == "reported" else weighted
-        if raw is not None and not row.get("source_document"):
+        raw = reported if published or method == "reported" else weighted
+        if raw is not None and not (row.get("source_document") or published):
             raise ValueError(f"{row['brand_id']}: a score needs a source_document")
         row["raw_fmi"] = raw
+        row["dossier_reported_fmi_difference"] = (
+            raw - row["reported_fmi"]
+            if published and row.get("reported_fmi") is not None
+            else None
+        )
         row["has_dossier_data"] = any(
             row.get(k) is not None
             for k in (
@@ -542,7 +612,10 @@ def score_rows(inputs: list[Row], policy: Policy) -> list[Row]:
         row["raw_classification"] = (
             classify(raw)
             if raw is not None
-            and row.get("dossier_score_basis") != "component_percentile_normalized"
+            and (
+                published
+                or row.get("dossier_score_basis") != "component_percentile_normalized"
+            )
             else None
         )
         row["fmi_status"] = (
@@ -669,6 +742,11 @@ def finalize(rows: list[Row], policy: Policy) -> tuple[list[Row], Row]:
         ],
         "minimum": lo,
         "maximum": hi,
+        "published_members": [
+            r["brand_id"]
+            for r in rows
+            if r.get("include") and r.get("score_source") == "published_delivery"
+        ],
     }
     for row in rows:
         row.update(cohort_min=lo, cohort_max=hi, policy_version=policy.version)
@@ -691,14 +769,24 @@ def finalize(rows: list[Row], policy: Policy) -> tuple[list[Row], Row]:
         if row.get("include") and row.get("raw_fmi") is not None:
             assert lo is not None and hi is not None
             raw = row["raw_fmi"]
-            display = half_up(
-                policy.display_equal
-                if lo == hi
-                else policy.display_lower
-                + (policy.display_upper - policy.display_lower) * (raw - lo) / (hi - lo)
+            locked = row.get("score_source") == "published_delivery"
+            display = (
+                row["published_display_fmi"]
+                if locked
+                else half_up(
+                    policy.display_equal
+                    if lo == hi
+                    else policy.display_lower
+                    + (policy.display_upper - policy.display_lower)
+                    * (raw - lo)
+                    / (hi - lo)
+                )
             )
             row.update(
                 display_fmi=display,
+                display_fmi_basis="published_delivery_preserved"
+                if locked
+                else "current_cohort_minmax",
                 uplift_fraction=uplift(display, policy),
                 legacy_uplift_fraction=legacy_uplift(raw, policy),
             )
@@ -836,7 +924,9 @@ def fields_for(rows: list[Row]) -> list[Field]:
             else "Identity and evidence"
         )
         kind = (
-            "array"
+            "object"
+            if key == "published_card_values"
+            else "array"
             if key == "peer_observations" or key in LOOKUP_ARRAYS
             else "boolean"
             if key in FLAGS
@@ -859,7 +949,9 @@ def fields_for(rows: list[Row]) -> list[Field]:
             else "string"
         )
         unit = (
-            "peer_records"
+            "published_card_record"
+            if key == "published_card_values"
+            else "peer_records"
             if key == "peer_observations"
             else "source_records"
             if key in LOOKUP_ARRAYS
@@ -931,8 +1023,8 @@ def fields_for(rows: list[Row]) -> list[Field]:
             derivation = (
                 "Explicit supplied ranking/dinner company-list transcription; "
                 "Y/N presence is expectation, not proof of a forecast. Listed brands "
-                "use the explicit app category also for delivery ranking; unlisted "
-                "historical categories are not automatically remapped."
+                "use the current explicit app category also for delivery ranking; "
+                "unlisted brands have blank categories and remain unranked."
             )
         elif key in {"light_list_check_status", "light_registry_presence"}:
             derivation = (
@@ -966,11 +1058,11 @@ def fields_for(rows: list[Row]) -> list[Field]:
             )
         if key.startswith("leaderboard_"):
             derivation = (
-                "Explicit input category copied once from supplied assignments; "
+                "Current company-list column B assignment, read each dossier run; "
                 "provisional competition rank 1 + count of higher rounded display FMI "
                 "within current delivered category. Ties share rank, missing scores "
-                "are unranked. Revised dinner-list categories take precedence for "
-                "listed brands; unlisted historical assignments remain. Delivery "
+                "are unranked. Only LUXE/PREMIUM/MASS_MARKET are allowed; unlisted "
+                "brands have no current category or rank. Delivery "
                 "ranks are not live app ranks."
             )
         if key in PY_YOY or key == "fmi_increment_vs_py_forecast_pp":
@@ -1000,7 +1092,8 @@ def fields_for(rows: list[Row]) -> list[Field]:
             ("_insight", "_descriptor", "_sentiment", "_kpi", "_kpi_label")
         ):
             derivation = (
-                "Generated from final dossier metrics. IR KPI is peer gap in pp; "
+                "Published scored brands preserve published card values; others are "
+                "generated from final dossier metrics. IR KPI is peer gap in pp; "
                 "Social KPI is source metric lift as fraction; Trend KPI is own "
                 "growth as fraction, not numeric Strength. Missing KPI is null."
             )
@@ -1016,14 +1109,17 @@ def fields_for(rows: list[Row]) -> list[Field]:
             "reported_component_difference",
         }:
             derivation = (
-                "Selected reported headline, or explicit weighted_components mode. "
+                "published_raw_fmi when explicitly supplied, otherwise selected "
+                "reported headline or explicit weighted_components mode. "
                 "Weighted diagnostic = IR×50% + Social×30% + Trend×20%. "
-                "Difference = diagnostic − reported headline."
+                "Difference = diagnostic − selected reported headline. "
+                "Original dossier reported_fmi/components stay separate for audit."
             )
         elif key == "display_fmi":
             derivation = (
-                "Selected cohort min–max to 70–98, half-up one decimal; "
-                "equal cohort 84. Dynamic cohort."
+                "Published brands use published_display_fmi unchanged. Other brands "
+                "use selected cohort min–max to 70–98, half-up one decimal; equal "
+                "cohort 84. See display_fmi_basis and published_source_reference."
             )
         elif key == "uplift_fraction":
             derivation = (
@@ -1100,6 +1196,10 @@ def fields_for(rows: list[Row]) -> list[Field]:
                     "social_score",
                     "trend_score",
                     "score_method",
+                    "published_raw_fmi",
+                    "published_ir_score",
+                    "published_social_score",
+                    "published_trend_score",
                 },
                 **field_source(key),
             )
@@ -1137,8 +1237,12 @@ def export_delivery(
             "calculation_traces": calculation_traces,
             "leaderboards": leaderboards(delivered),
             "limitations": [
-                "Dynamic cohort rescaling changes uplift even if a brand's "
-                "dossier score is unchanged.",
+                "Previously published scores/displays/cards are preserved from "
+                "explicit published input values. New dossier brands use dynamic "
+                "cohort rescaling, which can change their uplift on cohort changes.",
+                "Published displays and newly rescaled dossier displays are not "
+                "one freshly recalibrated cohort. Category ranks are provisional "
+                "presentation ordering, not newly validated comparable percentiles.",
                 "Approved legacy-calibrated exponential: 5.272–15.686% uplift "
                 "on display scores 70–98, 16.746% at 100. No 11% cap. "
                 "Raw-scale calibration is intentionally applied to normalized FMI.",
@@ -1153,13 +1257,17 @@ def export_delivery(
                 "database revenue/social measurements never replace dossier scores.",
                 "PY forecast comparisons use a current Light snapshot, not archived "
                 "forecasts as issued in the prior year, and are not actuals YoY.",
-                "Category ranks cover this dossier delivery only. Source categories "
-                "are not automatically mapped to the native app taxonomy; unknown "
-                "assignments stay unranked.",
+                "Category ranks use only current company-list column B assignments "
+                "(LUXE/PREMIUM/MASS_MARKET). Unlisted delivered brands keep their "
+                "scores/forecasts but have blank category and no rank.",
             ],
             "fields": [f.record() for f in fields],
             "column_layout": {
                 "reference": reference.get("source"),
+                "score_selection": "Published scores/displays/cards from explicit "
+                "published_* input snapshot (weighted-delivery-1300.xlsx); "
+                "otherwise selected dossier. The layout reference is not "
+                "automatically the score source.",
                 "weighted_columns": [key for key, _ in WEIGHTED_COLUMNS],
                 "historical_snapshot_columns": "AB:AL; frozen, not new forecasts",
                 "company_code_note": "Column L is the single verified Light "

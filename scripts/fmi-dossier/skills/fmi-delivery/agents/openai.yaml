@@ -1,0 +1,4 @@
+interface:
+  display_name: "FMI Delivery"
+  short_description: "Maintain separate FMI workflows and WWD HTML delivery"
+  default_prompt: "Use $fmi-delivery to continue FMI delivery work while preserving published scores, source mappings, and workflow separation."

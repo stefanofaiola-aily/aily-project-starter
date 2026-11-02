@@ -64,42 +64,49 @@ DETAILS = {
         "parent key as the brand app key."
     ),
     "raw_fmi": (
-        "Selected dossier headline before current display rescaling. Reported mode "
+        "Published headline when score_source=published_delivery, otherwise "
+        "selected dossier headline. Reported mode "
         "preserves the printed score; weighted mode uses supplied components. "
         "May already represent a source percentile method."
     ),
     "display_fmi": (
-        "Current cohort-normalized FMI, 70–98, rounded half-up to one decimal. "
+        "Published normalized FMI is preserved for existing scored brands. Other "
+        "brands use current cohort rescaling, 70–98, half-up one decimal. "
         "This is the input to NEW exponential uplift, not source_display_fmi."
     ),
     "ir_score": (
-        "Dossier IR/Momentum score, 50% weight. Displayed as Trend / Peer Trajectory. "
+        "Published or selected dossier IR/Momentum score, 50% weight. "
+        "Displayed as Trend / Peer Trajectory. "
         "Accepted source score, not freshly recomputed from rounded growth."
     ),
     "social_score": (
-        "Dossier Social/Show Attention score, 30% weight. Measures the source-defined "
+        "Published or selected dossier Social/Show Attention score, 30% weight. "
+        "Measures the source-defined "
         "attention metric, not audience sentiment."
     ),
     "trend_score": (
-        "Dossier Strength/Commercial Pace score, 20% weight. "
+        "Published or selected dossier Strength/Commercial Pace score, 20% weight. "
         "Not the IR component despite its internal trend name."
     ),
     "ir_kpi": (
-        "Latest brand growth minus selected peer-median growth, in percentage points. "
+        "Published card KPI for existing scored brands; otherwise latest brand "
+        "growth minus selected peer-median growth, in percentage points. "
         "KPI is distinct from the 0–100 IR score."
     ),
     "social_kpi": (
-        "Current median social metric divided by baseline median minus one. "
+        "Published card KPI for existing scored brands; otherwise current median "
+        "social metric divided by baseline median minus one. "
         "Use with social_metric/platform and source windows; "
         "it is not necessarily likes for every dossier."
     ),
     "trend_kpi": (
-        "Own latest revenue growth, a fraction. Context for the Commercial Pace "
+        "Published card KPI for existing scored brands; otherwise own latest "
+        "revenue growth, a fraction. Context for the Commercial Pace "
         "card, not a recalculation of source Strength."
     ),
     "leaderboard_category": (
-        "Explicit revised company-list category where supplied; preserved historical "
-        "assignment otherwise. No inferred conversion for unlisted brands."
+        "Current company-list column B: LUXE, PREMIUM or MASS_MARKET. "
+        "Unlisted brands have a blank category and no rank; no inferred conversion."
     ),
     "leaderboard_rank": (
         "Competition rank on rounded display FMI within the delivered category. "
@@ -219,7 +226,8 @@ DETAILS = {
         "otherwise Needs improvement. Separate from detailed raw classification."
     ),
     "one_core_insight": (
-        "Brand narrative generated from final raw/normalized scores and method; "
+        "Published narrative for existing scored brands; otherwise generated "
+        "from final raw/normalized scores and method; "
         "states the missing reason instead when no headline is available."
     ),
     "oldest_revenue": (
